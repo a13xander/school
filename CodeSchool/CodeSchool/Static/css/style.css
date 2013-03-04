@@ -1,0 +1,198 @@
+#loginTitle{
+	font-size:400%;
+	text-align:center;
+	margin-top:7%;
+	margin-bottom: 7%;
+}
+
+#formLoggin{
+	text-align:center;
+}
+
+#headWelcomeAdministrator{
+	float:left;
+	width:100%
+}
+
+.loggedTitle{
+	float:left;
+	font-size:350%;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-bottom: 0.5%;
+}
+
+ul.menu{
+	float: right;
+	list-style: none;
+	margin-top: 2%;
+	margin-right: 5%;
+	font-size: 200%;
+	border : 2px solid #000;
+	background-color: #FFF;
+	display:block;
+	text-align:center;
+	padding-left: 0%;
+	cursor: pointer;
+}
+
+ul.menu:hover{
+	background-color: #000;
+	color: #FFF;
+}
+
+ul.menu ul{
+	display:none;
+	list-style:none;
+}
+
+ul.menu li:hover{
+	background-color: #000;
+	color: #FFF;
+}
+
+ul.menu li:hover > ul{
+	display:block;
+	background-color: #FFF;
+	color: #000;
+	text-align:center;
+	padding-left: 0%;
+}
+
+.loginHr{
+	width: 60%;
+	height: 0.5%;
+	background-color: #000;
+}
+
+.loggedHr{
+	width: 90%;
+	height: 0.5%;
+	background-color: #000;
+}
+
+#formLogin{
+	margin-left:38%;
+	margin-top:4%;
+	margin-bottom:2%;
+}
+
+
+.userNameOnFocus{
+	width: 40%;
+	height: 7%;
+	font-size: 200%;
+	border : 2px solid #000;
+	background: url(/media/user.png) no-repeat right;
+	padding-left:2%;
+	padding-right:4.5%;
+	color: #000;
+}
+
+.userPassword{
+	margin-top:2%;
+	width: 40%;
+	height: 7%;
+	border : 2px solid #000;
+	font-size: 200%;
+	background: url(/media/user.png) no-repeat right;
+	padding-left:2%;
+	padding-right:4.5%;
+	color: #BDBDBD;
+}
+
+.userPasswordOnFocus{
+	margin-top:2%;
+	width: 40%;
+	height: 7%;
+	border : 2px solid #000;
+	font-size: 200%;
+	background: url(/media/user.png) no-repeat right;
+	padding-left:2%;
+	padding-right:4.5%;
+	color: #000;
+}
+
+.loginRemember{
+	margin-top: 5%;
+	margin-bottom: 5%;
+	font-size: 200%;
+}
+
+.loginButton{
+	width: 15%;
+	height: 7%;
+	font-size: 170%;
+	margin-left: 6.3%;
+	border : 2px solid #000;
+	background-color: #FFF;
+}
+
+.loginButton:hover{
+	background-color: #000;
+	color: #FFF;
+}
+
+.loginFooter{
+	font-size: 200%;
+	text-align:center;
+	margin-top: 3%;
+}
+
+.loggedFooter{
+	font-size: 200%;
+	text-align:center;
+	margin-top: -1.5%;
+}
+
+.footerLink{
+	color: #000;
+	font-weight:bold;
+}
+
+#columnContainer{
+	float:left;
+    width:70%;
+    height: 75%;
+    margin-top: 1.5%;
+    margin-left: 20%;
+    margin-bottom: -1.5%;
+}
+
+#firstColumn{
+	float:left;
+    width:30%;
+}
+
+#secondColumn{
+	float:left;
+    width:30%;
+    margin-left: 5%;
+}
+
+#thirdColumn{
+	float:left;
+    width:30%;
+    margin-left: 5%;
+}
+
+.imagesAdministrator{
+	width: 60%;
+	height: 17%;
+	border:0;
+}
+
+.textImage{
+	margin-top: 0%;
+	margin-bottom: 15%;
+	background-color: #000;
+	width: 60%;
+	font-size: 200%;	
+	text-align:center;
+}
+
+.imgagesLink{
+	color: #FFF;
+	font-weight:bold;
+	text-decoration: none;
+}
