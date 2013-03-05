@@ -42,7 +42,6 @@
 }
 
 #scroll{
-	margin-top:4%;
 	height: 450px;
 	overflow-y: scroll;
 }
