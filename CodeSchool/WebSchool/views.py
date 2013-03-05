@@ -41,7 +41,7 @@ def base_administrator(request):
 
 @login_required(login_url='/')
 def qualifications(request):
-    return render_to_response('qualification.html',{'qualifications':qualifications}, context_instance=RequestContext(request))
+    return render_to_response('qualifications.html',{'qualifications':qualifications}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def subjects(request):
