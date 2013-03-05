@@ -21,16 +21,16 @@
 	
 		<div class="row-fluid">
 			<div class="span8 offset2">
-			  	<h1 id="logginTitle">
+			  	<h1 id="loginTitle">
 					Colegio Huellitas Genitales
 				</h1>
-				<div id="borderTopLoggin"> </div>
+				<div id="borderTopLogin"> </div>
 			</div>
 		</div>
-	
+			
 		<div class="row-fluid">
 	  		<div class="span12">
-			  	<form class="form-inline" method="post"  id="formLoggin">
+			  	<form class="form-inline" method="post"  id="formLogin">
 					{% csrf_token %}
 				    <div class="control-group">
 						<div class="controls">
@@ -46,7 +46,7 @@
 						<label class="checkbox">
 							<input type="checkbox"> Recuerdame
 						</label>
-						<button type="submit" class="btn btn-large btn-primary">Ingresar</button>
+						<button type="submit" id="buttonLogin" class="btn btn-large btn-primary offset0.5">Ingresar</button>
 					</div>
 				</form>
 			</div>
@@ -54,7 +54,7 @@
 		
 		<div class="row-fluid">
 			<div class="span8 offset2">
-			  <div id="borderBottomLoggin"> </div>
+			  <div id="borderBottomLogin"> </div>
 			</div>
 		</div>
 		

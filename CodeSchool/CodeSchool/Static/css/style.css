@@ -1,27 +1,28 @@
-#logginTitle{
+#loginTitle{
 	font-size:400%;
 	text-align:center;
 	margin-top:15%;
 }
 
-#borderTopLoggin{
+#borderTopLogin{
 	margin-top:3%;
 	margin-bottom: 8%;
 	border-bottom: thick double black;
 }
 
-#borderBottomLoggin{
+#formLogin{
+	text-align:center;
+}
+
+#borderBottomLogin{
 	margin-top:7%;
 	border-bottom: thick double black;
 }
 
-#footerLoggin{
-	margin-top:2%;
+#buttonLogin{
+	margin-left: 5%;	
 }
 
-#formLoggin{
-	text-align:center;
-}
 
 .verticalNav{
 	margin: 100px;
