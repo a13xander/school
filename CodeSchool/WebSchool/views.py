@@ -11,6 +11,8 @@ def login_school(request):
         userName = request.POST['userName']
         userPassword = request.POST['userPassword']
         access = authenticate(username=userName, password=userPassword)
+        print(request.POST)
+#        if request.POST['rememberMe']== 'True':
         if access is not None:
             if access.is_active:
                 login(request, access)
