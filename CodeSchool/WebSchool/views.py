@@ -40,5 +40,37 @@ def base_administrator(request):
     return render_to_response('base_administrator.html',{'base_administrator':base_administrator}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
-def qualification(request):
-    return render_to_response('qualification.html',{'qualification':qualification}, context_instance=RequestContext(request))
+def qualifications(request):
+    return render_to_response('qualification.html',{'qualifications':qualifications}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def subjects(request):
+    return render_to_response('subjects.html',{'subjects':subjects}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def teachers(request):
+    return render_to_response('teachers.html',{'teachers':teachers}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def reports(request):
+    return render_to_response('reports.html',{'reports':reports}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def goals(request):
+    return render_to_response('goals.html',{'goals':goals}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def grades(request):
+    return render_to_response('grades.html',{'grades':grades}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def courses(request):
+    return render_to_response('courses.html',{'courses':courses}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def students(request):
+    return render_to_response('students.html',{'students':qualifications}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def headquarters(request):
+    return render_to_response('headquarters.html',{'headquarters':qualifications}, context_instance=RequestContext(request))
