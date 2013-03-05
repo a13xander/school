@@ -1,5 +1,12 @@
 eclipse.preferences.version=1
+encoding//CodeSchool/Templates/courses.html=UTF-8
+encoding//CodeSchool/Templates/goals=UTF-8
+encoding//CodeSchool/Templates/grades.html=UTF-8
+encoding//CodeSchool/Templates/headquarters.html=UTF-8
 encoding//CodeSchool/Templates/qualification.html=UTF-8
+encoding//CodeSchool/Templates/reports.html=UTF-8
+encoding//CodeSchool/Templates/subjects.html=UTF-8
+encoding//CodeSchool/Templates/teachers.html=UTF-8
 encoding//CodeSchool/settings.py=utf-8
 encoding/<project>=UTF-8
 separateDerivedEncodings=true
