@@ -9,3 +9,6 @@ def login(request):
     
 def base_administrator(request):
     return render_to_response('base_administrator.html',{'base_administrator':base_administrator}, context_instance=RequestContext(request))
+
+def qualification(request):
+    return render_to_response('qualification.html',{'qualification':qualification}, context_instance=RequestContext(request))
