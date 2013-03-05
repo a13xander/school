@@ -8,11 +8,8 @@
 
 {% block contenido %}
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span2">
-  		</div>
-		<div class="span10">
-  			<!--Body content-->
+	
+  			
   			<form id="frmOptions" method="post" class="form-inline">
       			<label>Periodo							
 		   		<select class="comboboxPeriodo">
@@ -63,7 +60,46 @@
 				</select>
 				</label>					
 			</form>
-   		</div>
-  	</div>
+			
+			<table class="table table-striped">  
+	    <thead>  
+	      <tr>  
+	        <th>Periodo</th>  
+	        <th>Grado</th>  
+	        <th>Curso</th>  
+	        <th>Materia</th>
+	        <th>Docente</th>  
+	        <th>Opciones</th>    
+	      </tr>  
+	    </thead>  
+        <tbody>  
+          <tr>  
+            <td>001</td>  
+            <td>Once</td>  
+            <td>Once 01</td>  
+            <td>Educación Sexual</td>
+            <td>Alexander Castro</td> 
+            <td><a href="">Calificar</a></td>   
+          </tr>  
+          <tr>  
+            <td>001</td>  
+            <td>Once</td>  
+            <td>Once 01</td>  
+            <td>Educación Sexual</td>
+            <td>Alexander Castro</td> 
+            <td><a href="">Calificar</a></td>   
+          </tr>  
+          <tr>  
+            <td>001</td>  
+            <td>Once</td>  
+            <td>Once 01</td>  
+            <td>Educación Sexual</td>
+            <td>Alexander Castro</td> 
+            <td><a href="">Calificar</a></td>   
+          </tr>  
+        </tbody>  
+	</table>  
 </div>
-{% endblock %}
+{% endblock %} 
+
+	

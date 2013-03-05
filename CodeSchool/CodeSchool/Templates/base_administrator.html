@@ -45,7 +45,7 @@
 	</header>	
 	
 	<section class="verticalNav">
-		{% block contenido %}{% endblock %}
+		
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span2">
@@ -60,6 +60,9 @@
 						<li><a href="#">Grados</a></li>
 						<li><a href="#">Sedes</a></li>
 					</ul>
+				</div>
+				<div class="span10">
+				{% block contenido %}{% endblock %} 
 				</div>
 			</div>
 		</div>
