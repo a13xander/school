@@ -70,12 +70,13 @@
 	
 </body>
 	
-<footer>
-	<div class="container navbar-fixed-bottom">
-		<p class="text-center">
-			Desarrollado por: <a href="www." target="_blank" class="footerLink">Smile
-				Software</a> &copy; 2013
-		</p>
-	</div>
+<footer class="footer">
+	{% block piepagina %}{% endblock %}
+	<div class="navbar navbar-fixed-bottom">
+		<div class="navbar-inner">
+		<h5 class="text-center">Desarrollado por: <a href="www.google.com" target="_blank" class="footerLink">Smile
+					Software</a> &copy; 2013</h5>
+		</div>
+		</div>	
 </footer>
 </html>
