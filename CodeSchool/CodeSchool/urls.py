@@ -4,6 +4,7 @@ from CodeSchool import settings
 urlpatterns = patterns('',
     url(r'^$','WebSchool.views.login_school'),
     url(r'^welcome_administrator/$','WebSchool.views.welcome_administrator'),
+    url(r'^logout_school/$','WebSchool.views.logout_school'),
     url(r'^base_administrator/$','WebSchool.views.base_administrator'),
     url(r'^qualification/$','WebSchool.views.qualification'),
     url(r'^media/(?P<path>.*)$','django.views.static.serve',
