@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
+	
 	<head>
 		<meta charset="utf-8">
-		<title>
-			Sistema integrado de gestión de notas
-		</title>
+		<title>Sistema Integrado de Gestión de Notas</title>
 		<!—[if lt IE 9]>
-			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]—>
 		<link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
 		<link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
-		<link href="{{STATIC_URL}}css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="{{STATIC_URL}}css/bootstrap-responsive.min.css"
+			rel="stylesheet">
 	</head>
+	
 	<body>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script
+			src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 		<div class="row-fluid">
 			<div class="span12">
-			  	<h1 id="loginTitle">
-					Colegio Huellitas Genitales
-				</h1>
+				<h1 id="loginTitle">Colegio Huellitas Genitales</h1>
 				<div class="row-fluid">
-			  		<div class="span4 offset3">
-					  	<form class="form-horizontal" method="post">
+					<div class="span4 offset3">
+						<form class="form-horizontal" method="post">
 							{% csrf_token %}
-						    <div class="control-group">
+							<div class="control-group">
 								<div class="controls">
-									<input type="input" class="span12" id="inputUser" placeholder="Usuario">
+									<input type="input" class="span12" id="inputUser"
+										placeholder="Usuario">
 								</div>
 							</div>
 							<div class="control-group">
 								<div class="controls">
-									<input type="password" class="span12" id="inputUser" placeholder="Contraseña">
+									<input type="password" class="span12" id="inputUser"
+										placeholder="Contraseña">
 								</div>
 							</div>
 							<div class="row-fluid">
 								<div class="span5">
 									<div class="controls">
-										<label class="checkbox">
-											<input type="checkbox"> Recuerdame
+										<label class="checkbox"> <input type="checkbox">
+											Recuerdame
 										</label>
 									</div>
 								</div>
@@ -54,4 +56,10 @@
 			</div>
 		</div>
 	</body>
-</html>	
+	
+	<footer>
+		<div class="container navbar-fixed-bottom">
+			<p class="text-center">Desarrollado por: <a href="www." target="_blank" class="footerLink">Smile Software</a> &copy; 2013</p>
+	    </div>	
+	</footer>
+</html>
