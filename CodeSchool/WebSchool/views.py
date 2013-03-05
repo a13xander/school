@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 def login_school(request):
     if not request.user.is_anonymous():
-        return render_to_response('login.html', context_instance = RequestContext(request))
+        return HttpResponseRedirect('/welcome_administrator')
     if request.method == 'POST':
         userName = request.POST['userName']
         userPassword = request.POST['userPassword']
