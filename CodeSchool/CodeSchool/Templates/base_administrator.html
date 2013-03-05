@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
-	<head>
+<head>
 	<meta charset="utf-8">
 	<title>Sistema Integrado de Gestión de Notas {% block titulo %}{% endblock %}</title>
 	<!—[if lt IE 9]>
@@ -13,14 +12,14 @@
 	<link href="{{STATIC_URL}}css/bootstrap-responsive.min.css"
 		rel="stylesheet">
 	{% block style_css %}{% endblock %}
-	</head>
+</head>
 	
-	<body>
-		<script
-			src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-	
-	
+<body>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+	<header>
+		{% block encabezado %}{% endblock %}
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
@@ -42,15 +41,17 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		<section class="verticalNav">
+		</div>	
+	</header>	
+	
+	<section class="verticalNav">
+		{% block contenido %}{% endblock %}
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span2">
 					<ul class="nav nav-tabs nav-stacked">
 						<li class="active"><a href="#">Calificación</a></li>
-						<li><a href="#">Grados</a></li>
+						<li><a href="#">Informes</a></li>
 						<li><a href="#">Cursos </a></li>
 						<li><a href="#">Materias</a></li>
 						<li><a href="#">Logros</a></li>
@@ -62,16 +63,16 @@
 				</div>
 			</div>
 		</div>
-		</section>
-		
-	</body>
+	</section>
 	
-	<footer>
-		<div class="container navbar-fixed-bottom">
-			<p class="text-center">
-				Desarrollado por: <a href="www." target="_blank" class="footerLink">Smile
-					Software</a> &copy; 2013
-			</p>
-		</div>
-	</footer>
+</body>
+	
+<footer>
+	<div class="container navbar-fixed-bottom">
+		<p class="text-center">
+			Desarrollado por: <a href="www." target="_blank" class="footerLink">Smile
+				Software</a> &copy; 2013
+		</p>
+	</div>
+</footer>
 </html>
