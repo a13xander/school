@@ -16,9 +16,11 @@ def login_school(request):
                 login(request, access)
                 return HttpResponseRedirect('/welcome_administrator')
             else:
-                return HttpResponseRedirect('/')
+                warning = 'usuario bloqueado'
+                return render_to_response('login.html', {'warning':warning}, context_instance = RequestContext(request))
         else:
-            return HttpResponseRedirect('/')
+            warning = 'contrase;a no valida'
+            return render_to_response('login.html', {'warning':warning}, context_instance = RequestContext(request))
     else: 
         return render_to_response('login.html', context_instance = RequestContext(request))
 

@@ -32,6 +32,7 @@
 	  		<div class="span12">
 			  	<form class="form-inline" method="post"  id="formLogin">
 					{% csrf_token %}
+					<h1>{{warning}}</h1>
 				    <div class="control-group">
 						<div class="controls">
 							<input class="input-xlarge" type="text" placeholder="Usuario" name="userName">
