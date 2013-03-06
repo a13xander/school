@@ -40,3 +40,8 @@
 .comboboxGrado{
 	width: 100px;
 }
+
+#scroll{
+	height: 500px;
+	overflow-y: scroll
+}
