@@ -10,7 +10,7 @@
 	border-bottom: thick double black;
 }
 
-#formLogin{
+#formCenter{
 	text-align:center;
 }
 
@@ -44,4 +44,8 @@
 #scroll{
 	height: 450px;
 	overflow-y: scroll;
+}
+
+#margins{
+	margin-left: 4%;
 }
