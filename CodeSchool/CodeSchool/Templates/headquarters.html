@@ -1,0 +1,54 @@
+{% extends 'base_administrator.html' %} 
+{% block titulo %} Sedes {%endblock %} 
+{% block encabezado %} 
+{% endblock %} 
+{% block contenido %}
+<div class="container-fluid">
+	<button type="button" class="btn btn-primary offset0.5"
+		data-toggle="modal" data-target="#m_n_subjtect">
+		<i class="icon-plus"></i>Nueva
+	</button>
+	<br></br>
+	<br></br>
+	  <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="{{MEDIA_URL}}img/cover/bulletin.jpg" alt="Boletines">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{{MEDIA_URL}}img/cover/information.jpg" alt="Informacion">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{{MEDIA_URL}}img/cover/lists.jpg" alt="Listas">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>One more for good measure.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+</div>
+{% endblock %}
+{% block piepagina %}
+{% endblock %}
