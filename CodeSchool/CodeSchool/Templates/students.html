@@ -1,14 +1,17 @@
 {% extends 'base_administrator.html' %}
-
 {% block titulo %} Estudiantes {% endblock %}
-
-{% block encabezado %} 
-	
+{% block encabezado %}
 {% endblock %}
+{% block contenido%}
 
-{% block contenido %}
 <div class="container-fluid">
+
 	<form id="frmOptions" method="post" class="form-inline text-center">
+		<button type="button" class="btn btn-primary offset0.5"
+			data-toggle="modal" data-target="#m_n_student">
+			<i class="icon-plus"></i>Nuevo
+		</button>
+		
 		<label>Grado <select>
 				<option value="">1</option>
 				<option value="">2</option>
@@ -29,9 +32,9 @@
 		</select>
 		</label>
 	</form>
-	
+
 	<div id="scroll">
-		<table class="table  table-hover">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>Codigo</th>
@@ -57,7 +60,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -69,7 +73,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -81,7 +86,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -93,7 +99,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -105,7 +112,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -117,7 +125,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -129,7 +138,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -141,7 +151,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -153,7 +164,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -165,7 +177,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -177,7 +190,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -189,7 +203,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -201,7 +216,8 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>1</td>
@@ -213,14 +229,73 @@
 					<td>7</td>
 					<td>2</td>
 					<td>lorem.eget.mollis@libero.com</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a> <br> <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <br>
+						<a href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-{% endblock %} 
+<div id="m_n_student" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nuevo Estudiante</h3>
+	</div>
 
-{% block piepagina %}{% endblock %}
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="inputID">Codigo:</label>
+				<div class="controls">
+					<input type="text" class="uneditable-input" id="inputID">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputName">Nombres:</label>
+				<div class="controls">
+					<input type="text" id="inputName">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLastName">Apellidos:</label>
+				<div class="controls">
+					<input type="text" id="inputLastName">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputID">Documento de
+					indentidad:</label>
+				<div class="controls">
+					<input type="text" id="inputID">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAddress">Dirección:</label>
+				<div class="controls">
+					<input type="text" id="inputAddress">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPhone">Telefono:</label>
+				<div class="controls">
+					<input type="text" id="inputPhone">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Email:</label>
+				<div class="controls">
+					<input type="text" id="inputEmail">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-primary">Guardar</button>
+	</div>
+</div>
 
+{% endblock %}
+{% block piepagina %}
+{% endblock %}

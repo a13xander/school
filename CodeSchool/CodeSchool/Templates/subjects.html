@@ -1,18 +1,18 @@
 {% extends 'base_administrator.html' %}
-
-{% block titulo %} Materias {% endblock %}
-
-{% block encabezado %} 
-	
+{% block titulo %} Materias {%endblock %}
+{% block encabezado %}
 {% endblock %}
-
 {% block contenido %}
+
 <div class="container-fluid">
-	<button type="submit" id="buttonLogin" class="btn btn-large btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</button>
+
+	<button type="button" class="btn btn-primary offset0.5"
+		data-toggle="modal" data-target="#m_n_subjtect">
+		<i class="icon-plus"></i>Nueva
+	</button>
 
 	<br></br>
-	
-	</form>
+
 	<div id="scroll">
 		<table class="table  table-hover">
 			<thead>
@@ -26,38 +26,84 @@
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Educación Sexual</td>
 					<td>Once</td>
-					<td>  <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-{% endblock %} 
+<div id="m_n_subjtect" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nueva Materia</h3>
+	</div>
+	<div class="modal-body">
 
-{% block piepagina %}{% endblock %}
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="inputName">Nombre:</label>
+				<div class="controls">
+					<input type="text" id="inputName">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputGrade">Grado:</label>
+				<div class="controls">
+					<select id="inputGrade">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-primary">Guardar</button>
+	</div>
+</div>
+
+{% endblock %}
+{% block piepagina %}
+{% endblock %}

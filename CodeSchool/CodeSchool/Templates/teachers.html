@@ -1,18 +1,18 @@
 {% extends 'base_administrator.html' %}
-
-{% block titulo %} Profesores {% endblock %}
-
-{% block encabezado %} 
-	
+{% block titulo %} Profesores {%endblock %}
+{% block encabezado %}
 {% endblock %}
-
 {% block contenido %}
 
 <div class="container-fluid">
-	<button type="submit" id="buttonLogin" class="btn btn-large btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</button>
+
+	<button type="button" class="btn btn-primary offset0.5"
+		data-toggle="modal" data-target="#m_n_teacher">
+		<i class="icon-plus"></i>Nuevo
+	</button>
 
 	<br></br>
-	
+
 	<div id="scroll">
 		<table class="table  table-hover">
 			<thead>
@@ -34,7 +34,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -43,7 +45,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -52,7 +56,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -61,7 +67,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -70,7 +78,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -79,7 +89,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -88,7 +100,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -97,7 +111,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -106,7 +122,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -115,7 +133,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -124,7 +144,9 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Alexander</td>
@@ -133,13 +155,67 @@
 					<td>Barrio Galan</td>
 					<td>3014567890</td>
 					<td>alex@example.com</td>
-					<td>  <a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
-				</tr>				
+					<td><a href=""><i class="icon-eye-open"></i>Ver</a> <a href=""><i
+							class="icon-pencil"></i>Editar</a> <a href=""><i
+							class="icon-trash"></i>Eliminar</a></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-{% endblock %} 
+<div id="m_n_teacher" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nuevo Docente</h3>
+	</div>
+	<div class="modal-body">
 
-{% block piepagina %}{% endblock %}
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="inputName">Nombres:</label>
+				<div class="controls">
+					<input type="text" id="inputName">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLastName">Apellidos:</label>
+				<div class="controls">
+					<input type="text" id="inputLastName">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputID">Cédula:</label>
+				<div class="controls">
+					<input type="text" id="inputID">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAddress">Dirección:</label>
+				<div class="controls">
+					<input type="text" id="inputAddress">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPhone">Telefono:</label>
+				<div class="controls">
+					<input type="text" id="inputPhone">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Email:</label>
+				<div class="controls">
+					<input type="text" id="inputEmail">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-primary">Guardar</button>
+	</div>
+</div>
+
+{% endblock %}
+{% block piepagina %}
+{% endblock %}

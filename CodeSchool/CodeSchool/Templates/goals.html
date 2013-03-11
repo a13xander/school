@@ -1,44 +1,40 @@
-{% extends 'base_administrator.html' %}
-
-{% block titulo %} Logros {% endblock %}
-
+{% extends 'base_administrator.html' %} 
+{% block titulo %} Logros {%endblock %} 
 {% block encabezado %} 
-	
-{% endblock %}
-
+{% endblock %} 
 {% block contenido %}
 
 <div class="container-fluid">
+
 	<form id="frmOptions" method="post" class="form-inline text-center">
 	
-   		<button type="submit" id="buttonLogin" class="btn btn-large btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</button>
-	
-		<label id="margins">Grado			
-			<select class="comboboxGrado">
-			  <option value="">1</option>
-			  <option value="">2</option>
-			  <option value="">3</option>
-			  <option value="">5</option>
-			  <option value="">6</option>
-			  <option value="">7</option>
-			  <option value="">8</option>
-			  <option value="">9</option>
-			  <option value="">10</option>
-			  <option value="">11</option>
-			</select>
+		<button type="button" class="btn btn-primary offset0.5"
+			data-toggle="modal" data-target="#m_n_goal">
+			<i class="icon-plus"></i>Nuevo
+		</button>
+		
+		<label id="margins">Grado <select class="comboboxGrado">
+				<option value="">1</option>
+				<option value="">2</option>
+				<option value="">3</option>
+				<option value="">5</option>
+				<option value="">6</option>
+				<option value="">7</option>
+				<option value="">8</option>
+				<option value="">9</option>
+				<option value="">10</option>
+				<option value="">11</option>
+		</select>
+		</label> <label id="margins">Materia <select class="combobox">
+				<option value="">Educación Sexual</option>
+				<option value="">Trigonometria</option>
+				<option value="">Matemáticas</option>
+				<option value="">Biología</option>
+				<option value="">Educación Física</option>
+		</select>
 		</label>
-	
-		<label id="margins">Materia			
-			<select class="combobox">
-			  <option value="">Educación Sexual</option>
-			  <option value="">Trigonometria</option>
-			  <option value="">Matemáticas</option>
-			  <option value="">Biología</option>
-			  <option value="">Educación Física</option>
-			</select>
-		</label>					
-	</form>	
-	
+	</form>
+
 	<div id="scroll">
 		<table class="table  table-hover">
 			<thead>
@@ -56,90 +52,165 @@
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
 				</tr>
 				<tr>
 					<td>Uso correcto del condón</td>
 					<td>Educación Sexual</td>
 					<td>3</td>
 					<td>Once</td>
-					<td> <a href=""><i class="icon-pencil"></i>Editar</a>  <a href=""><i class="icon-trash"></i>Eliminar</a></td>
-				</tr>		
+					<td><a href=""><i class="icon-pencil"></i>Editar</a> <a
+						href=""><i class="icon-trash"></i>Eliminar</a></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-{% endblock %} 
+<div id="m_n_goal" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nuevo Logro</h3>
+	</div>
+	<div class="modal-body">
 
-{% block piepagina %}{% endblock %}
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="inputGoal">Logro:</label>
+				<div class="controls">
+					<textarea id="inputGoal" rows="5"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputSubject">Materia:</label>
+				<div class="controls">
+					<select id="inputSubject">
+						<option>Matematicas</option>
+						<option>Ingles</option>
+						<option>Español</option>
+						<option>Sociales</option>
+						<option>Etica</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputGrade">Grado:</label>
+				<div class="controls">
+					<select id="inputGrade">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPeriod">Periodo:</label>
+				<div class="controls">
+					<select id="inputPeriod">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-primary">Guardar</button>
+	</div>
+</div>
+
+{% endblock %}
+{% block piepagina %}
+{% endblock %}

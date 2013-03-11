@@ -1,195 +1,357 @@
-{% extends 'base_administrator.html' %}
-
-{% block titulo %} Calificación {% endblock %}
-
-{% block encabezado %} 
-	
+{% extends 'base_administrator.html' %} 
+{% block titulo %} Calificación {% endblock %} 
+{% block encabezado %}
 {% endblock %}
+{% block contenido%}
 
-{% block contenido %}
-	<div class="container-fluid">
-		<form id="frmOptions" method="post" class="form-inline text-center">
-   			<label>Periodo							
-		  		<select class="comboboxPeriodo">
-				  <option value="">1</option>
-				  <option value="">2</option>
-				  <option value="">3</option>
-				  <option value="">4</option>
-				</select>
-			</label>
+<div class="container-fluid">
+	<form id="frmOptions" method="post" class="form-inline text-center">
 	
-			<label id="margins">Grado			
-				<select class="comboboxGrado">
-				  <option value="">1</option>
-				  <option value="">2</option>
-				  <option value="">3</option>
-				  <option value="">5</option>
-				  <option value="">6</option>
-				  <option value="">7</option>
-				  <option value="">8</option>
-				  <option value="">9</option>
-				  <option value="">10</option>
-				  <option value="">11</option>
-				</select>
-			</label>
-	
-			<label id="margins">Curso			
-				<select class="combobox">
-				  <option value="">Once 01</option>
-				  <option value="">Once 02</option>
-				  <option value="">Once 03</option>
-				  <option value="">Decimo 01</option>
-				  <option value="">Decimo 02</option>
-				  <option value="">Decimo 03</option>
-				  <option value="">Noveno 01</option>
-				  <option value="">Noveno 02</option>
-				  <option value="">Noveno 03</option>
-				  <option value="">Octavo 01</option>
-				</select>
-			</label>
-	
-			<label id="margins">Materia			
-				<select class="combobox">
-				  <option value="">Educación Sexual</option>
-				  <option value="">Trigonometria</option>
-				  <option value="">Matemáticas</option>
-				  <option value="">Biología</option>
-				  <option value="">Educación Física</option>
-				</select>
-			</label>					
-		</form>
-		
-		<div id="scroll">
-			<table class="table  table-hover">  
-				<thead>  
-				    <tr>  
-				      	<th>Periodo</th>  
-				      	<th>Grado</th>  
-				      	<th>Curso</th>  
-				      	<th>Materia</th>
-				   		<th>Docente</th>  
-				    	<th>Opciones</th>    
-	 				</tr>  
-				 </thead>  
-			     <tbody>  
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-					<tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>  
-			       <tr>  
-				        <td>001</td>  
-				        <td>Once</td>  
-				        <td>Once 01</td>  
-				        <td>Educación Sexual</td>
-				        <td>Alexander Castro</td> 
-				        <td><button class="btn btn-info" type="button"><i class="icon-list-alt"></i> Calificar</button></td>   
-					</tr>
-				</tbody>  
-			</table>  					
-		</div>
+		<label>Periodo <select class="comboboxPeriodo">
+				<option value="">1</option>
+				<option value="">2</option>
+				<option value="">3</option>
+				<option value="">4</option>
+		</select>
+		</label> <label id="margins">Grado <select class="comboboxGrado">
+				<option value="">1</option>
+				<option value="">2</option>
+				<option value="">3</option>
+				<option value="">5</option>
+				<option value="">6</option>
+				<option value="">7</option>
+				<option value="">8</option>
+				<option value="">9</option>
+				<option value="">10</option>
+				<option value="">11</option>
+		</select>
+		</label> <label id="margins">Curso <select class="combobox">
+				<option value="">Once 01</option>
+				<option value="">Once 02</option>
+				<option value="">Once 03</option>
+				<option value="">Decimo 01</option>
+				<option value="">Decimo 02</option>
+				<option value="">Decimo 03</option>
+				<option value="">Noveno 01</option>
+				<option value="">Noveno 02</option>
+				<option value="">Noveno 03</option>
+				<option value="">Octavo 01</option>
+		</select>
+		</label> <label id="margins">Materia <select class="combobox">
+				<option value="">Educación Sexual</option>
+				<option value="">Trigonometria</option>
+				<option value="">Matemáticas</option>
+				<option value="">Biología</option>
+				<option value="">Educación Física</option>
+		</select>
+		</label>
+	</form>
+
+	<div id="scroll">
+		<table class="table  table-hover">
+			<thead>
+				<tr>
+					<th>Periodo</th>
+					<th>Grado</th>
+					<th>Curso</th>
+					<th>Materia</th>
+					<th>Docente</th>
+					<th>Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button type="button" class="btn btn-info offset0.5"
+							data-toggle="modal" data-target="#m_n_score">
+							<i class="icon-list-alt"></i>Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+				<tr>
+					<td>001</td>
+					<td>Once</td>
+					<td>Once 01</td>
+					<td>Educación Sexual</td>
+					<td>Alexander Castro</td>
+					<td><button class="btn btn-info" type="button">
+							<i class="icon-list-alt"></i> Calificar
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+</div>
+
+<div id="m_n_score" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nuevo Grado</h3>
+	</div>
+	<div class="modal-body">
+
+		<form class="form-horizontal">
+
+			<div class="control-group">
+				<label class="control-label" for="inputPeriod">Periodo:</label>
+				<div class="controls">
+					<select id="inputPeriod">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputGrade">Grado:</label>
+				<div class="controls">
+					<select id="inputGrade">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+					</select>
+				</div>
+			</div>
+				<div class="control-group">
+				<label class="control-label" for="inputCourse">Curso:</label>
+				<div class="controls">
+					<select id="inputCourse">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+					</select>
+				</div>
+			</div>
+				<div class="control-group">
+				<label class="control-label" for="inputSubject">Materia:</label>
+				<div class="controls">
+					<select id="inputSubject">
+						<option>Matematicas</option>
+						<option>Ingles</option>
+						<option>Español</option>
+						<option>Sociales</option>
+						<option>Etica</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputTeacher">Director de
+					grado:</label>
+				<div class="controls">
+					<select id="inputGrade">
+						<option>Andres</option>
+						<option>Jose</option>
+						<option>Sebastian</option>
+						<option>Cristhian</option>
+						<option>Leonardo</option>
+						<option>Alexander</option>
+						<option>Javier</option>
+						<option>Diego</option>
+						<option>Jose 2</option>
+						<option>Santiago</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="control-group">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Estudiante</th>
+								<th>Nota</th>
+								<th>Valoración</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Andres Andres</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Jose</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Sebastian</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Cristhian</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Leonardo</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Alexander</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Javier</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Diego</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+							<tr>
+								<td>Santiago</td>
+								<td><input class="input-mini" type="text" id="inputScore"></td>
+								<td>Alto</td>
+							</tr>
+						</tbody>
+					</table>	
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-primary">Guardar</button>
+	</div>
+</div>
+
 {% endblock %} 
-
-{% block piepagina %}{% endblock %}
-
-	
+{% block piepagina %}
+{% endblock %}
