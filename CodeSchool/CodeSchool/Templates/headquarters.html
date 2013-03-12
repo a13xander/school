@@ -5,7 +5,7 @@
 {% block contenido %}
 <div class="container-fluid">
 	<button type="button" class="btn btn-primary offset0.5"
-		data-toggle="modal" data-target="#m_n_subjtect">
+		data-toggle="modal" data-target="#m_n_headquarter">
 		<i class="icon-plus"></i>Nueva
 	</button>
 	<br></br>
@@ -18,9 +18,17 @@
           <img src="{{MEDIA_URL}}img/cover/bulletin.jpg" alt="Boletines">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+            	<form id="frmOptions" method="post" class="text-center">
+	              <p>Nombre</p>
+	              <p>NIT</p>
+	              <p>Direccion</p>
+	              <p>Telefono</p>
+	              <p>Fax</p>
+              	</form>
+              <form id="frmOptions" method="post" class="form-inline text-center">
+	              <a class="btn btn-large btn-primary" href="#">Editar</a>
+	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
+	          </form>
             </div>
           </div>
         </div>
@@ -28,9 +36,17 @@
           <img src="{{MEDIA_URL}}img/cover/information.jpg" alt="Informacion">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+              <form id="frmOptions" method="post" class="text-center">
+	              <p>Nombre</p>
+	              <p>NIT</p>
+	              <p>Direccion</p>
+	              <p>Telefono</p>
+	              <p>Fax</p>
+              	</form>
+              <form id="frmOptions" method="post" class="form-inline text-center">
+	              <a class="btn btn-large btn-primary" href="#">Editar</a>
+	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
+	          </form>
             </div>
           </div>
         </div>
@@ -38,9 +54,17 @@
           <img src="{{MEDIA_URL}}img/cover/lists.jpg" alt="Listas">
           <div class="container">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+              <form id="frmOptions" method="post" class="text-center">
+	              <p>Nombre</p>
+	              <p>NIT</p>
+	              <p>Direccion</p>
+	              <p>Telefono</p>
+	              <p>Fax</p>
+              	</form>
+              <form id="frmOptions" method="post" class="form-inline text-center">
+	              <a class="btn btn-large btn-primary" href="#">Editar</a>
+	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
+	          </form>
             </div>
           </div>
         </div>
@@ -48,6 +72,50 @@
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
+</div>
+
+<div id="m_n_headquarter" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Registro Nueva Sede</h3>
+	</div>	
+	<div class="modal-body">
+		<form class="form-horizontal" method="post">			
+			<div class="control-group">				
+				<label class="control-label" for="inputName">Nombre:</label>
+				<div class="controls">
+					<input type="text" value="Enter your name here!">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputNIT">NIT:</label>
+				<div class="controls">
+					<input type="text" value="Enter NIT here!">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAdress">Dirección:</label>
+				<div class="controls">
+					<input type="text" value="Enter school adress here!">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPhone">Teléfono:</label>
+				<div class="controls">
+					<input type="text" value="Enter school phone here!">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputFax">Fax:</label>
+				<div class="controls">
+					<input type="text" value="Enter fax number here!">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+		</form>
+	</div>
 </div>
 {% endblock %}
 {% block piepagina %}
