@@ -79,6 +79,7 @@ class Allocation(models.Model):
             
 class Student(models.Model):
     student_id = models.AutoField(primary_key = True)
+    student_code = models.IntegerField(null = False)
     student_document_id = models.CharField(max_length = 12, null = False, unique = True)
     student_first_name = models.CharField(max_length = 50, null = False)
     student_last_name = models.CharField(max_length = 50, null = False)

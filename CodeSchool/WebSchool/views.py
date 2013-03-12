@@ -3,6 +3,8 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from WebSchool.models import Student
+from CodeSchool.forms import StudentForm
 
 def login_school(request):
     if not request.user.is_anonymous():
@@ -66,9 +68,42 @@ def courses(request):
     return render_to_response('courses.html',{'courses':courses}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
-def students(request):
-    return render_to_response('students.html',{'students':qualifications}, context_instance=RequestContext(request))
-
-@login_required(login_url='/')
 def headquarters(request):
     return render_to_response('headquarters.html',{'headquarters':qualifications}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def students(request):
+    students_list = Student.objects.all()
+    return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def add_student(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            students_list = Student.objects.all()
+            return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request)) 
+    else:
+        form = StudentForm()
+    return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
+
+@login_required(login_url='/')
+def edit_student(request, id_student):
+    student = Student.objects.get(pk = id_student)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance = student)
+        if form.is_valid():
+            form.save()
+            students_list = Student.objects.all()
+            return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
+    else:
+        form = StudentForm(instance = student)
+    return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
+
+@login_required(login_url='/')
+def delete_student(request, id_student):
+    student = Student.objects.get(pk = id_student)
+    student.delete()
+    students_list = Student.objects.all()
+    return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
