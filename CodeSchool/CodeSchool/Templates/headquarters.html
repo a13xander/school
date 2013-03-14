@@ -25,10 +25,12 @@
 	              <p>Telefono</p>
 	              <p>Fax</p>
               	</form>
-              <form id="frmOptions" method="post" class="form-inline text-center">
-	              <a class="btn btn-large btn-primary" href="#">Editar</a>
-	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
-	          </form>
+              	<form id="frmOptions" method="post" class="form-inline text-center">           
+		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
+								<i class="icon-pencil"></i>Editar</a>
+		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
+		              			<i class="icon-remove"></i>Eliminar</a>
+	          	</form>
             </div>
           </div>
         </div>
@@ -43,9 +45,11 @@
 	              <p>Telefono</p>
 	              <p>Fax</p>
               	</form>
-              <form id="frmOptions" method="post" class="form-inline text-center">
-	              <a class="btn btn-large btn-primary" href="#">Editar</a>
-	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
+              <form id="frmOptions" method="post" class="form-inline text-center">           
+		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
+								<i class="icon-pencil"></i>Editar</a>
+		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
+		              			<i class="icon-remove"></i>Eliminar</a>
 	          </form>
             </div>
           </div>
@@ -61,9 +65,11 @@
 	              <p>Telefono</p>
 	              <p>Fax</p>
               	</form>
-              <form id="frmOptions" method="post" class="form-inline text-center">
-	              <a class="btn btn-large btn-primary" href="#">Editar</a>
-	              <a class="btn btn-large btn-primary" href="#">Eliminar</a>
+              <form id="frmOptions" method="post" class="form-inline text-center">           
+		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
+								<i class="icon-pencil"></i>Editar</a>
+		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
+		              			<i class="icon-remove"></i>Eliminar</a>
 	          </form>
             </div>
           </div>
@@ -111,10 +117,30 @@
 					<input type="text" value="Enter fax number here!">
 				</div>
 			</div>
+			<div class="control-group form-inline text-center">
+				<label class="control-label" for="inputImage">Imágen:</label>
+				<div class="controls">
+					<input type="button" value="Examinar">
+				</div>
+			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
 		</form>
+	</div>
+</div>
+
+<div id="m_d_headquarter" class="modal hide fade" tabindex="-1">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 id="myModalLabel">Eliminar Sede</h3>
+	</div>
+	<div class="modal-body">
+	<p>¿Esta seguro que desea eliminar esta sede:?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancelar</button>
+		<button class="btn btn-danger">Eliminar</button>
 	</div>
 </div>
 {% endblock %}

@@ -359,3 +359,7 @@ def delete_teacher(request, id_teacher):
 def reports(request):
     return render_to_response('reports.html',{'reports':reports}, context_instance=RequestContext(request))
 
+@login_required(login_url='/')
+def school(request):
+    return render_to_response('school.html',{'school':school}, context_instance=RequestContext(request))
+
