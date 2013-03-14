@@ -8,6 +8,7 @@ from WebSchool.models import Score
 from WebSchool.models import Student
 from WebSchool.models import Subject
 from WebSchool.models import Teacher
+from django.forms.widgets import RadioSelect
 
 class CourseForm(ModelForm):
     class Meta:
@@ -32,6 +33,11 @@ class ScoreForm(ModelForm):
 class StudentForm(ModelForm):
     class Meta:
         model =  Student
+        GENDERS = (('F', 'Femenino'),
+                   ('M', 'Masculino'))
+        widgets = {
+            'student_gender': RadioSelect(choices=GENDERS),
+        }
         
 class SubjectForm(ModelForm):
     class Meta:

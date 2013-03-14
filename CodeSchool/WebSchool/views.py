@@ -245,6 +245,7 @@ def delete_qualification(request, id_qualification):
 @login_required(login_url='/')
 def students(request):
     students_list = Student.objects.all()
+    grades = {}
     return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')

@@ -1,19 +1,34 @@
 from django.db import models
 #modelos
 
+class Year(models.Model):
+    year_id = models.AutoField(primary_key = True)
+    year_value =  models.IntegerField(null = False)
+    
+    class Meta:
+        db_table = "YEAR"
+        
 class School(models.Model):
+    school_id = models.AutoField(primary_key = True)
+    school_name =  models.CharField(max_length = 100, null = False)
+    school_year = models.ForeignKey(Year)
+    
+    class Meta:
+        db_table = "SCHOOL"
+
+class Headquarter(models.Model):
     school_id = models.AutoField(primary_key = True)
     school_name =  models.CharField(max_length = 100, null = False)
     school_address = models.CharField(max_length = 50, null = False)
     school_phone = models.CharField(max_length = 10, null = False)
     
     class Meta:
-        db_table = "SCHOOL"
+        db_table = "HEADQUARTER"
     
 class Grade(models.Model):
     grade_id = models.AutoField(primary_key = True)
     grade_name =  models.CharField(max_length = 20, null = False)
-    grade_year = models.DateField(null = False, unique_for_year = True)
+    grade_year = models.ForeignKey(Year)
     grade_school = models.ForeignKey(School)
     
     class Meta:
@@ -55,6 +70,7 @@ class Teacher(models.Model):
     teacher_address = models.CharField(max_length = 50, null = False)
     teacher_email = models.CharField(max_length = 50, null = False)
     teacher_hire_date = models.DateField(null = False)
+    teacher_contracted = models.BooleanField(default = False)
     
     class Meta:
             db_table = "TEACHER"
@@ -87,7 +103,9 @@ class Student(models.Model):
     student_address = models.CharField(max_length = 50, null = False)
     student_gender = models.CharField(max_length = 1, null = False)
     student_date_of_birth = models.DateField(null = False)
-    
+    student_matriculated = models.BooleanField(default = False)
+    student_course = models.ForeignKey(Course)
+
     class Meta:
             db_table = "STUDENT"
             

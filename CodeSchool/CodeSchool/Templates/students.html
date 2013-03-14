@@ -1,169 +1,163 @@
 {% extends 'base_administrator.html' %}
-{% block titulo %} Estudiantes {% endblock %}
+
+{% block titulo %}
+	Estudiantes
+{% endblock %}
+
 {% block encabezado %}
 {% endblock %}
-{% block contenido%}
 
-<div class="container-fluid">
-	<form id="frmOptions" method="post" class="form-inline text-center">
-		<a href="/students/new_student" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nuevo</a>
-		<label>Grado <select>
-				<option value="">1</option>
-				<option value="">2</option>
-				<option value="">3</option>
-				<option value="">5</option>
-				<option value="">6</option>
-				<option value="">7</option>
-				<option value="">8</option>
-				<option value="">9</option>
-				<option value="">10</option>
-				<option value="">11</option>
-		</select>
-		</label> <label id="margins">Curso <select>
-				<option value="">11-01</option>
-				<option value="">2</option>
-				<option value="">3</option>
-				<option value="">4</option>
-		</select>
-		</label>
-	</form>
-	<div id="scroll">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Codigo</th>
-					<th>Documento</th>
-					<th>Nombres</th>
-					<th>Apellidos</th>
-					<th>Teléfono</th>
-					<th>Dirección</th>
-					<th>Genero</th>
-					<th>Fecha de nacimiento</th>
-					<th>Opciones</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for student in students %}
-				<tr>
+{% block contenido%}
+	<div class="container-fluid">
+		<form id="frmOptions" method="post" class="form-inline text-center">
+			<a href="/students/new_student" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nuevo</a>
+			<label>Grado <select>
+					<option value="">1</option>
+					<option value="">2</option>
+					<option value="">3</option>
+					<option value="">5</option>
+					<option value="">6</option>
+					<option value="">7</option>
+					<option value="">8</option>
+					<option value="">9</option>
+					<option value="">10</option>
+					<option value="">11</option>
+			</select>
+			</label> <label id="margins">Curso <select>
+					<option value="">11-01</option>
+					<option value="">2</option>
+					<option value="">3</option>
+					<option value="">4</option>
+			</select>
+			</label>
+		</form>
+		<div id="scroll">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Codigo</th>
+						<th>Documento</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>Teléfono</th>
+						<th>Dirección</th>
+						<th>Genero</th>
+						<th>Fecha de nacimiento</th>
+						<th>Grado</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for student in students %}
+					<tr>
 						<td>{{ student.student_code }}</td>
 						<td>{{ student.student_document_id }}</td>
 						<td>{{ student.student_first_name }}</td>
 						<td>{{ student.student_last_name }}</td>
 						<td>{{ student.student_mobile_number }}</td>
 						<td>{{ student.student_address }}</td>
-						<td>{{ student.student_gender }}</td>
+						{% if student.student_gender == 'F' %}
+							<td>Femenino</td>
+						{% else %}
+							<td>Masculino</td>
+						{% endif %}
 						<td>{{ student.student_date_of_birth }}</td>
+						<td>XXX</td>
 						<td>
 							<a href="/students/edit_student/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 							<i class="icon-pencil"></i>Editar</a>
-							<a href="/students/delete_student/{{student.student_id}}" role="button" class="btn btn-mini btn-danger">
+							<a href="/students/delete_student/{{student.student_id}}" role="button" class="btn btn-mini btn-danger" 
+							   onclick="return confirm('¿Esta seguro que desea eliminar el estudiante: {{student.student_first_name}} {{student.student_last_name}}?')">
 							<i class="icon-trash"></i>Eliminar</a>
 						</td>
 					</tr>
-				{% empty %}
-					<li>No hay estudiantes registrados</li>
-			{% endfor %}
-			</tbody>
-		</table>
+					{% empty %}
+						<li>No hay estudiantes registrados</li>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
-
-{% if form %}
-	<script type="text/javascript">
-	    $(document).ready(function(){
-	        $('#m_n_student').modal('show');
-	    });
-	</script>
-{% endif %}
-
-<div id="m_n_student" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3 id="myModalLabel">Registro Nuevo Estudiante</h3>
+	
+	{% if form %}
+		<script type="text/javascript">
+		    $(document).ready(function(){
+		        $('#m_n_student').modal('show');
+		    });
+		</script>
+	{% endif %}
+	
+	<div id="m_n_student" class="modal hide fade" tabindex="-1">
+		<div class="modal-header">
+			<a href="/students" type="button" class="close">×</a>
+			<h3 id="myModalLabel">Registro Nuevo Estudiante</h3>
+		</div>
+	
+		<div class="modal-body">
+			<form class="form-horizontal" method="post">
+				{% csrf_token %}
+				{{ form.non_field_errors }}
+				<div class="control-group">
+					{{ form.student_code.errors }}
+					<label class="control-label" for="inputID">Codigo:</label>
+					<div class="controls">
+						{{ form.student_code }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_document_id.errors }}
+					<label class="control-label">Documento:</label>
+					<div class="controls">
+						{{ form.student_document_id }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_first_name.errors }}
+					<label class="control-label" for="inputLastName">Nombres:</label>
+					<div class="controls">
+						{{ form.student_first_name }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_last_name.errors }}
+					<label class="control-label" for="inputID">Apellidos:</label>
+					<div class="controls">
+						{{ form.student_last_name }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_mobile_number.errors }}
+					<label class="control-label" for="inputAddress">Teléfono:</label>
+					<div class="controls">
+						{{ form.student_mobile_number }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_address.errors }}
+					<label class="control-label" for="inputPhone">Dirección:</label>
+					<div class="controls">
+						{{ form.student_address }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_gender.errors }}
+					<label class="control-label" for="inputEmail">Género:</label>
+					<div class="controls">
+						{{ form.student_gender }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form.student_date_of_birth.errors }}
+					<label class="control-label" for="inputEmail">Fecha de nacimiento:</label>
+					<div class="controls">
+						{{ form.student_date_of_birth }}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="/students" type="button" class="btn">Cancelar</a>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div>
 	</div>
-
-	<div class="modal-body">
-		<form class="form-horizontal" method="post">
-			{% csrf_token %}
-			{{ form.non_field_errors }}
-			<div class="control-group">
-				{{ form.student_code.errors }}
-				<label class="control-label" for="inputID">Codigo:</label>
-				<div class="controls">
-					{{ form.student_code }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_document_id.errors }}
-				<label class="control-label">Documento:</label>
-				<div class="controls">
-					{{ form.student_document_id }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_first_name.errors }}
-				<label class="control-label" for="inputLastName">Nombres:</label>
-				<div class="controls">
-					{{ form.student_first_name }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_last_name.errors }}
-				<label class="control-label" for="inputID">Apellidos:</label>
-				<div class="controls">
-					{{ form.student_last_name }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_mobile_number.errors }}
-				<label class="control-label" for="inputAddress">Teléfono:</label>
-				<div class="controls">
-					{{ form.student_mobile_number }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_address.errors }}
-				<label class="control-label" for="inputPhone">Dirección:</label>
-				<div class="controls">
-					{{ form.student_address }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_gender.errors }}
-				<label class="control-label" for="inputEmail">Email:</label>
-				<div class="controls">
-					{{ form.student_gender }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.student_date_of_birth.errors }}
-				<label class="control-label" for="inputEmail">Fecha de nacimiento:</label>
-				<div class="controls">
-					{{ form.student_date_of_birth }}
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Cancelar</button>
-				<button type="submit" class="btn btn-primary">Guardar</button>
-			</div>
-		</form>
-	</div>
-</div>
-
-<div id="m_d_student" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3 id="myModalLabel">Eliminar Estudiante</h3>
-	</div>
-	<div class="modal-body">
-	<p>¿Esta seguro que desea eliminar el estudiante:?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-danger">Eliminar</button>
-	</div>
-</div>
-
-{% endblock %}
-{% block piepagina %}
 {% endblock %}
