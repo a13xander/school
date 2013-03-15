@@ -17,10 +17,11 @@ class School(models.Model):
         db_table = "SCHOOL"
 
 class Headquarter(models.Model):
-    school_id = models.AutoField(primary_key = True)
-    school_name =  models.CharField(max_length = 100, null = False)
-    school_address = models.CharField(max_length = 50, null = False)
-    school_phone = models.CharField(max_length = 10, null = False)
+    headquarter_id = models.AutoField(primary_key = True)
+    headquarter_name =  models.CharField(max_length = 100, null = False)
+    headquarter_address = models.CharField(max_length = 50, null = False)
+    headquarter_phone = models.CharField(max_length = 10, null = False)
+    headquarter_school = models.ForeignKey(School)
     
     class Meta:
         db_table = "HEADQUARTER"
