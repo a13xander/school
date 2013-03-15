@@ -95,7 +95,7 @@ class Allocation(models.Model):
             
 class Student(models.Model):
     student_id = models.AutoField(primary_key = True)
-    student_code = models.IntegerField(null = False)
+    student_code = models.IntegerField(null = False, unique = True)
     student_document_id = models.CharField(max_length = 12, null = False, unique = True)
     student_first_name = models.CharField(max_length = 50, null = False)
     student_last_name = models.CharField(max_length = 50, null = False)
@@ -104,7 +104,7 @@ class Student(models.Model):
     student_gender = models.CharField(max_length = 1, null = False)
     student_date_of_birth = models.DateField(null = False)
     student_matriculated = models.BooleanField(default = False)
-    student_course = models.ForeignKey(Course)
+    student_course = models.ForeignKey(Course, blank = True, null = True,)
 
     class Meta:
             db_table = "STUDENT"

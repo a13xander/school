@@ -243,10 +243,19 @@ def delete_qualification(request, id_qualification):
     return render_to_response('qualifications.html',{'qualifications':qualifications_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
-def students(request):
-    students_list = Student.objects.all()
-    grades = {}
-    return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
+def students(request, state):
+    students_list = []
+    state_selected = ''
+    if state == '0':
+        students_list = Student.objects.filter(student_matriculated = False)
+        state_selected = '0'
+    elif state == '1':
+        students_list = Student.objects.filter(student_matriculated = True)
+        state_selected = '1'
+    elif state == '2':
+        students_list = Student.objects.all()
+        state_selected = '2'
+    return render_to_response('students.html',{'students':students_list, 'state_selected':state_selected}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def add_student(request):
@@ -254,8 +263,7 @@ def add_student(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
-            students_list = Student.objects.all()
-            return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request)) 
+            return HttpResponseRedirect('/students/2') 
     else:
         form = StudentForm()
     return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
@@ -267,8 +275,7 @@ def edit_student(request, id_student):
         form = StudentForm(request.POST, instance = student)
         if form.is_valid():
             form.save()
-            students_list = Student.objects.all()
-            return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
+            return HttpResponseRedirect('/students/2')
     else:
         form = StudentForm(instance = student)
     return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
@@ -277,8 +284,7 @@ def edit_student(request, id_student):
 def delete_student(request, id_student):
     student = Student.objects.get(pk = id_student)
     student.delete()
-    students_list = Student.objects.all()
-    return render_to_response('students.html',{'students':students_list}, context_instance=RequestContext(request))
+    return HttpResponseRedirect('/students/2')
 
 @login_required(login_url='/')
 def subjects(request):

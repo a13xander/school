@@ -11,7 +11,30 @@
 	<div class="container-fluid">
 		<form id="frmOptions" method="post" class="form-inline text-center">
 			<a href="/students/new_student" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nuevo</a>
-			<label>Grado <select>
+			<label id="margins">Estado</label>
+			
+			{% if state_selected == '0' %}
+				<select id="states" onchange="students_state()">
+						<option value="1">Matriculado</option>
+						<option value="0" selected="selected">No matriculado</option>
+						<option value="2">Todos</option>
+				</select>
+			{% elif state_selected == '1' %}
+				<select id="states" onchange="students_state()">
+						<option value="1" selected="selected">Matriculado</option>
+						<option value="0">No matriculado</option>
+						<option value="2">Todos</option>
+				</select>
+			{% elif state_selected == '2' %}
+				<select id="states" onchange="students_state()">
+						<option value="1">Matriculado</option>
+						<option value="0">No matriculado</option>
+						<option value="2" selected="selected">Todos</option>
+				</select>
+			{% endif %}
+			
+			<label id="margins">Grado</label> 
+			<select>
 					<option value="">1</option>
 					<option value="">2</option>
 					<option value="">3</option>
@@ -23,13 +46,13 @@
 					<option value="">10</option>
 					<option value="">11</option>
 			</select>
-			</label> <label id="margins">Curso <select>
+			<label id="margins">Curso</label>
+			<select>
 					<option value="">11-01</option>
 					<option value="">2</option>
 					<option value="">3</option>
 					<option value="">4</option>
 			</select>
-			</label>
 		</form>
 		<div id="scroll">
 			<table class="table table-hover">
@@ -43,7 +66,8 @@
 						<th>Dirección</th>
 						<th>Genero</th>
 						<th>Fecha de nacimiento</th>
-						<th>Grado</th>
+						<th>Último grado</th>
+						<th>Estado</th>
 						<th>Opciones</th>
 					</tr>
 				</thead>
@@ -56,20 +80,45 @@
 						<td>{{ student.student_last_name }}</td>
 						<td>{{ student.student_mobile_number }}</td>
 						<td>{{ student.student_address }}</td>
+						
 						{% if student.student_gender == 'F' %}
 							<td>Femenino</td>
 						{% else %}
 							<td>Masculino</td>
 						{% endif %}
+						
 						<td>{{ student.student_date_of_birth }}</td>
-						<td>XXX</td>
-						<td>
-							<a href="/students/edit_student/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
-							<i class="icon-pencil"></i>Editar</a>
-							<a href="/students/delete_student/{{student.student_id}}" role="button" class="btn btn-mini btn-danger" 
-							   onclick="return confirm('¿Esta seguro que desea eliminar el estudiante: {{student.student_first_name}} {{student.student_last_name}}?')">
-							<i class="icon-trash"></i>Eliminar</a>
-						</td>
+						
+						{% if student.student.student_course == None %}
+							<td>No asignado</td>
+						{% else %}
+							<td>{{ student.student_course }}</td>
+						{% endif %}
+						
+						
+						{% if student.student_matriculated == 0 %}
+							<td>No matriculado</td>
+							<td>
+								<a href="/#" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-pencil"></i> Matricular</a>
+								<a href="/students/edit_student/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-pencil"></i> Editar</a>
+								<a href="/students/delete_student/{{student.student_id}}" role="button" class="btn btn-mini btn-danger" 
+								   onclick="return confirm('¿Esta seguro que desea eliminar el estudiante: {{student.student_first_name}} {{student.student_last_name}}?')">
+								<i class="icon-trash"></i> Eliminar</a>
+							</td>
+						{% else %}
+							<td>Matriculado</td>
+							<td>
+								<a href="/#" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-pencil"></i> Editar matricular</a>
+								<a href="/students/edit_student/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-pencil"></i> Editar</a>
+								<a href="/students/delete_student/{{student.student_id}}" role="button" class="btn btn-mini btn-danger" 
+								   onclick="return confirm('¿Esta seguro que desea eliminar el estudiante: {{student.student_first_name}} {{student.student_last_name}}?')">
+								<i class="icon-trash"></i> Eliminar</a>
+							</td>
+						{% endif %}
 					</tr>
 					{% empty %}
 						<li>No hay estudiantes registrados</li>
@@ -82,14 +131,14 @@
 	{% if form %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
-		        $('#m_n_student').modal('show');
+		    	model_student();
 		    });
 		</script>
 	{% endif %}
 	
 	<div id="m_n_student" class="modal hide fade" tabindex="-1">
 		<div class="modal-header">
-			<a href="/students" type="button" class="close">×</a>
+			<a href="/students/2" type="button" class="close">×</a>
 			<h3 id="myModalLabel">Registro Nuevo Estudiante</h3>
 		</div>
 	
@@ -98,7 +147,7 @@
 				{% csrf_token %}
 				{{ form.non_field_errors }}
 				<div class="control-group">
-					{{ form.student_code.errors }}
+					{{ form.student_course.errors }}
 					<label class="control-label" for="inputID">Codigo:</label>
 					<div class="controls">
 						{{ form.student_code }}
@@ -154,7 +203,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a href="/students" type="button" class="btn">Cancelar</a>
+					<a href="/students/2" type="button" class="btn">Cancelar</a>
 					<button type="submit" class="btn btn-primary">Guardar</button>
 				</div>
 			</form>
