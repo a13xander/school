@@ -369,3 +369,7 @@ def reports(request):
 def school(request):
     return render_to_response('school.html',{'school':school}, context_instance=RequestContext(request))
 
+@login_required(login_url='/')
+def school_year(request):
+    warning = 'Html en mantenimiento'
+    return render_to_response('school.html', {'warning':warning}, context_instance = RequestContext(request))
