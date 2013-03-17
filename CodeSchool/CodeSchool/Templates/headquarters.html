@@ -5,12 +5,8 @@
 {% block contenido %}
 <div class="container-fluid">
 	<form id="frmOptions" method="post" class="form-inline text-center">
-				
 		<a href="/headquarters/new_headquarter" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
-		
-		<button type="button" class="btn btn-primary offset0.5">
-			<i class="icon-eye-open"></i>Ver Grados
-		</button>
+		<a href="/grades" role="button" class="btn btn btn-primary"><i class="icon-eye-open"></i> Ver Grados</a>
 	</form>
 	<br></br>
 	<br></br>
@@ -27,16 +23,18 @@
 						<p>{{ headquarter.headquarter_name }}</p>					        	
 		              	<p>{{ headquarter.headquarter_address }}</p>
 		              	<p>{{ headquarter.headquarter_phone }}</p>	  
-	              	{% endfor %}           
+	              	           
               	</form>
               	<form id="frmOptions" method="post" class="form-inline text-center">           
-		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
+		        	<a href="/headquarters/edit_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
 								<i class="icon-pencil"></i>Editar</a>
-		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
+		            <a href="/headquarters/delete_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
+		            	onclick="return confirm('¿Esta seguro que desea eliminar esta sede: {{headquarter.headquarter_name}} {{headquarter.headquarter_address}}?')">
 		              			<i class="icon-remove"></i>Eliminar</a>
 	          	</form>
             </div>
           </div>
+          {% endfor %}
         </div>
         <div class="item" align="center">
           <img src="{{MEDIA_URL}}img/cover/information.jpg" alt="Informacion">

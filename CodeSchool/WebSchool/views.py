@@ -10,9 +10,10 @@ from WebSchool.models import Goal
 from CodeSchool.forms import GoalForm
 from WebSchool.models import Grade
 from CodeSchool.forms import GradeForm
-from WebSchool.models import School
 from WebSchool.models import Headquarter
 from CodeSchool.forms import HeadquarterForm
+from WebSchool.models import School
+from CodeSchool.forms import SchoolForm
 from WebSchool.models import Score
 from CodeSchool.forms import ScoreForm
 from WebSchool.models import Student
@@ -186,23 +187,21 @@ def add_headquarter(request):
 
 @login_required(login_url='/')
 def edit_headquarter(request, id_headquarter):
-    headquarter = School.objects.get(pk = id_headquarter)
+    headquarter = Headquarter.objects.get(pk = id_headquarter)
     if request.method == 'POST':
         form = HeadquarterForm(request.POST, instance = headquarter)
         if form.is_valid():
             form.save()
-            headquarters_list = headquarter.objects.all()
-            return render_to_response('headquarters.html',{'headquarters':headquarters_list}, context_instance=RequestContext(request))
+            return HttpResponseRedirect('/headquarters')
     else:
         form = HeadquarterForm(instance = headquarter)
     return render_to_response('headquarters.html', {'form':form}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def delete_headquarter(request, id_headquarter):
-    headquarter = School.objects.get(pk = id_headquarter)
+    headquarter = Headquarter.objects.get(pk = id_headquarter)
     headquarter.delete()
-    headquarters_list = headquarter.objects.all()
-    return render_to_response('headquarters.html',{'headquarters':headquarters_list}, context_instance=RequestContext(request))
+    return HttpResponseRedirect('/headquarters')
 
 
 @login_required(login_url='/')
@@ -360,7 +359,6 @@ def delete_teacher(request, id_teacher):
     teachers_list = teacher.objects.all()
     return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request))
 
-
 @login_required(login_url='/')
 def reports(request):
     return render_to_response('reports.html',{'reports':reports}, context_instance=RequestContext(request))
@@ -368,6 +366,19 @@ def reports(request):
 @login_required(login_url='/')
 def school(request):
     return render_to_response('school.html',{'school':school}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def edit_school(request, id_school):
+    school = School.objects.get(pk = id_school)
+    if request.method == 'POST':
+        form = SchoolForm(request.POST, instance = school)
+        if form.is_valid():
+            form.save()
+            schools_list = school.objects.all()
+            return render_to_response('school.html',{'school':schools_list}, context_instance=RequestContext(request))
+    else:
+        form = SchoolForm(instance = school)
+    return render_to_response('school.html', {'form':form}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def school_year(request):
