@@ -9,3 +9,8 @@ function students_state()
 	value = document.getElementById("states").value;
 	self.location.href = value;   
 }  
+
+function model_headquarter()
+{
+	$('#m_n_headquarter').modal('show');
+}

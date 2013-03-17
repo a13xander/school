@@ -11,6 +11,7 @@ from CodeSchool.forms import GoalForm
 from WebSchool.models import Grade
 from CodeSchool.forms import GradeForm
 from WebSchool.models import School
+from WebSchool.models import Headquarter
 from CodeSchool.forms import HeadquarterForm
 from WebSchool.models import Score
 from CodeSchool.forms import ScoreForm
@@ -169,7 +170,7 @@ def delete_grade(request, id_grade):
 
 @login_required(login_url='/')
 def headquarters(request):
-    headquarters_list = School.objects.all()
+    headquarters_list = Headquarter.objects.all()
     return render_to_response('headquarters.html',{'headquarters':headquarters_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
@@ -178,8 +179,7 @@ def add_headquarter(request):
         form = HeadquarterForm(request.POST)
         if form.is_valid():
             form.save()
-            headquarters_list = School.objects.all()
-            return render_to_response('headquarters.html',{'headquarters':headquarters_list}, context_instance=RequestContext(request)) 
+            return HttpResponseRedirect('/headquarters') 
     else:
         form = HeadquarterForm()
     return render_to_response('headquarters.html', {'form':form}, context_instance = RequestContext(request))

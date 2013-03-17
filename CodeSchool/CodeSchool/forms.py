@@ -8,6 +8,7 @@ from WebSchool.models import Score
 from WebSchool.models import Student
 from WebSchool.models import Subject
 from WebSchool.models import Teacher
+from WebSchool.models import Headquarter
 from django.forms.widgets import RadioSelect
 
 class CourseForm(ModelForm):
@@ -24,7 +25,7 @@ class GradeForm(ModelForm):
         
 class HeadquarterForm(ModelForm):
     class Meta:
-        model =  School
+        model =  Headquarter
 
 class ScoreForm(ModelForm):
     class Meta:
@@ -46,3 +47,7 @@ class SubjectForm(ModelForm):
 class TeacherForm(ModelForm):
     class Meta:
         model =  Teacher
+
+class SchoolForm(ModelForm):
+    class Meta:
+        model = School

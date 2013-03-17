@@ -4,10 +4,14 @@
 {% endblock %} 
 {% block contenido %}
 <div class="container-fluid">
-	<button type="button" class="btn btn-primary offset0.5"
-		data-toggle="modal" data-target="#m_n_headquarter">
-		<i class="icon-plus"></i>Nueva
-	</button>
+	<form id="frmOptions" method="post" class="form-inline text-center">
+				
+		<a href="/headquarters/new_headquarter" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
+		
+		<button type="button" class="btn btn-primary offset0.5">
+			<i class="icon-eye-open"></i>Ver Grados
+		</button>
+	</form>
 	<br></br>
 	<br></br>
 	  <!-- Carousel
@@ -18,12 +22,12 @@
           <img src="{{MEDIA_URL}}img/cover/bulletin.jpg" alt="Boletines">
           <div class="container">
             <div class="carousel-caption">
-            	<form id="frmOptions" method="post" class="text-center">
-	              <p>Nombre</p>
-	              <p>NIT</p>
-	              <p>Direccion</p>
-	              <p>Telefono</p>
-	              <p>Fax</p>
+            	<form id="frmOptions" method="post" class="text-center">  
+            		{% for headquarter in headquarters %}        		
+						<p>{{ headquarter.headquarter_name }}</p>					        	
+		              	<p>{{ headquarter.headquarter_address }}</p>
+		              	<p>{{ headquarter.headquarter_phone }}</p>	  
+	              	{% endfor %}           
               	</form>
               	<form id="frmOptions" method="post" class="form-inline text-center">           
 		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
@@ -80,50 +84,46 @@
     </div><!-- /.carousel -->
 </div>
 
+{% if form %}
+		<script type="text/javascript">
+		    $(document).ready(function(){
+		    	model_headquarter();
+		    });
+		</script>
+{% endif %}
+
 <div id="m_n_headquarter" class="modal hide fade" tabindex="-1">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
+		<a href="/headquarters" type="button" class="close">×</a>
 		<h3 id="myModalLabel">Registro Nueva Sede</h3>
 	</div>	
 	<div class="modal-body">
-		<form class="form-horizontal" method="post">			
-			<div class="control-group">				
-				<label class="control-label" for="inputName">Nombre:</label>
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+			{{ form.non_field_errors }}			
+			<div class="control-group">		
+				{{ form.headquarter_name.errors }}	
+				<label class="control-label" for="inputNameHeadquarter">Nombre:</label>
 				<div class="controls">
-					<input type="text" value="Enter your name here!">
+					{{ form.headquarter_name }}
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="inputNIT">NIT:</label>
+				{{ form.headquarter_address.errors }}
+				<label class="control-label" for="inputAdressHeadquarter">Dirección:</label>
 				<div class="controls">
-					<input type="text" value="Enter NIT here!">
+					{{ form.headquarter_address }}
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="inputAdress">Dirección:</label>
+				{{ form.headquarter_phone.errors }}
+				<label class="control-label" for="inputPhoneHeadquarter">Teléfono:</label>
 				<div class="controls">
-					<input type="text" value="Enter school adress here!">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPhone">Teléfono:</label>
-				<div class="controls">
-					<input type="text" value="Enter school phone here!">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputFax">Fax:</label>
-				<div class="controls">
-					<input type="text" value="Enter fax number here!">
-				</div>
-			</div>
-			<div class="control-group form-inline text-center">
-				<label class="control-label" for="inputImage">Imágen:</label>
-				<div class="controls">
-					<input type="button" value="Examinar">
+					{{ form.headquarter_phone }}
 				</div>
 			</div>
 			<div class="modal-footer">
+				<a href="/headquarters" type="button" class="btn">Cancelar</a>
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
 		</form>
