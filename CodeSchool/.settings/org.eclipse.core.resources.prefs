@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//CodeSchool/Templates/courses.html=UTF-8
 encoding//CodeSchool/Templates/goals.html=UTF-8
 encoding//CodeSchool/Templates/grades.html=UTF-8
+encoding//CodeSchool/Templates/grades_history.html=UTF-8
 encoding//CodeSchool/Templates/headquarters.html=UTF-8
 encoding//CodeSchool/Templates/qualifications.html=UTF-8
 encoding//CodeSchool/Templates/reports.html=UTF-8

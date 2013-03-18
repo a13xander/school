@@ -170,6 +170,10 @@ def delete_grade(request, id_grade):
     return render_to_response('grades.html',{'grades':grades_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
+def grades_history(request):
+    return render_to_response('grades_history.html',{'grades_history':grades_history}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
 def headquarters(request):
     headquarters_list = Headquarter.objects.all()
     return render_to_response('headquarters.html',{'headquarters':headquarters_list}, context_instance=RequestContext(request))

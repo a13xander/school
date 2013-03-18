@@ -6,25 +6,24 @@
 
 <div class="container-fluid">
 	<form id="frmOptions" method="post" class="form-inline text-center">
+		<label id="margins">Sede 
+		<select class="comboboxSede">
+				<option value="">Norte</option>
+				<option value="">Sur</option>
+				<option value="">Este</option>
+				<option value="">Oeste</option>
+		</select>
+		</label>
+		<label id="margins">Año
+			<input id="textAno" type="text" name="lname" value="2012" readonly>
+		</label>		
 		<button type="button" class="btn btn-primary offset0.5"
 			data-toggle="modal" data-target="#m_n_grade">
 			<i class="icon-plus"></i>Nuevo
 		</button>
-		<label id="margins">Año <select class="comboboxGrado">
-				<option value="">2001</option>
-				<option value="">2002</option>
-				<option value="">2003</option>
-				<option value="">2005</option>
-				<option value="">2006</option>
-				<option value="">2007</option>
-				<option value="">2008</option>
-				<option value="">2009</option>
-				<option value="">2010</option>
-				<option value="">2011</option>
-				<option value="">2012</option>
-				<option value="">2013</option>
-		</select>
-		</label>
+			
+		<a href="/grades_history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
+		
 	</form>
 	<div id="scroll">
 		<table class="table  table-hover">
