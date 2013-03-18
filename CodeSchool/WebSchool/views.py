@@ -246,19 +246,42 @@ def delete_qualification(request, id_qualification):
     return render_to_response('qualifications.html',{'qualifications':qualifications_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
-def students(request, state):
-    students_list = []
-    state_selected = ''
-    if state == '0':
-        students_list = Student.objects.filter(student_matriculated = False)
-        state_selected = '0'
-    elif state == '1':
-        students_list = Student.objects.filter(student_matriculated = True)
-        state_selected = '1'
-    elif state == '2':
+def students(request):
+    if request.method == 'POST':
+        students_list = []
+        grades_list = Grade.objects.all()
+        courses_list = []
+        
+        states = request.POST.getlist('states')
+        state = states[0]
+        grades_select = request.POST.getlist('grades')
+        grade = grades_select[0]
+        courses_select = request.POST.getlist('courses')
+        course = courses_select[0]
+                
+        if state == '0':
+            students_list = Student.objects.filter(student_matriculated = False)
+        elif state == '1':
+            students_list = Student.objects.filter(student_matriculated = True)
+        elif state == '-1':
+            students_list = Student.objects.all()
+        
+        if course != '-1':
+            students_list = students_list.filter(student_course = course)
+        
+        if grade == '-1':
+            courses_list = Course.objects.all()
+        else:
+            courses_list = Course.objects.filter(course_grade = grade)
+        
+        return render_to_response('students.html',{'students':students_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':state, 
+                                               'grade_selected':int(grade), 'course_selected': int(course)}, context_instance=RequestContext(request))
+    else:
+        grades_list = Grade.objects.all()
+        courses_list = Course.objects.all()
         students_list = Student.objects.all()
-        state_selected = '2'
-    return render_to_response('students.html',{'students':students_list, 'state_selected':state_selected}, context_instance=RequestContext(request))
+    return render_to_response('students.html',{'students':students_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':'-1', 
+                                               'grade_selected':-1, 'course_selected':-1}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def add_student(request):
@@ -266,10 +289,22 @@ def add_student(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/2') 
+            return HttpResponseRedirect('/students') 
     else:
         form = StudentForm()
     return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
+
+@login_required(login_url='/')
+def consult_student(request, id_student):
+    student = Student.objects.get(pk = id_student)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance = student)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/students')
+    else:
+        form = StudentForm(instance = student)
+    return render_to_response('students.html', {'form':form, 'consult':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def edit_student(request, id_student):
@@ -278,7 +313,7 @@ def edit_student(request, id_student):
         form = StudentForm(request.POST, instance = student)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/2')
+            return HttpResponseRedirect('/students')
     else:
         form = StudentForm(instance = student)
     return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
@@ -287,7 +322,7 @@ def edit_student(request, id_student):
 def delete_student(request, id_student):
     student = Student.objects.get(pk = id_student)
     student.delete()
-    return HttpResponseRedirect('/students/2')
+    return HttpResponseRedirect('/students')
 
 @login_required(login_url='/')
 def subjects(request):

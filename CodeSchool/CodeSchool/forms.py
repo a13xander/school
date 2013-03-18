@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 from django.forms.models import ModelForm
 
 from WebSchool.models import Course
@@ -10,6 +12,9 @@ from WebSchool.models import Subject
 from WebSchool.models import Teacher
 from WebSchool.models import Headquarter
 from django.forms.widgets import RadioSelect
+
+import re
+from django.core.exceptions import ValidationError
 
 class CourseForm(ModelForm):
     class Meta:
@@ -31,6 +36,9 @@ class ScoreForm(ModelForm):
     class Meta:
         model =  Score
         
+CHECK_ONLY_LETTERS = re.compile('[a-zA-Z]+$')
+CHECK_ONLY_NUMBERS = re.compile('[0-9]+$')
+
 class StudentForm(ModelForm):
     class Meta:
         model =  Student
@@ -39,6 +47,24 @@ class StudentForm(ModelForm):
         widgets = {
             'student_gender': RadioSelect(choices=GENDERS),
         }
+        
+    def clean_student_first_name(self):
+        string = self.cleaned_data['student_first_name']
+        if not CHECK_ONLY_LETTERS.match(string):
+            raise ValidationError("Este campo solo acepta letras")
+        return string
+    
+    def clean_student_last_name(self):
+        string = self.cleaned_data['student_last_name']
+        if not CHECK_ONLY_LETTERS.match(string):
+            raise ValidationError("Este campo solo acepta letras")
+        return string
+    
+    def clean_student_mobile_number(self):
+        string = self.cleaned_data['student_mobile_number']
+        if not CHECK_ONLY_NUMBERS.match(string):
+            raise ValidationError("Este campo solo acepta números")
+        return string
         
 class SubjectForm(ModelForm):
     class Meta:

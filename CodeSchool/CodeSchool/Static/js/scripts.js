@@ -3,12 +3,10 @@ function model_student()
 	$('#m_n_student').modal('show');
 }
 
-function students_state()   
+function update_students()   
 {   
-	var value;  
-	value = document.getElementById("states").value;
-	self.location.href = value;   
-}  
+	document.optionsStudents.submit();  
+}   
 
 function model_headquarter()
 {
