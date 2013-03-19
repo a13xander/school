@@ -68,10 +68,10 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Codigo</th>
+						<th>Código</th>
 						<th>Nombres</th>
 						<th>Apellidos</th>
-						<th>Último grado</th>
+						<th>Matriculado en</th>
 						<th>Opciones</th>
 					</tr>
 				</thead>
@@ -87,7 +87,7 @@
 						<td>{{ student.student_last_name }}</td>
 												
 						{% if student.student_course == None %}
-							<td>No asignado</td>
+							<td>Sin curso</td>
 						{% else %}
 							<td>{{ student.student_course.course_name }}</td>
 						{% endif %}
@@ -124,6 +124,12 @@
 		    });
 		</script>
 	{% endif %}
+	
+	<script>
+		$(function() {
+			$('#student_date_of_birth').datepicker();
+		});
+	</script>
 	
 	<form method="post" class="form-horizontal">
 		<div id="m_n_student" class="modal hide fade" tabindex="-1">

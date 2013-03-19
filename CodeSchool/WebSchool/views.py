@@ -248,9 +248,10 @@ def delete_qualification(request, id_qualification):
 @login_required(login_url='/')
 def students(request):
     if request.method == 'POST':
-        students_list = []
         grades_list = Grade.objects.all()
         courses_list = []
+        query = ''
+        first = True
         
         states = request.POST.getlist('states')
         state = states[0]
@@ -258,22 +259,36 @@ def students(request):
         grade = grades_select[0]
         courses_select = request.POST.getlist('courses')
         course = courses_select[0]
-                
-        if state == '0':
-            students_list = Student.objects.filter(student_matriculated = False)
-        elif state == '1':
-            students_list = Student.objects.filter(student_matriculated = True)
-        elif state == '-1':
-            students_list = Student.objects.all()
-        
-        if course != '-1':
-            students_list = students_list.filter(student_course = course)
         
         if grade == '-1':
             courses_list = Course.objects.all()
+            students_list = Student.objects.all()
+            query = 'select student_id, student_code, student_first_name, student_last_name, student_course_id from student'
         else:
             courses_list = Course.objects.filter(course_grade = grade)
+            first = False
+            query = 'select student_id, student_code, student_first_name, student_last_name, student_course_id from student, course, grade where student_course_id = course_id and course_grade_id = grade_id and grade_id = ' + grade
+
+        if course != '-1':
+            if first:
+                query += ' where student_course_id = ' + course
+                first = False
+            else:
+                query += ' and student_course_id = ' + course            
+                
+        if state == '0':
+            if first:
+                query += ' where student_matriculated = 0'
+            else:
+                query += ' and student_matriculated = 0'
+        elif state == '1':
+            if first:
+                query += ' where student_matriculated = 1'
+            else:
+                query += ' and student_matriculated = 1'
         
+        students_list = Student.objects.raw(query)
+               
         return render_to_response('students.html',{'students':students_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':state, 
                                                'grade_selected':int(grade), 'course_selected': int(course)}, context_instance=RequestContext(request))
     else:

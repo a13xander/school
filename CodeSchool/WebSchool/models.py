@@ -1,5 +1,6 @@
+#encoding:utf-8
+
 from django.db import models
-#modelos
 
 class Year(models.Model):
     year_id = models.AutoField(primary_key = True)
@@ -96,8 +97,8 @@ class Allocation(models.Model):
             
 class Student(models.Model):
     student_id = models.AutoField(primary_key = True)
-    student_code = models.IntegerField(null = False, unique = True)
-    student_document_id = models.CharField(max_length = 12, null = False, unique = True)
+    student_code = models.IntegerField(null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este código'})
+    student_document_id = models.CharField(max_length = 12, null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este documento'})
     student_first_name = models.CharField(max_length = 50, null = False)
     student_last_name = models.CharField(max_length = 50, null = False)
     student_mobile_number = models.CharField(max_length = 10, null = False)
