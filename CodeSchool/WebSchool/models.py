@@ -9,6 +9,9 @@ class Year(models.Model):
     class Meta:
         db_table = "YEAR"
         
+    def __unicode__(self):
+        return self.year_value
+        
 class School(models.Model):
     school_id = models.AutoField(primary_key = True)
     school_name =  models.CharField(max_length = 100, null = False)
@@ -26,12 +29,15 @@ class Headquarter(models.Model):
     
     class Meta:
         db_table = "HEADQUARTER"
+        
+    def __unicode__(self):
+        return self.headquarter_name
     
 class Grade(models.Model):
     grade_id = models.AutoField(primary_key = True)
     grade_name =  models.CharField(max_length = 20, null = False)
     grade_year = models.ForeignKey(Year)
-    grade_school = models.ForeignKey(School)
+    grade_headquarter = models.ForeignKey(Headquarter)
     
     class Meta:
         db_table = "GRADE"

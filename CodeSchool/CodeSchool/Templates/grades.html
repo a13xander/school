@@ -17,11 +17,8 @@
 		<label id="margins">Año
 			<input id="textAno" type="text" name="lname" value="2012" readonly>
 		</label>		
-		<button type="button" class="btn btn-primary offset0.5"
-			data-toggle="modal" data-target="#m_n_grade">
-			<i class="icon-plus"></i>Nuevo
-		</button>
 			
+		<a href="/grades/new_grade" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo Grado</a>			
 		<a href="/grades_history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
 		
 	</form>
@@ -29,15 +26,18 @@
 		<table class="table  table-hover">
 			<thead>
 				<tr>
-					<th>Nombre</th>
+					<th>Nombre Grado</th>
+					<th>Sede</th>
 					<th>Año</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
+				{% for grade in grades %}
 				<tr>
-					<td>Once</td>
-					<td>2012</td>
+					<td>{{ grade.grade_name }}</td>
+					<td>{{ grade.grade_headquarter }}</td>
+					<td>{{ grade.grade_year }}</td>
 					<td>
 						<button type="button" class="btn btn-mini btn-primary"
 							data-toggle="modal" data-target="#m_v_grade">
@@ -53,247 +53,56 @@
 						</button>
 					</td>
 				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Once</td>
-					<td>2012</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_grade">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>
 </div>
 
+{% if form %}
+		<script type="text/javascript">
+		    $(document).ready(function(){
+		    	model_grade();
+		    });
+		</script>
+{% endif %}
+
 <div id="m_n_grade" class="modal hide fade" tabindex="-1">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
+		<a href="/grades" type="button" class="close">×</a>
 		<h3 id="myModalLabel">Registro Nuevo Grado</h3>
 	</div>
 	<div class="modal-body">
-
-		<form class="form-horizontal">
-
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+			{{ form.non_field_errors }}	
 			<div class="control-group">
+				{{ form.grade_name.errors }}
 				<label class="control-label" for="inputGrade">Grado:</label>
 				<div class="controls">
-					<select id="inputGrade">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-						<option>6</option>
-						<option>7</option>
-						<option>8</option>
-						<option>9</option>
-						<option>10</option>
-						<option>11</option>
-					</select>
+					{{form.grade_name}}
+			</div>
+				
+			</div>
+			<div class="control-group">
+				{{ form.grade_year.errors }}
+				<label class="control-label" for="inputYear">Año:</label>
+				<div class="controls">
+					{{ form.grade_year }}
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="inputYear">Año:</label>
+				{{ form.grade_headquarter.errors }}
+				<label class="control-label" for="inputYear">Sede:</label>
 				<div class="controls">
-					<input class="input-mini" type="text" id="inputYear">
+					{{ form.grade_headquarter }}
 				</div>
 			</div>
+			<div class="modal-footer">
+				<a href="/grades" type="button" class="btn">Cancelar</a>
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
 		</form>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-primary">Guardar</button>
 	</div>
 </div>
 

@@ -143,8 +143,7 @@ def add_grade(request):
         form = GradeForm(request.POST)
         if form.is_valid():
             form.save()
-            grades_list = Grade.objects.all()
-            return render_to_response('grades.html',{'grades':grades_list}, context_instance=RequestContext(request)) 
+            return HttpResponseRedirect('/grades') 
     else:
         form = GradeForm()
     return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))

@@ -11,7 +11,7 @@ from WebSchool.models import Student
 from WebSchool.models import Subject
 from WebSchool.models import Teacher
 from WebSchool.models import Headquarter
-from django.forms.widgets import RadioSelect, TextInput
+from django.forms.widgets import RadioSelect, TextInput, Select
 
 import re
 from django.core.exceptions import ValidationError
@@ -27,6 +27,22 @@ class GoalForm(ModelForm):
 class GradeForm(ModelForm):
     class Meta:
         model =  Grade
+        GRADES = (
+            ('Primero', 'Primero'),
+            ('Segundo', 'Segundo'),
+            ('Tercero', 'Tercero'),
+            ('Cuarto', 'Cuarto'),
+            ('Quinto', 'Quinto'),
+            ('Sexto', 'Sexto'),
+            ('Septimo', 'Septimo'),
+            ('Octavo', 'Octavo'),
+            ('Noveno', 'Noveno'),
+            ('Decimo', 'Decimo'),
+            ('Once', 'Once'),
+            )
+        widgets = {
+            'grade_name': Select(choices=GRADES),
+        }
         
 class HeadquarterForm(ModelForm):
     class Meta:

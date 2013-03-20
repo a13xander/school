@@ -12,3 +12,8 @@ function model_headquarter()
 {
 	$('#m_n_headquarter').modal('show');
 }
+
+function model_grade()
+{
+	$('#m_n_grade').modal('show');
+}

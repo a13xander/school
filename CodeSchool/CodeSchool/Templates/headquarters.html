@@ -8,79 +8,50 @@
 		<a href="/headquarters/new_headquarter" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
 		<a href="/grades" role="button" class="btn btn btn-primary"><i class="icon-eye-open"></i> Ver Grados</a>
 	</form>
-	<br></br>
-	<br></br>
+	
 	  <!-- Carousel
-    ================================================== -->
+    ================================================== -->  
+    
     <div id="myCarousel" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="item active" align="center">
-          <img src="{{MEDIA_URL}}img/cover/bulletin.jpg" alt="Boletines">
-          <div class="container">
-            <div class="carousel-caption">
-            	<form id="frmOptions" method="post" class="text-center">  
-            		{% for headquarter in headquarters %}        		
-						<p>Nombre: {{ headquarter.headquarter_name }}</p>					        	
-		              	<p>Dirección: {{ headquarter.headquarter_address }}</p>
-		              	<p>Teléfono: {{ headquarter.headquarter_phone }}</p>	  
-	              	           
-              	</form>
-              	<form id="frmOptions" method="post" class="form-inline text-center">           
-		        	<a href="/headquarters/edit_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
-								<i class="icon-pencil"></i>Editar</a>
-		            <a href="/headquarters/delete_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
-		            	onclick="return confirm('¿Esta seguro que desea eliminar esta sede: {{headquarter.headquarter_name}} {{headquarter.headquarter_address}}?')">
-		              			<i class="icon-remove"></i>Eliminar</a>
-	          	</form>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <div class="item" align="center">
-          <img src="{{MEDIA_URL}}img/cover/information.jpg" alt="Informacion">
-          <div class="container">
-            <div class="carousel-caption">
-              <form id="frmOptions" method="post" class="text-center">
-	              <p>Nombre</p>
-	              <p>NIT</p>
-	              <p>Direccion</p>
-	              <p>Telefono</p>
-	              <p>Fax</p>
-              	</form>
-              <form id="frmOptions" method="post" class="form-inline text-center">           
-		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
-								<i class="icon-pencil"></i>Editar</a>
-		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
-		              			<i class="icon-remove"></i>Eliminar</a>
-	          </form>
-            </div>
-          </div>
-        </div>
-        <div class="item" align="center">
-          <img src="{{MEDIA_URL}}img/cover/lists.jpg" alt="Listas">
-          <div class="container">
-            <div class="carousel-caption">
-              <form id="frmOptions" method="post" class="text-center">
-	              <p>Nombre</p>
-	              <p>NIT</p>
-	              <p>Direccion</p>
-	              <p>Telefono</p>
-	              <p>Fax</p>
-              	</form>
-              <form id="frmOptions" method="post" class="form-inline text-center">           
-		        	<a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_n_headquarter">
-								<i class="icon-pencil"></i>Editar</a>
-		            <a href="" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#m_d_headquarter">
-		              			<i class="icon-remove"></i>Eliminar</a>
-	          </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
+    
+    <ol class="carousel-indicators">
+	    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	    <li data-target="#myCarousel" data-slide-to="1"></li>
+	    <li data-target="#myCarousel" data-slide-to="2"></li>
+  	</ol>
+    
+    {% for headquarter in headquarters %} 
+	      <div class="carousel-inner">        
+    	{% if headquarter.headquarter_id == 1 %}	  
+	        <div class="active item" align="center">
+	    {% else %}
+	    	<div class="item" align="center">
+	    {% endif %} 
+	          <img src="{{MEDIA_URL}}img/cover/school_photo.jpg" alt="Boletines">
+	          <div class="container">
+	            <div class="carousel-caption">
+	            	<form id="frmOptions" method="post" class="text-center">            		     		
+							<p>Nombre: {{ headquarter.headquarter_name }}</p>					        	
+			              	<p>Dirección: {{ headquarter.headquarter_address }}</p>
+			              	<p>Teléfono: {{ headquarter.headquarter_phone }}</p>	              	           
+	              	</form>
+	              	<form id="frmOptions" method="post" class="form-inline text-center">           
+			        	<a href="/headquarters/edit_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
+									<i class="icon-pencil"></i>Editar</a>
+			            <a href="/headquarters/delete_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
+			            	onclick="return confirm('¿Esta seguro que desea eliminar esta sede: {{headquarter.headquarter_name}} {{headquarter.headquarter_address}}?')">
+			              			<i class="icon-remove"></i>Eliminar</a>		          
+		          	</form>
+	            </div>
+	          </div>
+	        </div>  
+	      <!-- Carousel nav -->
+		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+	    </div><!-- /.carousel -->
+	    {% endfor %}
 </div>
+
 
 {% if form %}
 		<script type="text/javascript">
@@ -141,6 +112,15 @@
 		<button class="btn btn-danger">Eliminar</button>
 	</div>
 </div>
+
+<script>
+      $(document).ready(function(){
+        $('.carousel').carousel({
+          interval: 4000
+          pause: true
+        });
+      });
+</script>
 {% endblock %}
 {% block piepagina %}
 {% endblock %}
