@@ -295,48 +295,52 @@ def students(request):
         courses_list = Course.objects.all()
         students_list = Student.objects.all()
     return render_to_response('students.html',{'students':students_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':'-1', 
-                                               'grade_selected':-1, 'course_selected':-1}, context_instance=RequestContext(request))
+                                               'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def add_student(request):
     if request.method == 'POST':
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form_student = StudentForm(request.POST)
+        if form_student.is_valid():
+            form_student.save()
             return HttpResponseRedirect('/students') 
     else:
-        form = StudentForm()
-    return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
+        form_student = StudentForm()
+    return render_to_response('students.html', {'form':form_student}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def consult_student(request, id_student):
     student = Student.objects.get(pk = id_student)
-    if request.method == 'POST':
-        form = StudentForm(request.POST, instance = student)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/students')
+    gender = ''
+    if student.student_gender == 'F':
+        gender = 'Femenino'
     else:
-        form = StudentForm(instance = student)
-    return render_to_response('students.html', {'form':form, 'consult':True}, context_instance = RequestContext(request))
+        gender = 'Masculino'
+    if request.method == 'POST':
+        return HttpResponseRedirect('/students')
+    else:
+        form_student = StudentForm(instance = student)
+    return render_to_response('students.html', {'form':form_student, 'consult':True, 'gender':gender}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def edit_student(request, id_student):
     student = Student.objects.get(pk = id_student)
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance = student)
-        if form.is_valid():
-            form.save()
+        form_student = StudentForm(request.POST, instance = student)
+        if form_student.is_valid():
+            form_student.save()
             return HttpResponseRedirect('/students')
     else:
-        form = StudentForm(instance = student)
-    return render_to_response('students.html', {'form':form}, context_instance = RequestContext(request))
+        form_student = StudentForm(instance = student)
+    return render_to_response('students.html', {'form':form_student, 'edit':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def delete_student(request, id_student):
     student = Student.objects.get(pk = id_student)
-    student.delete()
-    return HttpResponseRedirect('/students')
+    if request.method == 'POST':
+        student.delete()
+        return HttpResponseRedirect('/students')
+    return render_to_response('students.html', {'student':student, 'delete':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def subjects(request):
