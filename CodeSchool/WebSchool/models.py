@@ -36,7 +36,7 @@ class Headquarter(models.Model):
 class Grade(models.Model):
     grade_id = models.AutoField(primary_key = True)
     grade_name =  models.CharField(max_length = 20, null = False)
-    grade_year = models.ForeignKey(Year)
+    grade_year = models.ForeignKey(Year, default = School.school_year)
     grade_headquarter = models.ForeignKey(Headquarter)
     
     class Meta:

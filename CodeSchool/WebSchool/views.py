@@ -141,9 +141,19 @@ def grades(request):
 def add_grade(request):
     if request.method == 'POST':
         form = GradeForm(request.POST)
-        if form.is_valid():
+        
+        headquarter_selected = request.POST.getlist('grade_headquarter')
+        headquarter = headquarter_selected[0]
+        grades_select = request.POST.getlist('grade_name')
+        grade = grades_select[0]        
+        sc = School.objects.get(pk = 1)
+        q = Grade.objects.filter(grade_year = sc.school_year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
+        print(q)
+        if len(q)==0 and form.is_valid(): 
             form.save()
             return HttpResponseRedirect('/grades') 
+        else:
+            return render_to_response('grades.html', {'form':form, 'warning':'sffsdfsd'}, context_instance = RequestContext(request))
     else:
         form = GradeForm()
     return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))
@@ -155,8 +165,7 @@ def edit_grade(request, id_grade):
         form = GradeForm(request.POST, instance = grade)
         if form.is_valid():
             form.save()
-            grades_list = grade.objects.all()
-            return render_to_response('grades.html',{'grades':grades_list}, context_instance=RequestContext(request))
+            return HttpResponseRedirect('/grades')
     else:
         form = GradeForm(instance = grade)
     return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))
@@ -165,8 +174,7 @@ def edit_grade(request, id_grade):
 def delete_grade(request, id_grade):
     grade = Grade.objects.get(pk = id_grade)
     grade.delete()
-    grades_list = grade.objects.all()
-    return render_to_response('grades.html',{'grades':grades_list}, context_instance=RequestContext(request))
+    return HttpResponseRedirect('/grades')
 
 @login_required(login_url='/')
 def grades_history(request):
