@@ -11,10 +11,12 @@ from WebSchool.models import Student
 from WebSchool.models import Subject
 from WebSchool.models import Teacher
 from WebSchool.models import Headquarter
-from django.forms.widgets import RadioSelect, TextInput, Select
+from django.forms.widgets import RadioSelect, Select
+from django.core.exceptions import ValidationError
 
 import re
-from django.core.exceptions import ValidationError
+from django.forms.fields import DateField
+from CodeSchool.settings import DATE_INPUT_FORMATS
 
 class CourseForm(ModelForm):
     class Meta:
@@ -56,13 +58,13 @@ CHECK_ONLY_LETTERS = re.compile('[a-zA-Z]+$')
 CHECK_ONLY_NUMBERS = re.compile('[0-9]+$')
 
 class StudentForm(ModelForm):
+    student_date_of_birth = DateField(input_formats=DATE_INPUT_FORMATS)
     class Meta:
         model =  Student
         GENDERS = (('F', 'Femenino'),
                    ('M', 'Masculino'))
         widgets = {
             'student_gender': RadioSelect(choices=GENDERS),
-            'student_date_of_birth': TextInput(attrs={'id':'student_date_of_birth'})
         }
         
     def clean_student_first_name(self):
