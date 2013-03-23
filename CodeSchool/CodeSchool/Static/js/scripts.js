@@ -20,6 +20,11 @@ function update_students()
 	document.optionsStudents.submit();  
 }    
 
+function update_grades()   
+{   
+	document.optionsGrades.submit();  
+}  
+
 function model_headquarter()
 {
 	$('#m_n_headquarter').modal('show');
@@ -28,4 +33,10 @@ function model_headquarter()
 function model_grade()
 {
 	$('#m_n_grade').modal('show');
+}
+
+function model_delete_grade()
+{
+	$('#m_d_grade').modal('show');
+	
 }
