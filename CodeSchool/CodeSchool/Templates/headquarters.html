@@ -5,7 +5,7 @@
 {% block contenido %}
 <div class="container-fluid">
 	<form id="frmOptions" method="post" class="form-inline text-center">
-		<a href="/headquarters/new_headquarter" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
+		<a href="/headquarters/new" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
 		<a href="/grades" role="button" class="btn btn btn-primary"><i class="icon-eye-open"></i> Ver Grados</a>
 	</form>
 	
@@ -36,9 +36,9 @@
 			              	<p>Teléfono: {{ headquarter.headquarter_phone }}</p>	              	           
 	              	</form>
 	              	<form id="frmOptions" method="post" class="form-inline text-center">           
-			        	<a href="/headquarters/edit_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
+			        	<a href="/headquarters/edit/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
 									<i class="icon-pencil"></i>Editar</a>
-			            <a href="/headquarters/delete_headquarter/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
+			            <a href="/headquarters/delete/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
 			            	onclick="return confirm('¿Esta seguro que desea eliminar esta sede: {{headquarter.headquarter_name}} {{headquarter.headquarter_address}}?')">
 			              			<i class="icon-remove"></i>Eliminar</a>		          
 		          	</form>

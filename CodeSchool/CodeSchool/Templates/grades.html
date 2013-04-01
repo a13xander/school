@@ -26,7 +26,7 @@
 			<input id="textAno" type="text" name="lname" value="2013" readonly>
 		</label>		
 			
-		<a href="/grades/new_grade" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo Grado</a>			
+		<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo Grado</a>			
 		<a href="/grades_history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
 		
 	</form>
@@ -52,9 +52,9 @@
 							<i class="icon-eye-open"></i>Ver
 						</button>								
 						
-						<a href="/grades/edit_grade/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
+						<a href="/grades/edit/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
 							<i class="icon-pencil"></i> Editar</a>	
-						<a href="/grades/delete_grade/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >
+						<a href="/grades/delete/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >
 							<i class="icon-trash"></i> Eliminar</a>							
 					</td>
 				</tr>
