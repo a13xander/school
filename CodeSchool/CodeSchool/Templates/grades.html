@@ -21,13 +21,9 @@
 						<option value="{{headquarter.headquarter_id}}">{{headquarter.headquarter_name}}</option>
 					{% endif %}
 				{% endfor %}					
-		</select>
-		<label id="margins">Año
-			<input id="textAno" type="text" name="lname" value="2013" readonly>
-		</label>		
-			
+		</select>			
 		<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo Grado</a>			
-		<a href="/grades_history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
+		<a href="/grades/history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
 		
 	</form>
 	<div id="scroll">
@@ -47,11 +43,8 @@
 					<td>{{ grade.grade_headquarter }}</td>
 					<td>{{ grade.grade_year }}</td>
 					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_grade">
-							<i class="icon-eye-open"></i>Ver
-						</button>								
-						
+						<a href="/courses" role="button" class="btn btn-mini btn-primary">
+							<i class="icon-eye-open"></i> Ver</a>				
 						<a href="/grades/edit/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
 							<i class="icon-pencil"></i> Editar</a>	
 						<a href="/grades/delete/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >

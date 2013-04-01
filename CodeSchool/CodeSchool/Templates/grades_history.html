@@ -5,7 +5,76 @@
 {% block contenido %}
 
 <div class="container-fluid">
+	<form name="optionsGradesHistory" id="frmOptions" method="post" class="form-inline text-center">
+		{% csrf_token %}
+		
+		<label id="margins">Sede</label>
+		<select class="comboboxSede" name="headquarters" onchange="update_grades_history()">							
+			{% if headquarter_selected == '-1' %}
+					<option value="-1" selected="selected">Todos</option>
+				{% else %}
+					<option value="-1">Todos</option>
+				{% endif %}
+				{% for headquarter in headquarters %}	
+					{% if headquarter_selected == headquarter.headquarter_id %}
+						<option value="{{headquarter.headquarter_id}}" selected="selected">{{headquarter.headquarter_name}}</option>
+					{% else %}
+						<option value="{{headquarter.headquarter_id}}">{{headquarter.headquarter_name}}</option>
+					{% endif %}
+				{% endfor %}					
+		</select>
+		
+		<label id="margins">Año</label>
+		<select name="years" onchange="update_grades_history()">	
+			{% if year_selected == '-1' %}					
+					<option value="-1" selected="selected">Todos</option>		
+				{% else %}
+					<option value="-1">Todos</option>
+				{% endif %}		
+			{% for year in years %}	
+					{% if year_selected == year.year_id %}
+						<option value="{{year.year_id}}" selected="selected">{{year.year_value}}</option>
+					{% else %}
+						<option value="{{year.year_id}}">{{year.year_value}}</option>
+					{% endif %}
+				{% endfor %}			
+		</select>		
+	</form>
 	
+	<div id="scroll">
+		<table class="table  table-hover">
+			<thead>
+				<tr>
+					<th>Nombre Grado</th>
+					<th>Sede</th>
+					<th>Año</th>
+					<th>Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for grade in grades_history %}
+				<tr>
+					<td>{{ grade.grade_name }}</td>
+					<td>{{ grade.grade_headquarter }}</td>
+					<td>{{ grade.grade_year }}</td>
+					<td>
+						<a href="/courses" role="button" class="btn btn-mini btn-primary">
+							<i class="icon-eye-open"></i> Ver</a>				
+						<a href="/grades/edit/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
+							<i class="icon-pencil"></i> Editar</a>	
+						<a href="/grades/delete/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >
+							<i class="icon-trash"></i> Eliminar</a>							
+					</td>
+				</tr>
+			{% empty %}
+						<div class="alert alert-error">
+							 <button type="button" class="close" data-dismiss="alert">&times;</button>
+							 <p>Ningún grado para mostrar.</p>
+						</div>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </div>
 
 {% endblock %} 

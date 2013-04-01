@@ -22,6 +22,7 @@ from WebSchool.models import Subject
 from CodeSchool.forms import SubjectForm
 from WebSchool.models import Teacher
 from CodeSchool.forms import TeacherForm
+from WebSchool.models import Year
 
 
 def login_school(request):
@@ -199,7 +200,32 @@ def delete_grade(request, id_grade):
 
 @login_required(login_url='/')
 def grades_history(request):
-    return render_to_response('grades_history.html',{'grades_history':grades_history}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        
+        headquarters_list = Headquarter.objects.all()                
+        headquarter_selected = request.POST.getlist('headquarters')
+        headquarter = headquarter_selected[0]
+        
+        years_list = Year.objects.all()                
+        year_selected = request.POST.getlist('years')
+        year = year_selected[0]
+        
+        if headquarter == '-1':
+            grades_history_list = Grade.objects.all()
+        else:
+            grades_history_list = Grade.objects.filter(grade_headquarter = headquarter) 
+            
+        if year == '-1':
+            grades_history_list = Grade.objects.all()
+        else:
+            grades_history_list = Grade.objects.filter(grade_year = year)             
+                    
+        return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list, 'headquarter_selected':int(headquarter), 'year_selected':int(year)}, context_instance=RequestContext(request))
+    else:
+        grades_history_list = Grade.objects.all()
+        headquarters_list = Headquarter.objects.all()
+        years_list = Year.objects.all()
+    return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list,  'headquarter_selected':'-1', 'year_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def headquarters(request):

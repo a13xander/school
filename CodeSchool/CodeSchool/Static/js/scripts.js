@@ -25,6 +25,11 @@ function update_grades()
 	document.optionsGrades.submit();  
 }  
 
+function update_grades_history()   
+{   
+	document.optionsGradesHistory.submit();  
+}  
+
 function model_headquarter()
 {
 	$('#m_n_headquarter').modal('show');
