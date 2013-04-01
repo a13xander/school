@@ -11,23 +11,15 @@
 			<i class="icon-plus"></i>Nuevo
 		</button>
 		<label id="margins">Grado <select class="comboboxGrado">
-				<option value="">1</option>
-				<option value="">2</option>
-				<option value="">3</option>
-				<option value="">5</option>
-				<option value="">6</option>
-				<option value="">7</option>
-				<option value="">8</option>
-				<option value="">9</option>
-				<option value="">10</option>
-				<option value="">11</option>
+		{% for grade in grades %}
+				<option value={{ grade.grade_id }}>{{ grade.grade_name }}</option>
+		{% endfor %}
 		</select>
-		</label> <label id="margins">Materia <select class="combobox">
-				<option value="">Educación Sexual</option>
-				<option value="">Trigonometria</option>
-				<option value="">Matemáticas</option>
-				<option value="">Biología</option>
-				<option value="">Educación Física</option>
+		</label> 
+		<label id="margins">Materia <select class="combobox">
+		{% for subject in subjects %}
+				<option value={{subject_subject_id}}>{{ subject_subject_name }}</option>
+		{% endfor %}
 		</select>
 		</label>
 	</form>
@@ -43,9 +35,10 @@
 				</tr>
 			</thead>
 			<tbody>
+			{% for goal in goals %}
 				<tr>
-					<td>Uso correcto del condón</td>
-					<td>Educación Sexual</td>
+					<td>{{ goal.goal_description }}</td>
+					<td>{{ subject.subject_name}}</td>
 					<td>3</td>
 					<td>Once</td>
 					<td>

@@ -42,6 +42,9 @@ class Grade(models.Model):
     class Meta:
         db_table = "GRADE"
         
+    def __unicode__(self):
+        return self.grade_name
+        
 class Subject(models.Model):
     subject_id = models.AutoField(primary_key = True)
     subject_name = models.CharField(max_length = 20, null = False)
@@ -51,6 +54,9 @@ class Subject(models.Model):
     class Meta:
         db_table = "SUBJECT"
         
+    def __unicode__(self):
+        return self.subject_name
+        
 class Period(models.Model):
     period_id = models.AutoField(primary_key = True)
     period_name = models.CharField(max_length = 10, null = False)
@@ -59,6 +65,9 @@ class Period(models.Model):
     
     class Meta:
         db_table = "PERIOD"
+    
+    def __unicode__(self):
+        return self.period_name
         
 class Goal(models.Model):
     goal_id = models.AutoField(primary_key = True)
@@ -91,6 +100,9 @@ class Course(models.Model):
     
     class Meta:
         db_table = "COURSE"
+    
+    def __unicode__(self):
+        return self.course_name
             
 class Allocation(models.Model):
     allocation_id = models.AutoField(primary_key = True)

@@ -131,7 +131,6 @@ def delete_goal(request, id_Goal):
     goals_list = Goal.objects.all()
     return render_to_response('Goals.html',{'Goals':goals_list}, context_instance=RequestContext(request))
 
-
 @login_required(login_url='/')
 def grades(request):
     if request.method == 'POST':
@@ -235,7 +234,6 @@ def delete_headquarter(request, id_headquarter):
     headquarter = Headquarter.objects.get(pk = id_headquarter)
     headquarter.delete()
     return HttpResponseRedirect('/headquarters')
-
 
 @login_required(login_url='/')
 def qualifications(request):
@@ -387,7 +385,7 @@ def add_subject(request):
             return render_to_response('subjects.html',{'subjects':subjects_list}, context_instance=RequestContext(request)) 
     else:
         form = SubjectForm()
-    return render_to_response('subjects.html', {'form':form}, context_instance = RequestContext(request))
+    return render_to_response('subjects.html', {'form_new_subject':form}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def edit_subject(request, id_subject):
@@ -396,7 +394,7 @@ def edit_subject(request, id_subject):
         form = SubjectForm(request.POST, instance = subject)
         if form.is_valid():
             form.save()
-            subjects_list = subject.objects.all()
+            subjects_list = Subject.objects.all()
             return render_to_response('subjects.html',{'subjects':subjects_list}, context_instance=RequestContext(request))
     else:
         form = SubjectForm(instance = subject)
@@ -406,7 +404,7 @@ def edit_subject(request, id_subject):
 def delete_subject(request, id_subject):
     subject = Subject.objects.get(pk = id_subject)
     subject.delete()
-    subjects_list = subject.objects.all()
+    subjects_list = Subject.objects.all()
     return render_to_response('subjects.html',{'subjects':subjects_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
@@ -415,36 +413,58 @@ def teachers(request):
     return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
+def teachers_history(request):
+    teachers_list_history = Teacher.objects.all()
+    return render_to_response('teachers_history.html',{'teachers':teachers_list_history}, context_instance=RequestContext(request))
+                              
+@login_required(login_url='/')
 def add_teacher(request):
+    teachers_list = Teacher.objects.all()
     if request.method == 'POST':
-        form = TeacherForm(request.POST)
-        if form.is_valid():
-            form.save()
-            teachers_list = Teacher.objects.all()
-            return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request)) 
+        if request.POST.get("Cancel"):
+            print('cancel')
+        else:
+            form = TeacherForm(request.POST)
+            if form.is_valid():
+                form.save()
+                teachers_list = Teacher.objects.all()
+                return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request)) 
     else:
         form = TeacherForm()
-    return render_to_response('teachers.html', {'form':form}, context_instance = RequestContext(request))
+    return render_to_response('teachers.html', {'teachers':teachers_list,'form_teacher':form}, context_instance = RequestContext(request))
+
+@login_required(login_url='/')
+def details_teacher(request, id_teacher):
+    teacher_view = Teacher.objects.get(pk = id_teacher)
+    teachers_list = Teacher.objects.all()
+    teacher_subjects = Subject.objects.raw("SELECT subject_id, subject_name FROM subject, allocation WHERE subject_id=allocation_subject_id AND allocation_teacher_id=%s", [id_teacher])
+    teacher_grade = Course.objects.raw("SELECT course_id, course_name FROM course WHERE course_teacher_id=%s", [id_teacher])
+    return render_to_response('teachers.html', {'teachers':teachers_list, 'teacher_view':teacher_view, 'teacher_subjects':teacher_subjects, 'teacher_grade':teacher_grade}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def edit_teacher(request, id_teacher):
     teacher = Teacher.objects.get(pk = id_teacher)
+    teachers_list = Teacher.objects.all()
     if request.method == 'POST':
         form = TeacherForm(request.POST, instance = teacher)
         if form.is_valid():
             form.save()
-            teachers_list = teacher.objects.all()
-            return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request))
+            teachers_new_list = Teacher.objects.all()
+            return render_to_response('teachers.html',{'teachers':teachers_new_list}, context_instance=RequestContext(request))
     else:
         form = TeacherForm(instance = teacher)
-    return render_to_response('teachers.html', {'form':form}, context_instance = RequestContext(request))
+    return render_to_response('teachers.html', {'teachers':teachers_list, 'form_teacher':form}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def delete_teacher(request, id_teacher):
-    teacher = Teacher.objects.get(pk = id_teacher)
-    teacher.delete()
-    teachers_list = teacher.objects.all()
-    return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request))
+    teacher_to_delete = Teacher.objects.get(pk = id_teacher)
+    teachers_list = Teacher.objects.all()
+    if request.method == 'POST':
+        teacher = Teacher.objects.get(pk = id_teacher)
+        teacher.delete()
+        teachers_list = Teacher.objects.all()
+        return render_to_response('teachers.html',{'teachers':teachers_list}, context_instance=RequestContext(request))
+    return render_to_response('teachers.html', {'teachers':teachers_list,'teacher_to_delete':teacher_to_delete}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def reports(request):
