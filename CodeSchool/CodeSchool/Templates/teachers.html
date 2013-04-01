@@ -1,14 +1,13 @@
-{% extends 'base_administrator.html' %}
-{% block titulo %} Profesores {%endblock %}
-{% block encabezado %}
-{% endblock %}
-{% block contenido %}
+{% extends 'base_administrator.html' %} 
+{% block titulo %} Profesores {%endblock %} 
+{% block encabezado %} {% endblock %} 
+{% block contenido%}
 
 <div class="container-fluid">
-	<button type="button" class="btn btn-primary offset0.5"
-		data-toggle="modal" data-target="#m_n_teacher">
-		<i class="icon-plus"></i>Nuevo
-	</button>
+	<a href="/teachers/new" class="btn btn-primary offset0.5"
+		type="button"><i class="icon-plus"></i>Nuevo</a> 
+	<a href="/teachers/history" class="btn btn-primary offset9"
+		type="button"><i class="icon-list-alt"></i>Historial</a>
 	<br></br>
 	<div id="scroll">
 		<table class="table  table-hover">
@@ -24,340 +23,245 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% for teacher in teachers %}
 				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
+					<td>{{ teacher.teacher_first_name }}</td>
+					<td>{{ teacher.teacher_last_name }}</td>
+					<td>{{ teacher.teacher_document_id }}</td>
+					<td>{{ teacher.teacher_address }}</td>
+					<td>{{ teacher.teacher_mobile_number }}</td>
+					<td>{{ teacher.teacher_email }}</td>
 					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
+						<a href="/teachers/details/{{ teacher.teacher_id }}" class="btn btn-mini btn-primary"
+						type="button"><i class="icon-eye-open"></i>Ver</a>
+						<a href="/teachers/edit/{{ teacher.teacher_id }}" class="btn btn-mini btn-primary"
+						type="button"><i class="icon-pencil"></i>Editar</a>
+						<a href="/teachers/delete/{{ teacher.teacher_id }}" class="btn btn-mini btn-danger"
+						type="button"><i class="icon-trash"></i>Eliminar</a>
 					</td>
 				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Alexander</td>
-					<td>Castro</td>
-					<td>1034657980</td>
-					<td>Barrio Galan</td>
-					<td>3014567890</td>
-					<td>alex@example.com</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_v_teacher">
-							<i class="icon-eye-open"></i>Ver
-						</button>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_teacher">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
+				{% empty %}
+				<div class="alert">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>¡Alerta!</strong> No hay profesores contratados :(.
+				</div>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 </div>
 
-<div id="m_n_teacher" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3 id="myModalLabel">Registro Nuevo Docente</h3>
+<form class="form-horizontal" method="POST">
+	<div id="m_n_teacher" class="modal hide">
+		<div class="modal-header">
+			<a href="/teachers" type="button" class="close">x</a> 
+			{% if form_teacher.teacher_id.value > 0 %}
+			<h3 id="myModalLabel">Editar Docente</h3>
+			{% else %}
+			<h3 id="myModalLabel">Registro Nuevo Docente</h3>
+			{% endif %}
+		</div>
+		<div class="modal-body">
+			{% csrf_token %} 
+			{{ form_teacher.non_field_errors }} 
+			{% if form_teacher.teacher_document_id.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Cedula:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_document_id }} 
+					<span class="help-inline"> {{ form_teacher.teacher_document_id.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Cedula:</label>
+				<div class="controls">{{ form_teacher.teacher_document_id }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_first_name.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Nombres:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_first_name }} 
+					<span class="help-inline">{{ form_teacher.teacher_first_name.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Nombres:</label>
+				<div class="controls">{{ form_teacher.teacher_first_name }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_last_name.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Apellidos:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_last_name }} 
+					<span class="help-inline">{{ form_teacher.teacher_last_name.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Apellidos:</label>
+				<div class="controls">{{ form_teacher.teacher_last_name }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_address.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Dirección:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_address }} 
+					<span class="help-inline">{{form_teacher.teacher_address.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Dirección:</label>
+				<div class="controls">{{ form_teacher.teacher_address }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_mobile_number.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Teléfono:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_mobile_number }} 
+					<span class="help-inline"> {{form_teacher.teacher_mobile_number.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Teléfono:</label>
+				<div class="controls">{{ form_teacher.teacher_mobile_number }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_email.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Email:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_email }} 
+					<span class="help-inline">{{ form_teacher.teacher_email.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Email:</label>
+				<div class="controls">{{ form_teacher.teacher_email }}</div>
+			</div>
+			{% endif %} 
+			{% if form_teacher.teacher_hire_date.errors %}
+			<div class="control-group error">
+				<label class="control-label" for="inputError">Fecha de
+					contratación:</label>
+				<div class="controls">
+					{{ form_teacher.teacher_hire_date }} 
+					<span class="help-inline">{{form_teacher.teacher_hire_date.errors.as_text}} </span>
+				</div>
+			</div>
+			{% else %}
+			<div class="control-group">
+				<label class="control-label">Fecha de contratación:</label>
+				<div class="controls">{{ form_teacher.teacher_hire_date }}</div>
+			</div>
+			{% endif %}
+		</div>
+		<div class="modal-footer">
+			<a href="/teachers" type="button" class="btn">Cancelar</a>
+			<button class="btn btn-primary">Guardar</button>
+		</div>
 	</div>
-	<div class="modal-body">
+</form>
 
-		<form class="form-horizontal">
-			<div class="control-group">
-				<label class="control-label" for="inputName">Nombres:</label>
-				<div class="controls">
-					<input type="text" id="inputName">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputLastName">Apellidos:</label>
-				<div class="controls">
-					<input type="text" id="inputLastName">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputID">Cédula:</label>
-				<div class="controls">
-					<input type="text" id="inputID">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputAddress">Dirección:</label>
-				<div class="controls">
-					<input type="text" id="inputAddress">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPhone">Telefono:</label>
-				<div class="controls">
-					<input type="text" id="inputPhone">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputEmail">Email:</label>
-				<div class="controls">
-					<input type="text" id="inputEmail">
-				</div>
-			</div>
-		</form>
+<div id="m_v_teacher" class="modal hide" tabindex="-1">
+	<div class="modal-header">
+		<a href="/teachers" type="button" class="close">x</a>
+		<h3 id="myModalLabel">Detalles Docente</h3>
 	</div>
+	<form class="form-horizontal" method="POST">
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">Cedula:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_document_id }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Nombres:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_first_name }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Apellidos:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_last_name }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Dirección:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_address }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Teléfono:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_mobile_number }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Email:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_email }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Fecha de
+					contratación:</label>
+				<span class=" uneditable-input">{{ teacher_view.teacher_hire_date }}</span>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Materias:</label>
+				{% for subject in teacher_subjects %}
+					<span class=" uneditable-input">{{ subject.subject_name }}</span>
+				{% endfor %}
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputSubjects">Director de grado:</label>
+				<span class=" uneditable-input">{{ teacher_grade.course_name }}</span>
+			</div>
+		</div>
+	</form>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-primary">Guardar</button>
+		<a href="/teachers" type="button" class="btn">Cancelar</a>
 	</div>
 </div>
 
-<div id="m_d_teacher" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3 id="myModalLabel">Eliminar Docente</h3>
+<form class="form-horizontal" method="POST">
+	{% csrf_token %}
+	<div id="m_d_teacher" class="modal hide fade" tabindex="-1">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3 id="myModalLabel">Eliminar Docente</h3>
+		</div>
+		<div class="modal-body">
+			<p>¿Esta seguro que desea eliminar el docente: {{teacher_to_delete.teacher_first_name}}?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="/teachers" type="button" class="btn">Cancelar</a>
+			<button class="btn btn-danger">Eliminar</button>
+		</div>
 	</div>
-	<div class="modal-body">
-	<p>¿Esta seguro que desea eliminar el docente:?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-danger">Eliminar</button>
-	</div>
-</div>
+</form>
+
+{% if form_teacher and teachers %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#m_n_teacher').modal('show');
+		});
+	</script>
+{% endif %}
+{% if  teacher_view and teacher_grade %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#m_v_teacher').modal('show');
+		});
+	</script>
+{% endif %}
+{% if  teacher_to_delete %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#m_d_teacher').modal('show');
+		});
+	</script>
+{% endif %}
 
 {% endblock %}
 {% block piepagina %}

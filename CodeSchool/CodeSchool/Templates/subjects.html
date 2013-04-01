@@ -5,141 +5,106 @@
 {% block contenido %}
 
 <div class="container-fluid">
-	<button type="button" class="btn btn-primary offset0.5"
-		data-toggle="modal" data-target="#m_n_subjtect">
-		<i class="icon-plus"></i>Nueva
-	</button>
-	<br></br>
+	<form id="frmOptions" method="post" class="form-inline text-center">
+		<a href="/subjects/new" class="btn btn-primary"
+			type="button"><i class="icon-plus"></i>Nueva</a>
+		<label id="margins">Grado</label>
+		<select id="states" onchange="students_state()"> 
+		{% for grade in grades %}
+			<option value=grade.grade_id>grade.grade_name</option> 
+		{% endfor %}
+		</select> 
+		<a href="/subjects/history" id="margins" class="btn btn-primary"
+			type="button"><i class="icon-list-alt"></i>Historial</a>
+	</form>
 	<div id="scroll">
 		<table class="table  table-hover">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Grado</th>
+					<th>Horas</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
+			{% for subject in subjects %}
 				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
+					<td>{{ subject.subject_name }}</td>
+					<td>{{ subject.subject_grade }}</td>
+					<td>{{ subject.subject_hours }}</td>
 						<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
+						<a href="/subject/edit/{{ subject.subject_id }}" class="btn btn-mini btn-primary"
+						type="button"><i class="icon-pencil"></i>Editar</a>
+						<a href="/subject/delete/{{ subject.subject_id }}" class="btn btn-mini btn-danger"
+						type="button"><i class="icon-trash"></i>Eliminar</a>
 					</td>
 				</tr>
-				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>Educación Sexual</td>
-					<td>Once</td>
-					<td>
-						<button type="button" class="btn btn-mini btn-primary"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-pencil"></i>Editar
-						</button>
-						<button type="button" class="btn btn-mini btn-danger"
-							data-toggle="modal" data-target="#m_d_subject">
-							<i class="icon-trash"></i>Eliminar
-						</button>
-					</td>
-				</tr>
+			{% empty %}
+				<div class="alert">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>¡Alerta!</strong> No hay materias registradas :(.
+				</div>
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>
 </div>
 
-<div id="m_n_subjtect" class="modal hide fade" tabindex="-1">
+{% if form_new_subject%}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#m_n_subject').modal('show');
+		});
+	</script>
+{% endif %}
+
+{% if  subject_to_delete %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#m_d_subject').modal('show');
+		});
+	</script>
+{% endif %}
+
+<div id="m_n_subject" class="modal hide fade" tabindex="-1">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
+		<a href="/subjects" type="button" class="close">x</a>
 		<h3 id="myModalLabel">Registro Nueva Materia</h3>
 	</div>
 	<div class="modal-body">
-
 		<form class="form-horizontal">
+		{% csrf_token %}
+		{{ form_new_subject.non_field_errors }}
 			<div class="control-group">
-				<label class="control-label" for="inputName">Nombre:</label>
-				<div class="controls">
-					<input type="text" id="inputName">
+				{% if form_new_subject.subject_name.errors %}
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>¡Error!</strong> {{ form_new_subject.subject_name.errors }} 
 				</div>
+				{% endif %}
+				<label class="control-label" for="inputName">Nombre:</label>
+				<div class="controls">{{ form_new_subject.subject_name }}</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="inputGrade">Grado:</label>
-				<div class="controls">
-					<select id="inputGrade">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-						<option>6</option>
-						<option>7</option>
-						<option>8</option>
-						<option>9</option>
-						<option>10</option>
-						<option>11</option>
-					</select>
+				{% if form_new_subject.subject_hours.errors %}
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>¡Error!</strong> {{ form_new_subject.subject_hours.errors }} 
 				</div>
+				{% endif %}
+				<label class="control-label" for="inputName">Horas:</label>
+				<div class="controls">{{ form_new_subject.subject_hours }}</div>
+			</div>
+			<div class="control-group">
+				{% if form_new_subject.subject_grade.errors %}
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>¡Error!</strong> {{ form_new_subject.subject_grade.errors }} 
+				</div>
+				{% endif %}
+				<label class="control-label" for="inputName">Grade:</label>
+				<div class="controls">{{ form_new_subject.subject_grade }}</div>
 			</div>
 		</form>
 	</div>
@@ -151,7 +116,7 @@
 
 <div id="m_d_subject" class="modal hide fade" tabindex="-1">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
+		<a href="/subjects" type="button" class="close">x</a>
 		<h3 id="myModalLabel">Eliminar Materia</h3>
 	</div>
 	<div class="modal-body">

@@ -96,6 +96,24 @@ class SubjectForm(ModelForm):
         model =  Subject
         
 class TeacherForm(ModelForm):
+    
+    def clean_teacher_document_id(self):
+        string = self.cleaned_data['teacher_document_id']
+        if not CHECK_ONLY_NUMBERS.match(string):
+            raise ValidationError("Este campo solo acepta numeros.")
+        return string
+    
+    def clean_teacher_first_name(self):
+        string = self.cleaned_data['teacher_first_name']
+        if not CHECK_ONLY_LETTERS.match(string):
+            raise ValidationError("Este campo solo acepta letras.")
+        return string
+    
+    def clean_teacher_last_name(self):
+        string = self.cleaned_data['teacher_last_name']
+        if not CHECK_ONLY_LETTERS.match(string):
+            raise ValidationError("Este campo solo acepta letras.")
+        return string
     class Meta:
         model =  Teacher
 
