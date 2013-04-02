@@ -135,19 +135,22 @@ def delete_goal(request, id_Goal):
 @login_required(login_url='/')
 def grades(request):
     if request.method == 'POST':
-        headquarters_list = Headquarter.objects.all()
-                
+        headquarters_list = Headquarter.objects.all()                
         headquarter_selected = request.POST.getlist('headquarters')
         headquarter = headquarter_selected[0]
-        
+        query = ''
+                
         if headquarter == '-1':
-            grades_list = Grade.objects.all()
+            query = 'SELECT * FROM grade WHERE  grade_year_id = 1'  
+            grades_list = Grade.objects.raw(query)
         else:
-            grades_list = Grade.objects.filter(grade_headquarter = headquarter)        
+            query = 'SELECT * FROM grade, headquarter WHERE grade_year_id = 1 AND grade_headquarter_id = headquarter_id AND grade_headquarter_id = ' + headquarter            
+            grades_list = Grade.objects.raw(query)        
         
         return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':int(headquarter)}, context_instance=RequestContext(request))
     else:
-        grades_list = Grade.objects.all()
+        query = 'SELECT * FROM grade WHERE  grade_year_id = 1'
+        grades_list = Grade.objects.raw(query)
         headquarters_list = Headquarter.objects.all()
     return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':'-1'}, context_instance=RequestContext(request))
 
@@ -215,10 +218,8 @@ def grades_history(request):
         else:
             grades_history_list = Grade.objects.filter(grade_headquarter = headquarter) 
             
-        if year == '-1':
-            grades_history_list = Grade.objects.all()
-        else:
-            grades_history_list = Grade.objects.filter(grade_year = year)             
+        if year != '-1':
+            grades_history_list = grades_history_list.filter(grade_year = year)             
                     
         return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list, 'headquarter_selected':int(headquarter), 'year_selected':int(year)}, context_instance=RequestContext(request))
     else:
