@@ -54,7 +54,7 @@ class ScoreForm(ModelForm):
     class Meta:
         model =  Score
         
-CHECK_ONLY_LETTERS = re.compile('[a-zA-Z]+$')
+CHECK_ONLY_LETTERS = re.compile('[a-zA-Z ]+$')
 CHECK_ONLY_NUMBERS = re.compile('[0-9]+$')
 
 class StudentForm(ModelForm):

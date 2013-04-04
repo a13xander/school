@@ -15,7 +15,7 @@ class Year(models.Model):
 class School(models.Model):
     school_id = models.AutoField(primary_key = True)
     school_name =  models.CharField(max_length = 100, null = False)
-    school_year = models.ForeignKey(Year)
+    school_year = models.ForeignKey(Year, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "SCHOOL"
@@ -25,7 +25,7 @@ class Headquarter(models.Model):
     headquarter_name =  models.CharField(max_length = 100, null = False)
     headquarter_address = models.CharField(max_length = 50, null = False)
     headquarter_phone = models.CharField(max_length = 10, null = False)
-    headquarter_school = models.ForeignKey(School, blank = True, null = True)
+    headquarter_school = models.ForeignKey(School, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "HEADQUARTER"
@@ -36,8 +36,8 @@ class Headquarter(models.Model):
 class Grade(models.Model):
     grade_id = models.AutoField(primary_key = True)
     grade_name =  models.CharField(max_length = 20, null = False)
-    grade_year = models.ForeignKey(Year, default = School.school_year)
-    grade_headquarter = models.ForeignKey(Headquarter)
+    grade_year = models.ForeignKey(Year, default = School.school_year, on_delete = models.PROTECT)
+    grade_headquarter = models.ForeignKey(Headquarter, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "GRADE"
@@ -49,7 +49,7 @@ class Subject(models.Model):
     subject_id = models.AutoField(primary_key = True)
     subject_name = models.CharField(max_length = 20, null = False)
     subject_hours = models.IntegerField(null = False)
-    subject_grade = models.ForeignKey(Grade)
+    subject_grade = models.ForeignKey(Grade, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "SUBJECT"
@@ -72,8 +72,8 @@ class Period(models.Model):
 class Goal(models.Model):
     goal_id = models.AutoField(primary_key = True)
     goal_description = models.CharField(max_length = 1000, null = False)
-    goal_subject = models.ForeignKey(Subject)
-    goal_period = models.ForeignKey(Period)
+    goal_subject = models.ForeignKey(Subject, on_delete = models.PROTECT)
+    goal_period = models.ForeignKey(Period, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "GOAL"
@@ -95,8 +95,8 @@ class Teacher(models.Model):
 class Course(models.Model):
     course_id = models.AutoField(primary_key = True)
     course_name = models.CharField(max_length = 20, null = False)
-    course_grade = models.ForeignKey(Grade)
-    course_teacher = models.ForeignKey(Teacher)
+    course_grade = models.ForeignKey(Grade, on_delete = models.PROTECT)
+    course_teacher = models.ForeignKey(Teacher, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "COURSE"
@@ -106,9 +106,9 @@ class Course(models.Model):
             
 class Allocation(models.Model):
     allocation_id = models.AutoField(primary_key = True)
-    allocation_subject =  models.ForeignKey(Subject)
-    allocation_course = models.ForeignKey(Course)
-    allocation_teacher = models.ForeignKey(Teacher)
+    allocation_subject =  models.ForeignKey(Subject, on_delete = models.PROTECT)
+    allocation_course = models.ForeignKey(Course, on_delete = models.PROTECT)
+    allocation_teacher = models.ForeignKey(Teacher, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "ALLOCATION"
@@ -133,17 +133,17 @@ class Score(models.Model):
     score_id = models.AutoField(primary_key = True)
     score_number = models.IntegerField(null = False)
     score_text = models.CharField(max_length = 15, null = False)
-    score_student = models.ForeignKey(Student)
-    score_period = models.ForeignKey(Period)
-    score_allocation = models.ForeignKey(Allocation)
+    score_student = models.ForeignKey(Student, on_delete = models.PROTECT)
+    score_period = models.ForeignKey(Period, on_delete = models.PROTECT)
+    score_allocation = models.ForeignKey(Allocation, on_delete = models.PROTECT)
     
     class Meta:
             db_table = "SCORE"
             
 class Course_history(models.Model):
     course_history_id = models.AutoField(primary_key = True)
-    course_history_course = models.ForeignKey(Course)
-    course_history_student = models.ForeignKey(Student)
+    course_history_course = models.ForeignKey(Course, on_delete = models.PROTECT)
+    course_history_student = models.ForeignKey(Student, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "COURSE_HISTORY"
@@ -151,8 +151,8 @@ class Course_history(models.Model):
 class Observation(models.Model):
     observation_id = models.AutoField(primary_key = True)
     observation_description = models.CharField(max_length = 1000, null = False)
-    observation_period = models.ForeignKey(Period)
-    observation_course_history = models.ForeignKey(Course_history)
+    observation_period = models.ForeignKey(Period, on_delete = models.PROTECT)
+    observation_course_history = models.ForeignKey(Course_history, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "OBSERVATION"

@@ -9,7 +9,7 @@
 
 {% block contenido%}
 	<div class="container-fluid">
-		<form name="optionsStudents" id="frmOptions" method="post" class="form-inline text-center">
+		<form name="optionsStudents" method="post" class="form-inline text-center">
 			{% csrf_token %}
 			<a href="/students/new" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nuevo</a>
 			
@@ -30,6 +30,22 @@
 				{% else %}
 					<option value="0">No matriculado</option>
 				{% endif %}
+			</select>
+			
+			<label id="margins">Sede</label> 
+			<select name="headquarters" onchange="update_students()">
+				{% if headquarter_selected == '-1' %}
+					<option value="-1" selected="selected">Todas</option>
+				{% else %}
+					<option value="-1">Todas</option>
+				{% endif %}
+				{% for headquarter in headquarters %}
+					{% if headquarter_selected == headquarter.headquarter_id %}
+						<option value="{{headquarter.headquarter_id}}" selected="selected">{{headquarter}}</option>
+					{% else %}
+						<option value="{{headquarter.headquarter_id}}">{{headquarter}}</option>
+					{% endif %}
+				{% endfor %}
 			</select>
 			
 			<label id="margins">Grado</label> 
@@ -95,14 +111,14 @@
 						
 						<td>
 							{% if student.student_matriculated == 0 %}
-								<a href="/#" role="button" class="btn btn-mini btn-primary">
+								<a href="/students/register/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 								<i class="icon-pencil"></i> Matricular</a>
 							{% else %}
-								<a href="/#" role="button" class="btn btn-mini btn-primary">
+								<a href="/students/edit_register/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 								<i class="icon-pencil"></i> Editar matricular</a>
 							{% endif %}
-							<a href="/students/consult/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
-							<i class="icon-pencil"></i> Consultar</a>
+							<a href="/students/details/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
+							<i class="icon-eye-open"></i> Detalles</a>
 							<a href="/students/edit/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 							<i class="icon-pencil"></i> Editar</a>
 							<a href="/students/delete/{{student.student_id}}" role="button" class="btn btn-mini btn-danger">
@@ -111,7 +127,6 @@
 					</tr>
 					{% empty %}
 						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
 							 <p>Ningún estudiante para mostrar.</p>
 						</div>
 					{% endfor %}
@@ -120,19 +135,25 @@
 		</div>
 	</div>
 	
-	{% if consult %}
+	{% if form_details %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
-		    	model_consult_student();
+		    	model_details_student();
 		    });
 		</script>
-	{% elif delete %}
+	{% elif student_delete %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
 		    	 model_delete_student();
 		    });
 		</script>
-	{% elif form %}
+	{% elif last_course %}
+		<script type="text/javascript">
+		    $(document).ready(function(){
+		    	model_register();
+		    });
+		</script>
+	{% elif form_student %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
 		    	model_student();
@@ -148,7 +169,7 @@
 	
 	<form method="post" class="form-horizontal">
 		{% csrf_token %}
-		<div id="m_n_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+		<div id="m_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
 			<div class="modal-header">
 				<a href="/students" type="button" class="close">×</a>
 				{% if edit %}
@@ -157,107 +178,149 @@
 					<h3 id="myModalLabel">Registro Nuevo Estudiante</h3>
 				{% endif %}
 			</div>
-			<div class="modal-body">
-				<div class="control-group">
-					{% if form.student_code.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_code.errors.as_text }}</p>
+			<div class="modal-body">					
+				{% if form_student.student_code.errors %}
+					<div class="control-group error">
+						<label class="control-label">Código:</label>
+						<div class="controls">
+							{{ form_student.student_code }}
+							<span class="help-inline"> {{ form_student.student_code.errors.as_text }} </span>
 						</div>
-					{% endif %}
-					<label class="control-label" for="inputID">Código:</label>
-					<div class="controls">
-						{{ form.student_code }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_document_id.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_document_id.errors.as_text }}</p>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Código:</label>
+						<div class="controls">
+							{{ form_student.student_code }}
 						</div>
-					{% endif %}
-					<label class="control-label">Documento:</label>
-					<div class="controls">
-						{{ form.student_document_id }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_first_name.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_first_name.errors.as_text }}</p>
+				{% endif %}
+				{% if form_student.student_document_id.errors %}
+					<div class="control-group error">
+						<label class="control-label">Documento:</label>
+						<div class="controls">
+							{{ form_student.student_document_id }}
+							<span class="help-inline"> {{ form_student.student_document_id.errors.as_text }} </span>
 						</div>
-					{% endif %}
-					<label class="control-label">Nombres:</label>
-					<div class="controls">
-						{{ form.student_first_name }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_last_name.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_last_name.errors.as_text }}</p>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Documento:</label>
+						<div class="controls">
+							{{ form_student.student_document_id }}
 						</div>
-					{% endif %}
-					<label class="control-label">Apellidos:</label>
-					<div class="controls">
-						{{ form.student_last_name }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_mobile_number.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_mobile_number.errors.as_text }}</p>
+				{% endif %}
+				
+				{% if form_student.student_first_name.errors %}
+					<div class="control-group error">
+						<label class="control-label">Nombres:</label>
+						<div class="controls">
+							{{ form_student.student_first_name }}
+							<span class="help-inline"> {{ form_student.student_first_name.errors.as_text }} </span>
 						</div>
-					{% endif %}
-					<label class="control-label">Teléfono:</label>
-					<div class="controls">
-						{{ form.student_mobile_number }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_address.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_address.errors.as_text }}</p>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Nombres:</label>
+						<div class="controls">
+							{{ form_student.student_first_name }}
 						</div>
-					{% endif %}
-					<label class="control-label">Dirección:</label>
-					<div class="controls">
-						{{ form.student_address }}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_gender.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_gender.errors.as_text }}</p>
+				{% endif %}
+				
+				{% if form_student.student_last_name.errors %}
+					<div class="control-group error">
+						<label class="control-label">Apellidos:</label>
+						<div class="controls">
+							{{ form_student.student_last_name }}
+							<span class="help-inline"> {{ form_student.student_last_name.errors.as_text }} </span>
 						</div>
-					{% endif %}
-					<label class="control-label">Género:</label>
-					<div class="controls">
-						{% for gender in form.student_gender %}
-							<div class="radio inline">
-								{{ gender }}
-							</div>
-						{% endfor %}
 					</div>
-				</div>
-				<div class="control-group">
-					{% if form.student_date_of_birth.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_date_of_birth.errors.as_text }}</p>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Apellidos:</label>
+						<div class="controls">
+							{{ form_student.student_last_name }}
 						</div>
-					{% endif %}
-					<label class="control-label">Fecha de nacimiento:</label>
-					<div class="controls">
-						{{ form.student_date_of_birth }}
 					</div>
-				</div>
+				{% endif %}
+				
+				{% if form_student.student_mobile_number.errors %}
+					<div class="control-group error">
+						<label class="control-label">Teléfono:</label>
+						<div class="controls">
+							{{ form_student.student_mobile_number }}
+							<span class="help-inline"> {{ form_student.student_mobile_number.errors.as_text }} </span>
+						</div>
+					</div>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Teléfono:</label>
+						<div class="controls">
+							{{ form_student.student_mobile_number }}
+						</div>
+					</div>
+				{% endif %}
+				
+				{% if form_student.student_address.errors %}
+					<div class="control-group error">
+						<label class="control-label">Dirección:</label>
+						<div class="controls">
+							{{ form_student.student_address }}
+							<span class="help-inline"> {{ form_student.student_address.errors.as_text }} </span>
+						</div>
+					</div>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Dirección:</label>
+						<div class="controls">
+							{{ form_student.student_address }}
+						</div>
+					</div>
+				{% endif %}
+				
+				{% if form_student.student_gender.errors %}
+					<div class="control-group error">
+						<label class="control-label">Género:</label>
+						<div class="controls">
+							{% for gender in form_student.student_gender %}
+								<div class="radio inline">
+									{{ gender }}
+								</div>
+							{% endfor %}
+							<span class="help-inline"> {{ form_student.student_gender.errors.as_text }} </span>
+						</div>
+					</div>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Género:</label>
+						<div class="controls">
+							{% for gender in form_student.student_gender %}
+								<div class="radio inline">
+									{{ gender }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if form_student.student_date_of_birth.errors %}
+					<div class="control-group error">
+						<label class="control-label">Fecha de nacimiento:</label>
+						<div class="controls">
+							{{ form_student.student_date_of_birth }}
+							<span class="help-inline"> {{ form_student.student_date_of_birth.errors.as_text }} </span>
+						</div>
+					</div>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Fecha de nacimiento:</label>
+						<div class="controls">
+							{{ form_student.student_date_of_birth }}
+						</div>
+					</div>
+				{% endif %}	
 			</div>
 			<div class="modal-footer">
 				<a href="/students" type="button" class="btn">Cancelar</a>
@@ -268,106 +331,64 @@
 	
 	<form method="post" class="form-horizontal">
 		{% csrf_token %}
-		<div id="m_c_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+		<div id="m_details_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
 			<div class="modal-header">
 				<a href="/students" type="button" class="close">×</a>
-				<h3 id="myModalLabel">Consultar Estudiante</h3>
+				<h3 id="myModalLabel">Detalles Estudiante</h3>
 			</div>
 			<div class="modal-body">
 				<div class="control-group">
-					{% if form.student_code.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_code.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Código:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_code.value }}
+							{{ form_details.student_code.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_document_id.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_document_id.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Documento:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_document_id.value }}
+							{{ form_details.student_document_id.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_first_name.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_first_name.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Nombres:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_first_name.value }}
+							{{ form_details.student_first_name.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_last_name.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_last_name.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Apellidos:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_last_name.value }}
+							{{ form_details.student_last_name.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_mobile_number.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_mobile_number.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Teléfono:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_mobile_number.value }}
+							{{ form_details.student_mobile_number.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_address.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_address.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Dirección:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_address.value }}
+							{{ form_details.student_address.value }}
 						</span>
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_gender.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_gender.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Género:</label>
 					<div class="controls">
-						{% for student_gender in form.student_gender %}
+						{% for student_gender in form_details.student_gender %}
 							<div class="radio inline">
 								<span class="disabled">
 									{% if gender == student_gender.choice_label %}
@@ -382,16 +403,10 @@
 					</div>
 				</div>
 				<div class="control-group">
-					{% if form.student_date_of_birth.errors %} 
-						<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.student_date_of_birth.errors.as_text }}</p>
-						</div>
-					{% endif %}
 					<label class="control-label">Fecha de nacimiento:</label>
 					<div class="controls">
 						<span class="uneditable-input">
-							{{ form.student_date_of_birth.value }}
+							{{ form_details.student_date_of_birth.value }}
 						</span>
 					</div>
 				</div>
@@ -405,13 +420,13 @@
 	
 	<form method="post">
 		{% csrf_token %}
-		<div id="m_d_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+		<div id="m_delete_student" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
 			<div class="modal-header">
 				<a href="/students" type="button" class="close">×</a>
 				<h3 id="myModalLabel">Eliminar Estudiante</h3>
 			</div>
 			<div class="modal-body">
-				<p>¿Esta seguro que desea eliminar a: {{student.student_first_name}} {{student.student_last_name}}?</p>
+				<p>¿Esta seguro que desea eliminar a: {{student_delete.student_first_name}} {{student_delete.student_last_name}}?</p>
 			</div>
 			<div class="modal-footer">
 				<a href="/students" type="button" class="btn">Cancelar</a>
@@ -419,4 +434,69 @@
 			</div>
 		</div>
 	</form>
+	
+	<div id="m_register" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+		<div class="modal-header">
+			<a href="/students" type="button" class="close">×</a>
+			<h3 id="myModalLabel">Matricular Estudiante</h3>
+		</div>		
+		<div class="modal-body">
+			<form name="optionsRegister" method="post" class="form-inline text-center">
+				{% csrf_token %}
+				<label>Sede</label> 
+				<select name="register_headquarters" onchange="update_register()">
+					{% if headquarter_selected == '-1' %}
+						<option value="-1" selected="selected">Todas</option>
+					{% else %}
+						<option value="-1">Todas</option>
+					{% endif %}
+					{% for headquarter in headquarters %}
+						{% if headquarter_selected == headquarter.headquarter_id %}
+							<option value="{{headquarter.headquarter_id}}" selected="selected">{{headquarter}}</option>
+						{% else %}
+							<option value="{{headquarter.headquarter_id}}">{{headquarter}}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				
+				<label>Grado</label> 
+				<select name="register_grades" onchange="update_register()">
+					{% if grade_selected == '-1' %}
+						<option value="-1" selected="selected">Todos</option>
+					{% else %}
+						<option value="-1">Todos</option>
+					{% endif %}
+					{% for grade in grades %}
+						{% if grade_selected == grade.grade_id %}
+							<option value="{{grade.grade_id}}" selected="selected">{{grade.grade_name}}</option>
+						{% else %}
+							<option value="{{grade.grade_id}}">{{grade.grade_name}}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</form>
+			<form name="register" method="post">
+				{% csrf_token %}
+				{% if last_course %}
+					<input type='hidden' name='last_course' value='{{last_course}}' />
+				{% endif %}
+				<label>Curso</label>
+				<select name="register_courses">
+					{% for course in courses %}
+						{% if course_selected == course.course_id %}
+							<option value="{{course.course_id}}" selected="selected">{{course.course_name}}</option>
+						{% else %}
+							<option value="{{course.course_id}}">{{course.course_name}}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a href="/students" type="button" class="btn">Cancelar</a>
+			<a href="/students" type="button" class="btn">Cancelar Matrícula</a>
+			<button class="btn btn-danger" onclick="save_register()">Guardar</button>
+		</div>
+		</form>
+	</div>
 {% endblock %}

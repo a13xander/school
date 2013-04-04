@@ -1,23 +1,39 @@
-function model_student()
-{
-	$('#m_n_student').modal('show');
+function update_students()   
+{   
+	document.optionsStudents.submit();  
+}    
+
+function update_register()   
+{   
+	document.optionsRegister.submit();  
 }
 
-function model_consult_student()
+function save_register()   
+{   
+	document.register.submit();  
+}
+
+function model_student()
 {
-	$('#m_c_student').modal('show');
+	$('#m_student').modal('show');
+}
+
+function model_details_student()
+{
+	$('#m_details_student').modal('show');
 	
 }
 
 function model_delete_student()
 {
-	$('#m_d_student').modal('show');
+	$('#m_delete_student').modal('show');
 	
 }
 
-function update_students()   
-{   
-	document.optionsStudents.submit();  
+function model_register()
+{
+	$('#m_register').modal('show');
+	
 }    
 
 function update_grades()   
