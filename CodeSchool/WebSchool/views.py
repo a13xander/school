@@ -134,42 +134,49 @@ def delete_goal(request, id_Goal):
 
 @login_required(login_url='/')
 def grades(request):
+    year = School.objects.filter(school_id=1).values("school_year")
     if request.method == 'POST':
         headquarters_list = Headquarter.objects.all()                
         headquarter_selected = request.POST.getlist('headquarters')
         headquarter = headquarter_selected[0]
-        query = ''
-                
+                       
         if headquarter == '-1':
-            query = 'SELECT * FROM grade WHERE  grade_year_id = 1'  
-            grades_list = Grade.objects.raw(query)
+            grades_list = Grade.objects.filter(grade_year = year)            
         else:
-            query = 'SELECT * FROM grade, headquarter WHERE grade_year_id = 1 AND grade_headquarter_id = headquarter_id AND grade_headquarter_id = ' + headquarter            
-            grades_list = Grade.objects.raw(query)        
+            grades_list = Grade.objects.filter(grade_year = year).filter(grade_headquarter = headquarter)
         
         return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':int(headquarter)}, context_instance=RequestContext(request))
     else:
-        query = 'SELECT * FROM grade WHERE  grade_year_id = 1'
-        grades_list = Grade.objects.raw(query)
-        headquarters_list = Headquarter.objects.all()
+        grades_list = Grade.objects.filter(grade_year = year)
+        headquarters_list = Headquarter.objects.all().only("headquarter_id","headquarter_name")
     return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def add_grade(request):
+    warning = 0
     if request.method == 'POST':
         form = GradeForm(request.POST)        
         headquarter_selected = request.POST.getlist('grade_headquarter')
         headquarter = headquarter_selected[0]
         grades_select = request.POST.getlist('grade_name')
         grade = grades_select[0]        
-        sc = School.objects.get(pk = 1)
-        q = Grade.objects.filter(grade_year = sc.school_year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
-        print(q)
+       
+        year = School.objects.filter(school_id=1).values("school_year")
+        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
+        print (q)
+        print(grade)        
+                
         if len(q)==0 and form.is_valid(): 
-            form.save()
+            grades = Grade()
+            grades.grade_year = Year.objects.get(pk = year)
+            grades.grade_headquarter = Headquarter.objects.get(pk = headquarter)
+            grades.grade_name = str(grade)
+            grades.save()
+            
             return HttpResponseRedirect('/grades') 
         else:
-            return render_to_response('grades.html', {'form':form, 'warning':'sffsdfsd'}, context_instance = RequestContext(request))
+            warning = 2
+            return render_to_response('grades.html', {'form':form, 'warning':warning}, context_instance = RequestContext(request))
     else:
         form = GradeForm()
     return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))
@@ -183,15 +190,15 @@ def edit_grade(request, id_grade):
         headquarter = headquarter_selected[0]
         grades_select = request.POST.getlist('grade_name')
         grade = grades_select[0]        
-        sc = School.objects.get(pk = 1)
-        q = Grade.objects.filter(grade_year = sc.school_year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
+        year = School.objects.filter(school_id=1).values("school_year")
+        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
         print(q)
         if len(q)==0 and form.is_valid():
             form.save()
             return HttpResponseRedirect('/grades')
     else:
         form = GradeForm(instance = grade)
-    return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))
+    return render_to_response('grades.html', {'form':form, 'edit':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def delete_grade(request, id_grade):
@@ -224,8 +231,8 @@ def grades_history(request):
         return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list, 'headquarter_selected':int(headquarter), 'year_selected':int(year)}, context_instance=RequestContext(request))
     else:
         grades_history_list = Grade.objects.all()
-        headquarters_list = Headquarter.objects.all()
-        years_list = Year.objects.all()
+        headquarters_list = Headquarter.objects.all().only("headquarter_id","headquarter_name")
+        years_list = Year.objects.all().only("year_id","year_value")
     return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list,  'headquarter_selected':'-1', 'year_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
@@ -258,9 +265,11 @@ def edit_headquarter(request, id_headquarter):
 
 @login_required(login_url='/')
 def delete_headquarter(request, id_headquarter):
-    headquarter = Headquarter.objects.get(pk = id_headquarter)
-    headquarter.delete()
-    return HttpResponseRedirect('/headquarters')
+    headquarter = Headquarter.objects.get(pk = id_headquarter) 
+    if request.method == 'POST':
+        headquarter.delete()
+        return HttpResponseRedirect('/headquarters')
+    return render_to_response('headquarters.html', {'headquarter':headquarter, 'delete':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def qualifications(request):

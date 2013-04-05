@@ -4,63 +4,63 @@
 {% endblock %} 
 {% block contenido %}
 
-<div class="container-fluid">
-	<form name="optionsGrades" id="frmOptions" method="post" class="form-inline text-center">
-		{% csrf_token %}
-		<label id="margins">Sede</label>
-		<select class="comboboxSede" name="headquarters" onchange="update_grades()">							
-			{% if headquarter_selected == '-1' %}
-					<option value="-1" selected="selected">Todos</option>
-				{% else %}
-					<option value="-1">Todos</option>
-				{% endif %}
-				{% for headquarter in headquarters %}	
-					{% if headquarter_selected == headquarter.headquarter_id %}
-						<option value="{{headquarter.headquarter_id}}" selected="selected">{{headquarter.headquarter_name}}</option>
+	<div class="container-fluid">
+		<form name="optionsGrades" id="frmOptions" method="post" class="form-inline text-center">
+			{% csrf_token %}
+			<label id="margins">Sede</label>
+			<select class="comboboxSede" name="headquarters" onchange="update_grades()">							
+				{% if headquarter_selected == '-1' %}
+						<option value="-1" selected="selected">Todos</option>
 					{% else %}
-						<option value="{{headquarter.headquarter_id}}">{{headquarter.headquarter_name}}</option>
+						<option value="-1">Todos</option>
 					{% endif %}
-				{% endfor %}					
-		</select>			
-		<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo Grado</a>			
-		<a href="/grades/history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial Grados</a>
+					{% for headquarter in headquarters %}	
+						{% if headquarter_selected == headquarter.headquarter_id %}
+							<option value="{{headquarter.headquarter_id}}" selected="selected">{{headquarter.headquarter_name}}</option>
+						{% else %}
+							<option value="{{headquarter.headquarter_id}}">{{headquarter.headquarter_name}}</option>
+						{% endif %}
+					{% endfor %}					
+			</select>			
+			<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</a>			
+			<a href="/grades/history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial</a>			
+		</form>
 		
-	</form>
-	<div id="scroll">
-		<table class="table  table-hover">
-			<thead>
-				<tr>
-					<th>Nombre Grado</th>
-					<th>Sede</th>
-					<th>Año</th>
-					<th>Opciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for grade in grades %}
-				<tr>
-					<td>{{ grade.grade_name }}</td>
-					<td>{{ grade.grade_headquarter }}</td>
-					<td>{{ grade.grade_year }}</td>
-					<td>
-						<a href="/courses" role="button" class="btn btn-mini btn-primary">
-							<i class="icon-eye-open"></i> Ver</a>				
-						<a href="/grades/edit/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
-							<i class="icon-pencil"></i> Editar</a>	
-						<a href="/grades/delete/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >
-							<i class="icon-trash"></i> Eliminar</a>							
-					</td>
-				</tr>
-			{% empty %}
+		<div id="scroll">
+			<table class="table  table-hover">
+				<thead>
+					<tr>
+						<th>Nombre Grado</th>
+						<th>Sede</th>
+						<th>Año</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for grade in grades %}
+					<tr>
+						<td>{{ grade.grade_name }}</td>
+						<td>{{ grade.grade_headquarter }}</td>
+						<td>{{ grade.grade_year }}</td>
+						<td>
+							<a href="/courses" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-eye-open"></i> Ver</a>				
+							<a href="/grades/edit/{{grade.grade_id}}" role="button" class="btn btn-mini btn-primary">
+								<i class="icon-pencil"></i> Editar</a>	
+							<a href="/grades/delete/{{grade.grade_id}}" role="button" class="btn btn-mini btn-danger" >
+								<i class="icon-trash"></i> Eliminar</a>							
+						</td>
+					</tr>
+					{% empty %}
 						<div class="alert alert-error">
 							 <button type="button" class="close" data-dismiss="alert">&times;</button>
 							 <p>Ningún grado para mostrar.</p>
 						</div>
-			{% endfor %}
-			</tbody>
-		</table>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
 
 	{% if form %}
 			<script type="text/javascript">
@@ -76,66 +76,78 @@
 		</script>
 	{% endif %}
 
-<div id="m_n_grade" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<a href="/grades" type="button" class="close">×</a>
-		<h3 id="myModalLabel">Registro Nuevo Grado</h3>
-	</div>
-	<div class="modal-body">
-		<form class="form-horizontal" method="post">
-			{% csrf_token %}
-			{{ form.non_field_errors }}	
-			{{warning }}
-			<div class="control-group">
-				{{ form.grade_headquarter.errors }}
-				<label class="control-label" for="inputYear">Sede:</label>
-				<div class="controls">
-					{{ form.grade_headquarter }}
-				</div>
-			</div>			
-			<div class="control-group">
-				{{ form.grade_name.errors }}
-				<label class="control-label" for="inputGrade">Grado:</label>
-				<div class="controls">
-					{{form.grade_name}}
-				</div>				
+	<form class="form-horizontal" method="post">
+		{% csrf_token %} 
+		<div id="m_n_grade" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+	    	<div class="modal-header">
+	      		<a href="/grades" type="button" class="close">x</a>
+				{% if edit %}
+					<h3 id="myModalLabel">Editar Grado</h3>
+				{% else %}
+	      			<h3 id="myModalLabel">Registro Nuevo Grado</h3>
+	      		{% endif %}
+	    	</div>
+	
+	    	<div class="modal-body">
+	        	{{ form.non_field_errors }} 
+	        	{% if warning == 2 %}
+	        		<div class="alert alert-error">
+						<a class="close" data-dismiss="alert">×</a>
+						<i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> El Grado Ya Existe En Esa Sede
+					</div>					
+				{% endif %}	
+	        	<div class="control-group">
+	        		{% if form.grade_headquarter.errors %} 
+	        			<div class="alert alert-error">
+							 <button type="button" class="close" data-dismiss="alert">&times;</button>
+							 <p>{{ form.grade_headquarter.errors.as_text }}</p>
+						</div>
+					{% endif %}	 
+	          		<label class="control-label" for="inputHeadquarter">Sede:</label>
+	
+	          		<div class="controls">
+	            		{{ form.grade_headquarter }}
+	          		</div>
+	        	</div>
+	
+		        <div class="control-group">
+		       		{{ form.grade_name.errors }} 
+		       		<label class="control-label" for="inputGrade">Grado:</label>
+		
+		          	<div class="controls">
+		            	{{form.grade_name}}
+		          	</div>
+		        </div>
+		
+		        
+		    </div>
+		
+	        <div class="modal-footer">
+	          <a href="/grades" type="button" class="btn">Cancelar</a> <button type="submit"
+	          class="btn btn-primary">Guardar</button>
+	        </div>     
+	  </div>
+	</form>
+
+
+
+
+	<form method="post">
+		{% csrf_token %}
+		<div id="m_d_grade" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+			<div class="modal-header">
+				<a href="/grades" type="button" class="close">×</a>
+				<h3 id="myModalLabel">Eliminar Grado</h3>
 			</div>
-			
-			<div class="control-group">
-				{{ form.grade_year.errors }}
-				<label class="control-label" for="inputYear">Año:</label>
-				<div class="controls">
-					{{ form.grade_year }}
-				</div>
+			<div class="modal-body">
+				<p>¿Esta seguro que desea eliminar el grado: {{grade.grade_name}}?</p>
 			</div>
 			<div class="modal-footer">
 				<a href="/grades" type="button" class="btn">Cancelar</a>
-				<button type="submit" class="btn btn-primary">Guardar</button>
+				<button type="submit" class="btn btn-danger">Eliminar</button>
 			</div>
-		</form>
-	</div>
-</div>
-
-
-
-
-
-<form method="post">
-	{% csrf_token %}
-	<div id="m_d_grade" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
-		<div class="modal-header">
-			<a href="/grades" type="button" class="close">×</a>
-			<h3 id="myModalLabel">Eliminar Grado</h3>
 		</div>
-		<div class="modal-body">
-			<p>¿Esta seguro que desea eliminar el grado: {{grade.grade_name}}?</p>
-		</div>
-		<div class="modal-footer">
-			<a href="/grades" type="button" class="btn">Cancelar</a>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-		</div>
-	</div>
-</form>
+	</form>
 
 {% endblock %} 
 {% block piepagina %}

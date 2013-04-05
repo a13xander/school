@@ -45,10 +45,12 @@ class GradeForm(ModelForm):
         widgets = {
             'grade_name': Select(choices=GRADES),
         }
+        exclude = ('grade_year')
         
 class HeadquarterForm(ModelForm):
     class Meta:
         model =  Headquarter
+        exclude = ('headquarter_school')
 
 class ScoreForm(ModelForm):
     class Meta:

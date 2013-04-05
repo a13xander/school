@@ -3,124 +3,135 @@
 {% block encabezado %} 
 {% endblock %} 
 {% block contenido %}
-<div class="container-fluid">
-	<form id="frmOptions" method="post" class="form-inline text-center">
-		<a href="/headquarters/new" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
-		<a href="/grades" role="button" class="btn btn btn-primary"><i class="icon-eye-open"></i> Ver Grados</a>
-	</form>
+	<div class="container-fluid">
+		<form id="frmOptions" method="post" class="form-inline text-center">
+			<a href="/headquarters/new" role="button" class="btn btn-primary"><i class="icon-plus"></i>Nueva Sede</a>
+			<a href="/grades" role="button" class="btn btn btn-primary"><i class="icon-eye-open"></i> Ver Grados</a>
+		</form>
+		
+		  <!-- Carousel
+	    ================================================== -->  
+	    
+	    <div id="myCarousel" class="carousel slide">
+	    	    
+	    <ol class="carousel-indicators">
+		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		    <li data-target="#myCarousel" data-slide-to="1"></li>
+		    <li data-target="#myCarousel" data-slide-to="2"></li>
+	  	</ol>
+	    
+    	{% for headquarter in headquarters %} 
+	    <div class="carousel-inner">        
+    		{% if headquarter.headquarter_id == 1 %}	  
+	        	<div class="active item" align="center">
+	    	{% else %}
+	    		<div class="item" align="center">
+	    	{% endif %} 
+				<img src="{{MEDIA_URL}}img/cover/school_photo.jpg" alt="Boletines">
+		          <div class="container">
+		            <div class="carousel-caption">
+		            	<form id="frmOptions" method="post" class="text-center">            		     		
+								<p>Nombre: {{ headquarter.headquarter_name }}</p>					        	
+				              	<p>Dirección: {{ headquarter.headquarter_address }}</p>
+				              	<p>Teléfono: {{ headquarter.headquarter_phone }}</p>	              	           
+		              	</form>
+		              	<form id="frmOptions" method="post" class="form-inline text-center">           
+				        	<a href="/headquarters/edit/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
+										<i class="icon-pencil"></i>Editar</a>
+				            <a href="/headquarters/delete/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger">
+				              			<i class="icon-remove"></i>Eliminar</a>		          
+			          	</form>
+		            </div>
+		          </div>
+		        </div>  
+		      <!-- Carousel nav -->
+			  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+			  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		    </div><!-- /.carousel -->
+		    {% endfor %}
+	</div>
 	
-	  <!-- Carousel
-    ================================================== -->  
-    
-    <div id="myCarousel" class="carousel slide">
-    
-    <ol class="carousel-indicators">
-	    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-	    <li data-target="#myCarousel" data-slide-to="1"></li>
-	    <li data-target="#myCarousel" data-slide-to="2"></li>
-  	</ol>
-    
-    {% for headquarter in headquarters %} 
-	      <div class="carousel-inner">        
-    	{% if headquarter.headquarter_id == 1 %}	  
-	        <div class="active item" align="center">
-	    {% else %}
-	    	<div class="item" align="center">
-	    {% endif %} 
-	          <img src="{{MEDIA_URL}}img/cover/school_photo.jpg" alt="Boletines">
-	          <div class="container">
-	            <div class="carousel-caption">
-	            	<form id="frmOptions" method="post" class="text-center">            		     		
-							<p>Nombre: {{ headquarter.headquarter_name }}</p>					        	
-			              	<p>Dirección: {{ headquarter.headquarter_address }}</p>
-			              	<p>Teléfono: {{ headquarter.headquarter_phone }}</p>	              	           
-	              	</form>
-	              	<form id="frmOptions" method="post" class="form-inline text-center">           
-			        	<a href="/headquarters/edit/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-primary">
-									<i class="icon-pencil"></i>Editar</a>
-			            <a href="/headquarters/delete/{{headquarter.headquarter_id}}" role="button" class="btn btn-large btn-danger"
-			            	onclick="return confirm('¿Esta seguro que desea eliminar esta sede: {{headquarter.headquarter_name}} {{headquarter.headquarter_address}}?')">
-			              			<i class="icon-remove"></i>Eliminar</a>		          
-		          	</form>
-	            </div>
-	          </div>
-	        </div>  
-	      <!-- Carousel nav -->
-		  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-		  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-	    </div><!-- /.carousel -->
-	    {% endfor %}
-</div>
-
-
-{% if form %}
+	
+	{% if form %}
+			<script type="text/javascript">
+			    $(document).ready(function(){
+			    	model_headquarter();
+			    });
+			</script>
+	{% elif delete %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
-		    	model_headquarter();
+		    	 model_delete_headquarter();
 		    });
 		</script>
-{% endif %}
-
-<div id="m_n_headquarter" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<a href="/headquarters" type="button" class="close">×</a>
-		<h3 id="myModalLabel">Registro Nueva Sede</h3>
-	</div>	
-	<div class="modal-body">
-		<form class="form-horizontal" method="post">
-			{% csrf_token %}
-			{{ form.non_field_errors }}			
-			<div class="control-group">		
-				{{ form.headquarter_name.errors }}	
-				<label class="control-label" for="inputNameHeadquarter">Nombre:</label>
-				<div class="controls">
-					{{ form.headquarter_name }}
+	{% endif %}
+	
+	<form class="form-horizontal" method="post">
+		<div id="m_n_headquarter" class="modal hide fade" tabindex="-1">
+			<div class="modal-header">
+				<a href="/headquarters" type="button" class="close">×</a>
+				<h3 id="myModalLabel">Registro Nueva Sede</h3>
+			</div>	
+			<div class="modal-body">		
+				{% csrf_token %}
+				{{ form.non_field_errors }}			
+				<div class="control-group">		
+					{{ form.headquarter_name.errors }}	
+					<label class="control-label" for="inputNameHeadquarter">Nombre:</label>
+					<div class="controls">
+						{{ form.headquarter_name }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form.headquarter_address.errors }}
+					<label class="control-label" for="inputAdressHeadquarter">Dirección:</label>
+					<div class="controls">
+						{{ form.headquarter_address }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form.headquarter_phone.errors }}
+					<label class="control-label" for="inputPhoneHeadquarter">Teléfono:</label>
+					<div class="controls">
+						{{ form.headquarter_phone }}
+					</div>
 				</div>
 			</div>
-			<div class="control-group">
-				{{ form.headquarter_address.errors }}
-				<label class="control-label" for="inputAdressHeadquarter">Dirección:</label>
-				<div class="controls">
-					{{ form.headquarter_address }}
-				</div>
-			</div>
-			<div class="control-group">
-				{{ form.headquarter_phone.errors }}
-				<label class="control-label" for="inputPhoneHeadquarter">Teléfono:</label>
-				<div class="controls">
-					{{ form.headquarter_phone }}
-				</div>
-			</div>
+				
 			<div class="modal-footer">
 				<a href="/headquarters" type="button" class="btn">Cancelar</a>
 				<button type="submit" class="btn btn-primary">Guardar</button>
 			</div>
-		</form>
-	</div>
-</div>
-
-<div id="m_d_headquarter" class="modal hide fade" tabindex="-1">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3 id="myModalLabel">Eliminar Sede</h3>
-	</div>
-	<div class="modal-body">
-	<p>¿Esta seguro que desea eliminar esta sede:?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-danger">Eliminar</button>
-	</div>
-</div>
-
-<script>
-      $(document).ready(function(){
-        $('.carousel').carousel({
-          interval: 4000
-          pause: true
-        });
-      });
-</script>
+		</div>		
+	</form>
+	
+	<form method="post">
+		{% csrf_token %}
+		<div id="m_d_headquarter" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+			<div class="modal-header">
+				<a href="/headquarters" type="button" class="close">×</a>
+				<h3 id="myModalLabel">Eliminar Sede</h3>
+			</div>
+			<div class="modal-body">
+				<p>¿Esta seguro que desea eliminar esta sede: {{ headquarter.headquarter_name }}?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="/headquarters" type="button" class="btn">Cancelar</a>
+				<button type="submit" class="btn btn-danger">Eliminar</button>
+			</div>
+		</div>
+	</form>
+	
+	<script>
+	      $(document).ready(function(){
+	        $('.carousel').carousel({
+	          interval: 4000
+	          pause: true
+	        });
+	      });
+	</script>
 {% endblock %}
 {% block piepagina %}
 {% endblock %}

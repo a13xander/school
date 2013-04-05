@@ -19,13 +19,13 @@ class School(models.Model):
     
     class Meta:
         db_table = "SCHOOL"
-
+        
 class Headquarter(models.Model):
     headquarter_id = models.AutoField(primary_key = True)
     headquarter_name =  models.CharField(max_length = 100, null = False)
     headquarter_address = models.CharField(max_length = 50, null = False)
     headquarter_phone = models.CharField(max_length = 10, null = False)
-    headquarter_school = models.ForeignKey(School, on_delete = models.PROTECT)
+    headquarter_school = models.ForeignKey(School, default = 1, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "HEADQUARTER"
@@ -36,8 +36,8 @@ class Headquarter(models.Model):
 class Grade(models.Model):
     grade_id = models.AutoField(primary_key = True)
     grade_name =  models.CharField(max_length = 20, null = False)
-    grade_year = models.ForeignKey(Year, default = School.school_year, on_delete = models.PROTECT)
-    grade_headquarter = models.ForeignKey(Headquarter, on_delete = models.PROTECT)
+    grade_year = models.ForeignKey(Year, on_delete = models.PROTECT)
+    grade_headquarter = models.ForeignKey(Headquarter, default = Headquarter.objects, on_delete = models.PROTECT)
     
     class Meta:
         db_table = "GRADE"
