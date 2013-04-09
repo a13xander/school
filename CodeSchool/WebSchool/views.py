@@ -148,7 +148,7 @@ def grades(request):
         return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':int(headquarter)}, context_instance=RequestContext(request))
     else:
         grades_list = Grade.objects.filter(grade_year = year)
-        headquarters_list = Headquarter.objects.all().only("headquarter_id","headquarter_name")
+        headquarters_list = Headquarter.objects.all()
     return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
@@ -203,10 +203,30 @@ def edit_grade(request, id_grade):
 @login_required(login_url='/')
 def delete_grade(request, id_grade):
     grade = Grade.objects.get(pk = id_grade)
-    if request.method == 'POST':
-        grade.delete()
-        return HttpResponseRedirect('/grades')
-    return render_to_response('grades.html', {'grade':grade, 'delete':True}, context_instance = RequestContext(request))
+    print (id_grade)
+    print (grade)
+    warning = 0
+    if request.method == 'POST':        
+        try: 
+            course = Course.objects.get(course_grade = id_grade).course_grade
+            print (course)
+        except Course.DoesNotExist:
+            print ('No existe un curso asociado a ese grado')
+            course = None
+        
+        if grade != course and course is not None:        
+            grade.delete()
+            return HttpResponseRedirect('/grades')
+        elif course is None:
+            grade.delete()
+            return HttpResponseRedirect('/grades')
+        else:
+            warning = 1
+            return render_to_response('grades.html', {'grade':grade, 'delete':True, 'warning':warning}, context_instance = RequestContext(request))
+    else:
+        print ("Ese grado esta asociado ya a un curso")
+    return render_to_response('grades.html', {'grade':grade, 'delete':True}, context_instance = RequestContext(request))    
+            
 
 @login_required(login_url='/')
 def grades_history(request):
@@ -231,8 +251,8 @@ def grades_history(request):
         return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list, 'headquarter_selected':int(headquarter), 'year_selected':int(year)}, context_instance=RequestContext(request))
     else:
         grades_history_list = Grade.objects.all()
-        headquarters_list = Headquarter.objects.all().only("headquarter_id","headquarter_name")
-        years_list = Year.objects.all().only("year_id","year_value")
+        headquarters_list = Headquarter.objects.all()
+        years_list = Year.objects.all()
     return render_to_response('grades_history.html',{'grades_history':grades_history_list, 'headquarters':headquarters_list, 'years':years_list,  'headquarter_selected':'-1', 'year_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')

@@ -7,6 +7,7 @@
 	<div class="container-fluid">
 		<form name="optionsGrades" id="frmOptions" method="post" class="form-inline text-center">
 			{% csrf_token %}
+			<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</a>		
 			<label id="margins">Sede</label>
 			<select class="comboboxSede" name="headquarters" onchange="update_grades()">							
 				{% if headquarter_selected == '-1' %}
@@ -21,9 +22,8 @@
 							<option value="{{headquarter.headquarter_id}}">{{headquarter.headquarter_name}}</option>
 						{% endif %}
 					{% endfor %}					
-			</select>			
-			<a href="/grades/new" role="button" class="btn btn-primary offset0.5"><i class="icon-plus"></i>Nuevo</a>			
-			<a href="/grades/history" role="button" class="btn btn btn-primary offset0.5"><i class="icon-th-list"></i> Historial</a>			
+			</select>				
+			<a href="/grades/history" role="button" class="btn btn btn-primary offset6"><i class="icon-list-alt"></i> Historial</a>			
 		</form>
 		
 		<div id="scroll">
@@ -140,6 +140,12 @@
 				<h3 id="myModalLabel">Eliminar Grado</h3>
 			</div>
 			<div class="modal-body">
+				{% if warning == 1 %}
+	        		<div class="alert alert-error">
+						<a class="close" data-dismiss="alert">×</a>
+						<i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> Ese grado esta asociado ya a un curso
+					</div>					
+				{% endif %}	
 				<p>¿Esta seguro que desea eliminar el grado: {{grade.grade_name}}?</p>
 			</div>
 			<div class="modal-footer">
