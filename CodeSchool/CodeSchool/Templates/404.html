@@ -1,0 +1,20 @@
+{% extends 'base_administrator.html' %}
+
+{% block titulo %}
+	Estudiantes
+{% endblock %}
+
+{% block encabezado %}
+{% endblock %}
+
+{% block contenido%}
+	{% if message %}
+		<div class="alert alert-error">
+		 	<p>{{message}} <a href="{{link}}">aquí</a>. </p>
+		</div>
+	{% else %}
+		<div class="alert alert-error">
+		 	<p>Lo sentimos página no encontrada. . Sonrie y dá click <a href="/welcome_administrator">aquí</a>. </p>
+		</div>
+	{% endif %}
+{% endblock %}

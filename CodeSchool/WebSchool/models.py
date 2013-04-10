@@ -124,7 +124,7 @@ class Student(models.Model):
     student_gender = models.CharField(max_length = 1, null = False)
     student_date_of_birth = models.DateField(null = False)
     student_matriculated = models.BooleanField(default = False)
-    student_course = models.ForeignKey(Course, blank = True, null = True,)
+    student_course = models.ForeignKey(Course, null = True)
 
     class Meta:
             db_table = "STUDENT"

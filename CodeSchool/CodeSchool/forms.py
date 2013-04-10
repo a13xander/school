@@ -69,6 +69,8 @@ class StudentForm(ModelForm):
             'student_gender': RadioSelect(choices=GENDERS),
         }
         
+        exclude = ('student_course', 'student_matriculated')
+        
     def clean_student_first_name(self):
         string = self.cleaned_data['student_first_name']
         if not CHECK_ONLY_LETTERS.match(string):

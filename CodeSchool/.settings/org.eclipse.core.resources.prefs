@@ -13,5 +13,6 @@ encoding//CodeSchool/Templates/teachers.html=UTF-8
 encoding//CodeSchool/forms.py=utf-8
 encoding//CodeSchool/settings.py=utf-8
 encoding//WebSchool/models.py=utf-8
+encoding//WebSchool/views.py=utf-8
 encoding/<project>=UTF-8
 separateDerivedEncodings=true

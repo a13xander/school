@@ -1,10 +1,12 @@
-from django.shortcuts import render_to_response
+#encoding:utf-8
+
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from WebSchool.models import Course, Course_history
+from WebSchool.models import Course, Course_history, Allocation
 from CodeSchool.forms import CourseForm
 from WebSchool.models import Goal
 from CodeSchool.forms import GoalForm
@@ -23,6 +25,7 @@ from CodeSchool.forms import SubjectForm
 from WebSchool.models import Teacher
 from CodeSchool.forms import TeacherForm
 from WebSchool.models import Year
+from django.db.models.deletion import ProtectedError
 
 
 def login_school(request):
@@ -330,149 +333,69 @@ def delete_qualification(request, id_qualification):
 
 @login_required(login_url='/')
 def students(request):
-    school = School.objects.get(pk = 1)
-    year_school = school.school_year
-    year = year_school.year_id
+    year = School.objects.filter(school_id = 1).values('school_year')
+    
     if request.method == 'POST':
         return student_post(request, year)
     else:
         headquarters_list = Headquarter.objects.all()
-        grades_list = Grade.objects.raw('select grade_id, grade_name from grade where grade_year_id = ' + str(year))
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade where course_grade_id = grade_id and grade_year_id = ' + str(year))
+        grades_list = Grade.objects.filter(grade_year = year)
+        courses_list = Course.objects.filter(course_grade__in = grades_list)
         students_list = Student.objects.all()
-    return render_to_response('students.html',{'students':students_list, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':'-1', 
-                                               'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
-
+        
+        try:
+            message = request.session['message']
+            del request.session['message']
+            if message != '':
+                return render_to_response('students.html',{'students':students_list,'message': message,'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':'-1', 
+                                                   'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
+        except KeyError:
+            pass
+        
+    return render_to_response('students.html',{'students':students_list,'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':'-1', 
+                                                   'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))    
+    
 @login_required(login_url='/')
 def student_post(request, year):
     headquarters_list = Headquarter.objects.all()
     grades_list = []
     courses_list = []
+    students_list = []
     
-    query = ''
-    first = True
     state = request.POST.getlist('states')[0]
     headquarter = request.POST.getlist('headquarters')[0]
     grade = request.POST.getlist('grades')[0]
     course = request.POST.getlist('courses')[0]
     
-    if headquarter == '-1':
-        grades_list = Grade.objects.raw('select grade_id, grade_name from grade where grade_year_id = ' + str(year))
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade where course_grade_id = grade_id and grade_year_id = ' + str(year))
-        query = 'select student_id, student_code, student_first_name, student_last_name, student_course_id from student'
-    else:
-        grades_list = Grade.objects.filter(grade_headquarter = headquarter)
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade, headquarter where course_grade_id = grade_id and grade_headquarter_id = headquarter_id and grade_year_id = ' + str(year) + ' and headquarter_id = ' + headquarter)
-        query = 'select student_id, student_code, student_first_name, student_last_name, student_course_id from student, course, grade, headquarter where student_course_id = course_id and course_grade_id = grade_id and grade_headquarter_id = headquarter_id and headquarter_id = ' + headquarter
-        first = False
+    change = False
     
-    if grade != '-1':
+    if headquarter == '-1':
+        grades_list = Grade.objects.filter(grade_year = year)
+    else:
+        grades_list = Grade.objects.filter(grade_year = year).filter(grade_headquarter = headquarter)
+        change = True
+    
+    if grade == '-1':
+        courses_list = Course.objects.filter(course_grade__in = grades_list)
+    else:
         courses_list = Course.objects.filter(course_grade = grade)
-        if first:
-            query += ', course, grade where student_course_id = course_id and course_grade_id = grade_id and grade_id = ' + grade
-            first = False
+        change = True
+    
+    if course == '-1':
+        if change:
+            students_list = Student.objects.filter(student_course__in = courses_list)
         else:
-            query += ' and grade_id = ' + grade   
-
-    if course != '-1':
-        if first:
-            query += ' where student_course_id = ' + course
-            first = False
-        else:
-            query += ' and student_course_id = ' + course            
-            
+            students_list = Student.objects.all()         
+    else:
+        students_list = Student.objects.filter(student_course = course)  
+    
     if state == '0':
-        if first:
-            query += ' where student_matriculated = 0'
-        else:
-            query += ' and student_matriculated = 0'
+        students_list = students_list.filter(student_matriculated = False)
     elif state == '1':
-        if first:
-            query += ' where student_matriculated = 1'
-        else:
-            query += ' and student_matriculated = 1'
-
-    student_list = Student.objects.raw(query)
-    
-    return render_to_response('students.html',{'students':student_list, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':state, 
+        students_list = students_list.filter(student_matriculated = True)
+        
+    return render_to_response('students.html',{'students':students_list, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'state_selected':state, 
                                            'headquarter_selected': int(headquarter), 'grade_selected':int(grade), 'course_selected': int(course)}, context_instance=RequestContext(request))
-
-@login_required(login_url='/')
-def register(request, id_student):
-    school = School.objects.get(pk = 1)
-    year_school = school.school_year
-    year = year_school.year_id
-    if request.method == 'POST':
-        if len(request.POST.getlist('register_courses')) > 0:
-            student = Student.objects.get(pk = id_student)
-            course = Course.objects.get(pk = int(request.POST.getlist('register_courses')[0]))
-            student.student_course = course
-            student.student_matriculated = 1
-            student.save()
-            course_history = Course_history()
-            course_history.course_history_course = course
-            course_history.course_history_student = student
-            course_history.save()
-            return HttpResponseRedirect('/students')
-        else:
-            return update_register(request, year)
-            
-    else:
-        headquarters_list = Headquarter.objects.all()
-        grades_list = Grade.objects.raw('select grade_id, grade_name from grade where grade_year_id = ' + str(year))
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade where course_grade_id = grade_id and grade_year_id = ' + str(year))
-        
-    return render_to_response('students.html',{'register': True, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
-
-@login_required(login_url='/')
-def edit_register(request, id_student):
-    school = School.objects.get(pk = 1)
-    year_school = school.school_year
-    year = year_school.year_id
-    student = Student.objects.get(pk = id_student)
-    
-    if request.method == 'POST':
-        if len(request.POST.getlist('register_courses')) > 0:  
-            if(request.POST['last_course'] == request.POST.getlist('register_courses')[0]):      
-                return HttpResponseRedirect('/students')
-            else:
-                student = Student.objects.get(pk = id_student)
-                course = Course.objects.get(pk = int(request.POST.getlist('register_courses')[0]))
-                student.student_course = course
-                student.save()
-                course_history = Course_history.objects.get(course_history_student = student, course_history_course = int(request.POST['last_course']))
-                course_history.course_history_course = course
-                course_history.course_history_student = student
-                course_history.save()
-                return HttpResponseRedirect('/students')
-        else:
-                return update_register(request, year)
-    else:
-        headquarters_list = Headquarter.objects.all()
-        grades_list = Grade.objects.raw('select grade_id, grade_name from grade where grade_year_id = ' + str(year))
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade where course_grade_id = grade_id and grade_year_id = ' + str(year))
-        
-    return render_to_response('students.html',{'last_course': student.student_course.course_id, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':student.student_course.course_id}, context_instance=RequestContext(request))
-
-@login_required(login_url='/')
-def update_register(request, year):
-    headquarters_list = Headquarter.objects.all()
-        
-    headquarter = request.POST.getlist('register_headquarters')[0]
-    grade = request.POST.getlist('register_grades')[0]
-    
-    if headquarter == '-1':
-        grades_list = Grade.objects.raw('select grade_id, grade_name from grade where grade_year_id = ' + str(year))
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade where course_grade_id = grade_id and grade_year_id = ' + str(year))
-    else:
-        grades_list = Grade.objects.filter(grade_headquarter = headquarter)
-        courses_list = Course.objects.raw('select course_id, course_name from course, grade, headquarter where course_grade_id = grade_id and grade_headquarter_id = headquarter_id and grade_year_id = ' + str(year) + ' and headquarter_id = ' + headquarter)
-            
-    if grade != '-1':
-        courses_list = Course.objects.filter(course_grade = grade)
-    
-    return render_to_response('students.html',{'register': True, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': int(headquarter), 'grade_selected':int(grade)}, context_instance=RequestContext(request))
-
 
 @login_required(login_url='/')
 def add_student(request):
@@ -480,6 +403,8 @@ def add_student(request):
         form_student = StudentForm(request.POST)
         if form_student.is_valid():
             form_student.save()
+            message = 'El estudiante ' + request.POST['student_first_name'] + ' ' + request.POST['student_last_name'] + ' ha sido almacenado correctamente.'
+            request.session['message'] = message
             return HttpResponseRedirect('/students') 
     else:
         form_student = StudentForm()
@@ -487,7 +412,11 @@ def add_student(request):
 
 @login_required(login_url='/')
 def details_student(request, id_student):
-    student = Student.objects.get(pk = id_student)
+    try:
+        student = get_object_or_404(Student, pk = id_student)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+
     gender = ''
     if student.student_gender == 'F':
         gender = 'Femenino'
@@ -501,11 +430,17 @@ def details_student(request, id_student):
 
 @login_required(login_url='/')
 def edit_student(request, id_student):
-    student = Student.objects.get(pk = id_student)
+    try:
+        student = get_object_or_404(Student, pk = id_student)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+
     if request.method == 'POST':
         form_student = StudentForm(request.POST, instance = student)
         if form_student.is_valid():
             form_student.save()
+            message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido editado correctamente.'
+            request.session['message'] = message
             return HttpResponseRedirect('/students')
     else:
         form_student = StudentForm(instance = student)
@@ -513,11 +448,173 @@ def edit_student(request, id_student):
 
 @login_required(login_url='/')
 def delete_student(request, id_student):
-    student = Student.objects.get(pk = id_student)
+    try:
+        student = get_object_or_404(Student, pk = id_student)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+
     if request.method == 'POST':
-        student.delete()
+        
+        try:
+            student.delete()
+        except ProtectedError:
+            return render_to_response('students.html', {'student_delete': student, 'warning': 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' no puede ser eliminado.'}, context_instance = RequestContext(request))
+        
+        message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido eliminado correctamente.'
+        request.session['message'] = message
         return HttpResponseRedirect('/students')
-    return render_to_response('students.html', {'student_delete':student}, context_instance = RequestContext(request))
+    return render_to_response('students.html', {'student_delete': student}, context_instance = RequestContext(request))
+
+@login_required(login_url='/')
+def enrollment(request, id_student):
+    year = School.objects.filter(school_id = 1).values('school_year')
+    if request.method == 'POST':
+        if request.POST.getlist('register_headquarters'):
+            return update_enrollment(request, year, False)
+        elif request.POST.getlist('register_courses'):
+            try:
+                student = get_object_or_404(Student, pk = id_student)
+            except Http404:
+                return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+
+            course = Course.objects.get(pk = int(request.POST.getlist('register_courses')[0]))
+            student.student_course = course
+            student.student_matriculated = 1
+            student.save()
+            if(course_history_exist(request, student)):
+                message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido matriculado correctamente en' + ' ' + student.student_course.course_name + '.'
+                request.session['message'] = message
+                return HttpResponseRedirect('/students')
+            else:
+                course_history = Course_history()
+                course_history.course_history_course = course
+                course_history.course_history_student = student
+                course_history.save()
+                message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido matriculado correctamente en' + ' ' + student.student_course.course_name + '.'
+                request.session['message'] = message
+                return HttpResponseRedirect('/students')
+        else:
+            headquarters_list = Headquarter.objects.all()
+            grades_list = Grade.objects.filter(grade_year = year)
+            courses_list = Course.objects.filter(course_grade__in = grades_list)
+            return render_to_response('students.html',{'register': True, 'warning': '*Este campo es obligatorio', 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
+    else:
+        headquarters_list = Headquarter.objects.all()
+        grades_list = Grade.objects.filter(grade_year = year)
+        courses_list = Course.objects.filter(course_grade__in = grades_list)
+        
+    return render_to_response('students.html',{'register': True, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':'-1'}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def course_history_exist(request, student):
+    course_history = Course_history.objects.filter(course_history_student = student).filter(course_history_course = student.student_course)
+    
+    if len(course_history) > 0:
+        return True
+    else:
+        return False
+    
+@login_required(login_url='/')
+def edit_enrollment(request, id_student):
+    year = School.objects.filter(school_id = 1).values('school_year')
+    try:
+        student = get_object_or_404(Student, pk = id_student)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+    
+    if request.method == 'POST':
+        if request.POST.getlist('register_headquarters'):
+            return update_enrollment(request, year, True)
+        elif request.POST.getlist('register_courses'):
+            if(student.student_course.course_id == request.POST.getlist('register_courses')[0]):
+                message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido matriculado correctamente en' + ' ' + student.student_course.course_name + '.'
+                request.session['message'] = message    
+                return HttpResponseRedirect('/students')
+            else:
+                course = Course.objects.get(pk = int(request.POST.getlist('register_courses')[0]))
+                if delete_course_history(request, student):
+                    course_history = Course_history.objects.get(course_history_student = student, course_history_course = student.student_course)
+                    student.student_course = course
+                    student.save()           
+                    if course_history_exist(request, student):
+                        course_history.delete()
+                    else:
+                        course_history.course_history_course = course
+                        course_history.course_history_student = student
+                        course_history.save()
+                else:
+                    student.student_course = course
+                    student.save()
+                    if course_history_exist(request, student) == False:
+                        course_history = Course_history()
+                        course_history.course_history_course = course
+                        course_history.course_history_student = student
+                        course_history.save()
+                message = 'El estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido matriculado correctamente en' + ' ' + student.student_course.course_name + '.'
+                request.session['message'] = message
+                return HttpResponseRedirect('/students')
+        else:
+            headquarters_list = Headquarter.objects.all()
+            grades_list = Grade.objects.filter(grade_year = year)
+            courses_list = Course.objects.filter(course_grade__in = grades_list)
+            return render_to_response('students.html',{'register': True, 'edit_enrollment': True, 'warning': '*Este campo es obligatorio','student_id': student.student_id, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':student.student_course.course_id}, context_instance=RequestContext(request))
+    else:
+        headquarters_list = Headquarter.objects.all()
+        grades_list = Grade.objects.filter(grade_year = year)
+        courses_list = Course.objects.filter(course_grade__in = grades_list)
+        
+    return render_to_response('students.html',{'register': True, 'edit_enrollment': True, 'student_id': student.student_id, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': '-1', 'grade_selected':'-1', 'course_selected':student.student_course.course_id}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def update_enrollment(request, year, edit_enrollment):
+    headquarters_list = Headquarter.objects.all()
+        
+    headquarter = request.POST.getlist('register_headquarters')[0]
+    grade = request.POST.getlist('register_grades')[0]
+    
+    if headquarter == '-1':
+        grades_list = Grade.objects.filter(grade_year = year)
+    else:
+        grades_list = Grade.objects.filter(grade_year = year).filter(grade_headquarter = headquarter)
+    
+    if grade == '-1':
+        courses_list = Course.objects.filter(course_grade__in = grades_list)
+    else:
+        courses_list = Course.objects.filter(course_grade = grade)
+    
+    if edit_enrollment:
+        return render_to_response('students.html',{'register': True, 'edit_enrollment': edit_enrollment, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': int(headquarter), 'grade_selected':int(grade)}, context_instance=RequestContext(request))
+    else:
+        return render_to_response('students.html',{'register': True, 'headquarters': headquarters_list, 'grades':grades_list, 'courses':courses_list, 'headquarter_selected': int(headquarter), 'grade_selected':int(grade)}, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def cancel_enrollment(request, id_student):
+    try:
+        student = get_object_or_404(Student, pk = id_student)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos estudiante no encontrado. Sonrie y dá click ', 'link': '/students'}, context_instance = RequestContext(request))
+    
+    if delete_course_history(request, student):
+        course_history = Course_history.objects.get(course_history_student = student, course_history_course = student.student_course)
+        course_history.delete()
+    
+    student.student_course = None
+    student.student_matriculated = 0
+    student.save()
+    message = 'La matrícula del estudiante ' + student.student_first_name + ' ' + student.student_last_name + ' ha sido cancelada correctamente.'
+    request.session['message'] = message
+    return HttpResponseRedirect('/students')
+
+@login_required(login_url='/')
+def delete_course_history(request, student):
+    course = Course.objects.filter(course_id = student.student_course.course_id)
+    lists_allocation = Allocation.objects.filter(allocation_course = course)
+    lists_score = Score.objects.filter(score_allocation__in = lists_allocation).filter(score_student = student)
+    
+    if len(lists_score) > 0:
+        return False
+    else:
+        return True
 
 @login_required(login_url='/')
 def subjects(request):

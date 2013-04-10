@@ -80,6 +80,11 @@
 				{% endfor %}
 			</select>
 		</form>
+	 	{% if message %}	
+			<div class="alert alert-success">
+			 	<p>{{message}}</p>
+			</div>
+		{% endif %}
 		
 		<div id="scroll">
 			<table class="table table-hover">
@@ -111,10 +116,10 @@
 						
 						<td>
 							{% if student.student_matriculated == 0 %}
-								<a href="/students/register/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
+								<a href="/students/enrollment/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 								<i class="icon-pencil"></i> Matricular</a>
 							{% else %}
-								<a href="/students/edit_register/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
+								<a href="/students/edit_enrollment/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
 								<i class="icon-pencil"></i> Editar matricular</a>
 							{% endif %}
 							<a href="/students/details/{{student.student_id}}" role="button" class="btn btn-mini btn-primary">
@@ -147,7 +152,7 @@
 		    	 model_delete_student();
 		    });
 		</script>
-	{% elif last_course %}
+	{% elif register %}
 		<script type="text/javascript">
 		    $(document).ready(function(){
 		    	model_register();
@@ -425,20 +430,35 @@
 				<a href="/students" type="button" class="close">×</a>
 				<h3 id="myModalLabel">Eliminar Estudiante</h3>
 			</div>
-			<div class="modal-body">
-				<p>¿Esta seguro que desea eliminar a: {{student_delete.student_first_name}} {{student_delete.student_last_name}}?</p>
-			</div>
-			<div class="modal-footer">
-				<a href="/students" type="button" class="btn">Cancelar</a>
-				<button type="submit" class="btn btn-danger">Eliminar</button>
-			</div>
+			{% if warning %}
+				<div class="modal-body">
+					<div class="alert alert-error">
+						 <p>{{warning}}</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="/students" type="button" class="btn">Aceptar</a>
+				</div>
+			{% else %}
+				<div class="modal-body">
+					<p>¿Esta seguro que desea eliminar a: {{student_delete.student_first_name}} {{student_delete.student_last_name}}?</p>
+				</div>
+				<div class="modal-footer">
+					<a href="/students" type="button" class="btn">Cancelar</a>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</div>
+			{% endif %}
 		</div>
 	</form>
 	
 	<div id="m_register" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
 		<div class="modal-header">
 			<a href="/students" type="button" class="close">×</a>
-			<h3 id="myModalLabel">Matricular Estudiante</h3>
+			{% if last_course %}
+				<h3 id="myModalLabel">Editar Matricula Estudiante</h3>
+			{% else %}
+				<h3 id="myModalLabel">Matricular Estudiante</h3>
+			{% endif %}
 		</div>		
 		<div class="modal-body">
 			<form name="optionsRegister" method="post" class="form-inline text-center">
@@ -475,27 +495,48 @@
 					{% endfor %}
 				</select>
 			</form>
-			<form name="register" method="post">
+			<form name="register" method="post" class="form-horizontal">
 				{% csrf_token %}
-				{% if last_course %}
-					<input type='hidden' name='last_course' value='{{last_course}}' />
+				{% if warning %}
+					<div class="control-group error">
+						<label class="control-label">Curso</label>
+						<div class="controls">
+							<select name="register_courses">
+								{% for course in courses %}
+									{% if course_selected == course.course_id %}
+										<option value="{{course.course_id}}" selected="selected">{{course.course_name}}</option>
+									{% else %}
+										<option value="{{course.course_id}}">{{course.course_name}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+							<span class="help-inline"> {{warning }} </span>
+						</div>
+					</div>
+				{% else %}
+					<div class="control-group">
+						<label class="control-label">Curso</label>
+						<div class="controls">
+							<select name="register_courses">
+								{% for course in courses %}
+									{% if course_selected == course.course_id %}
+										<option value="{{course.course_id}}" selected="selected">{{course.course_name}}</option>
+									{% else %}
+										<option value="{{course.course_id}}">{{course.course_name}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+						</div>
+					</div>
 				{% endif %}
-				<label>Curso</label>
-				<select name="register_courses">
-					{% for course in courses %}
-						{% if course_selected == course.course_id %}
-							<option value="{{course.course_id}}" selected="selected">{{course.course_name}}</option>
-						{% else %}
-							<option value="{{course.course_id}}">{{course.course_name}}</option>
-						{% endif %}
-					{% endfor %}
-				</select>
 			</form>
 		</div>
 		<div class="modal-footer">
 			<a href="/students" type="button" class="btn">Cancelar</a>
-			<a href="/students" type="button" class="btn">Cancelar Matrícula</a>
-			<button class="btn btn-danger" onclick="save_register()">Guardar</button>
+			{% if edit_enrollment %}
+				<a href="/students/cancel_enrollment/{{student_id}}" type="button" class="btn btn-danger">Cancelar Matrícula</a>
+			{% endif %}
+			<button class="btn btn-primary" onclick="save_register()">Guardar</button>
 		</div>
 		</form>
 	</div>
