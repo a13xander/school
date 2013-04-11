@@ -152,6 +152,14 @@ def grades(request):
     else:
         grades_list = Grade.objects.filter(grade_year = year)
         headquarters_list = Headquarter.objects.all()
+        
+        try:
+            message = request.session['message']
+            del request.session['message']
+            if message != '':
+                return render_to_response('grades.html',{'grades':grades_list, 'message': message, 'headquarters':headquarters_list, 'headquarter_selected':'-1'}, context_instance=RequestContext(request))
+        except KeyError:
+            pass        
     return render_to_response('grades.html',{'grades':grades_list, 'headquarters':headquarters_list, 'headquarter_selected':'-1'}, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
@@ -165,17 +173,16 @@ def add_grade(request):
         grade = grades_select[0]        
        
         year = School.objects.filter(school_id=1).values("school_year")
-        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
-        print (q)
-        print(grade)        
+        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)       
                 
         if len(q)==0 and form.is_valid(): 
             grades = Grade()
             grades.grade_year = Year.objects.get(pk = year)
             grades.grade_headquarter = Headquarter.objects.get(pk = headquarter)
             grades.grade_name = str(grade)
-            grades.save()
-            
+            grades.save()            
+            message = 'El grado ' + request.POST['grade_name'] + ' ha sido almacenado correctamente.'
+            request.session['message'] = message            
             return HttpResponseRedirect('/grades') 
         else:
             warning = 2
@@ -186,48 +193,48 @@ def add_grade(request):
 
 @login_required(login_url='/')
 def edit_grade(request, id_grade):
-    grade = Grade.objects.get(pk = id_grade)
+    try:
+        grade = get_object_or_404(Grade, pk = id_grade)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos grado no encontrado. Sonrie y dá click ', 'link': '/grades'}, context_instance = RequestContext(request))
+    
     if request.method == 'POST':
         form = GradeForm(request.POST, instance = grade)
         headquarter_selected = request.POST.getlist('grade_headquarter')
         headquarter = headquarter_selected[0]
         grades_select = request.POST.getlist('grade_name')
-        grade = grades_select[0]        
+        grades = grades_select[0]        
         year = School.objects.filter(school_id=1).values("school_year")
-        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)
-        print(q)
+        q = Grade.objects.filter(grade_year = year).filter(grade_name = grades).filter(grade_headquarter = headquarter)
+        
         if len(q)==0 and form.is_valid():
             form.save()
+            message = 'El grado ' + grade.grade_name + ' ha sido editado correctamente.'
+            request.session['message'] = message
             return HttpResponseRedirect('/grades')
+        else:
+            warning = 2
+            return render_to_response('grades.html', {'form':form, 'warning':warning}, context_instance = RequestContext(request))
     else:
         form = GradeForm(instance = grade)
     return render_to_response('grades.html', {'form':form, 'edit':True}, context_instance = RequestContext(request))
 
 @login_required(login_url='/')
 def delete_grade(request, id_grade):
-    grade = Grade.objects.get(pk = id_grade)
-    print (id_grade)
-    print (grade)
-    warning = 0
-    if request.method == 'POST':        
-        try: 
-            course = Course.objects.get(course_grade = id_grade).course_grade
-            print (course)
-        except Course.DoesNotExist:
-            print ('No existe un curso asociado a ese grado')
-            course = None
+    try:
+        grade = get_object_or_404(Grade, pk = id_grade)
+    except Http404:
+        return render_to_response('404.html', {'message': 'Lo sentimos grado no encontrado. Sonrie y dá click ', 'link': '/grades'}, context_instance = RequestContext(request))
         
-        if grade != course and course is not None:        
+    if request.method == 'POST':        
+        try:
             grade.delete()
-            return HttpResponseRedirect('/grades')
-        elif course is None:
-            grade.delete()
-            return HttpResponseRedirect('/grades')
-        else:
-            warning = 1
-            return render_to_response('grades.html', {'grade':grade, 'delete':True, 'warning':warning}, context_instance = RequestContext(request))
-    else:
-        print ("Ese grado esta asociado ya a un curso")
+        except ProtectedError:
+            return render_to_response('grades.html', {'grade':grade, 'delete':True, 'warning':'El grado ' + grade.grade_name + ' no puede ser eliminado, porqué está asociado a un curso'}, context_instance = RequestContext(request))
+        
+        message = 'El grado ' + grade.grade_name + ' ha sido eliminado correctamente.'
+        request.session['message'] = message
+        return HttpResponseRedirect('/grades')        
     return render_to_response('grades.html', {'grade':grade, 'delete':True}, context_instance = RequestContext(request))    
             
 

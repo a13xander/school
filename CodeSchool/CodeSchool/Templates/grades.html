@@ -26,6 +26,12 @@
 			<a href="/grades/history" role="button" class="btn btn btn-primary offset6"><i class="icon-list-alt"></i> Historial</a>			
 		</form>
 		
+		{% if message %}	
+			<div class="alert alert-success">
+			 	<p>{{message}}</p>
+			</div>
+		{% endif %}
+		
 		<div id="scroll">
 			<table class="table  table-hover">
 				<thead>
@@ -92,7 +98,6 @@
 	        	{{ form.non_field_errors }} 
 	        	{% if warning == 2 %}
 	        		<div class="alert alert-error">
-						<a class="close" data-dismiss="alert">×</a>
 						<i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> El Grado Ya Existe En Esa Sede
 					</div>					
 				{% endif %}	
@@ -139,19 +144,24 @@
 				<a href="/grades" type="button" class="close">×</a>
 				<h3 id="myModalLabel">Eliminar Grado</h3>
 			</div>
-			<div class="modal-body">
-				{% if warning == 1 %}
+			{% if warning %}
+				<div class="modal-body">
 	        		<div class="alert alert-error">
-						<a class="close" data-dismiss="alert">×</a>
-						<i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> Ese grado esta asociado ya a un curso
-					</div>					
-				{% endif %}	
-				<p>¿Esta seguro que desea eliminar el grado: {{grade.grade_name}}?</p>
-			</div>
-			<div class="modal-footer">
-				<a href="/grades" type="button" class="btn">Cancelar</a>
-				<button type="submit" class="btn btn-danger">Eliminar</button>
-			</div>
+						<p>{{warning}}</p>
+					</div>
+				</div>	
+				<div class="modal-footer">
+					<a href="/grades" type="button" class="btn">Aceptar</a>
+				</div>				
+			{% else %}
+				<div class="modal-body">
+	        		<p>¿Esta seguro que desea eliminar el grado: {{grade.grade_name}}?</p>
+				</div>	
+				<div class="modal-footer">
+					<a href="/grades" type="button" class="btn">Cancelar</a>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</div>	
+			{% endif %}
 		</div>
 	</form>
 
