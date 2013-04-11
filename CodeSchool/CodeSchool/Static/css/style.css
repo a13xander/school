@@ -33,10 +33,6 @@
 	padding-bottom: 50px;
 } 
 
-.comboboxPeriodo{
-	width: 100px;
-}
-
 select{
 	width: 150px;
 }
@@ -48,4 +44,12 @@ select{
 
 #margins{
 	margin-left: 2%;
+}
+
+.carousel-inner{
+	text-align: center;
+}
+
+.carousel .item > img {
+	display: inline-block;
 }
