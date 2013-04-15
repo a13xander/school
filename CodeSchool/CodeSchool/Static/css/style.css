@@ -23,7 +23,6 @@
 	margin-left: 5%;	
 }
 
-
 .verticalNav{
 	margin: 100px;
 }
@@ -51,5 +50,15 @@ select{
 }
 
 .carousel .item > img {
+	display: inline-block;
+}
+
+.carousel-indicators{
+	text-align: center;
+	left: 0;
+}
+
+.carousel-indicators li{
+	float: none;
 	display: inline-block;
 }
