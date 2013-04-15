@@ -164,29 +164,27 @@ def grades(request):
 
 @login_required(login_url='/')
 def add_grade(request):
-    warning = 0
     if request.method == 'POST':
         form = GradeForm(request.POST)        
         headquarter_selected = request.POST.getlist('grade_headquarter')
         headquarter = headquarter_selected[0]
         grades_select = request.POST.getlist('grade_name')
-        grade = grades_select[0]        
+        grades = grades_select[0]        
        
         year = School.objects.filter(school_id=1).values("school_year")
-        q = Grade.objects.filter(grade_year = year).filter(grade_name = grade).filter(grade_headquarter = headquarter)       
+        q = Grade.objects.filter(grade_year = year).filter(grade_name = grades).filter(grade_headquarter = headquarter)       
                 
         if len(q)==0 and form.is_valid(): 
-            grades = Grade()
-            grades.grade_year = Year.objects.get(pk = year)
-            grades.grade_headquarter = Headquarter.objects.get(pk = headquarter)
-            grades.grade_name = str(grade)
-            grades.save()            
+            grade = Grade()
+            grade.grade_year = Year.objects.get(pk = year)
+            grade.grade_headquarter = Headquarter.objects.get(pk = headquarter)
+            grade.grade_name = str(grades)
+            grade.save()            
             message = 'El grado ' + request.POST['grade_name'] + ' ha sido almacenado correctamente.'
             request.session['message'] = message            
             return HttpResponseRedirect('/grades') 
         else:
-            warning = 2
-            return render_to_response('grades.html', {'form':form, 'warning':warning}, context_instance = RequestContext(request))
+            return render_to_response('grades.html', {'form':form, 'warning':'El grado ' + grades + ' ya existe en esa sede'}, context_instance = RequestContext(request))
     else:
         form = GradeForm()
     return render_to_response('grades.html', {'form':form}, context_instance = RequestContext(request))
@@ -206,15 +204,13 @@ def edit_grade(request, id_grade):
         grades = grades_select[0]        
         year = School.objects.filter(school_id=1).values("school_year")
         q = Grade.objects.filter(grade_year = year).filter(grade_name = grades).filter(grade_headquarter = headquarter)
-        
-        if len(q)==0 and form.is_valid():
+        if form.is_valid() and len(q) == 0:              
             form.save()
             message = 'El grado ' + grade.grade_name + ' ha sido editado correctamente.'
             request.session['message'] = message
             return HttpResponseRedirect('/grades')
         else:
-            warning = 2
-            return render_to_response('grades.html', {'form':form, 'warning':warning}, context_instance = RequestContext(request))
+            return render_to_response('grades.html', {'form':form, 'warning':'El grado ' + grades + ' ya existe en esa sede'}, context_instance = RequestContext(request))
     else:
         form = GradeForm(instance = grade)
     return render_to_response('grades.html', {'form':form, 'edit':True}, context_instance = RequestContext(request))

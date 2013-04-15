@@ -84,7 +84,7 @@
 
 	<form class="form-horizontal" method="post">
 		{% csrf_token %} 
-		<div id="m_n_grade" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
+		<div id="m_grade" class="modal hide fade" tabindex="-1" data-keyboard='false' data-backdrop='static'>
 	    	<div class="modal-header">
 	      		<a href="/grades" type="button" class="close">x</a>
 				{% if edit %}
@@ -96,35 +96,25 @@
 	
 	    	<div class="modal-body">
 	        	{{ form.non_field_errors }} 
-	        	{% if warning == 2 %}
+	        	{% if warning %}
 	        		<div class="alert alert-error">
-						<i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> El Grado Ya Existe En Esa Sede
-					</div>					
+						<p><i class="icon-exclamation-sign"></i><strong>¡Alerta!</strong> {{warning}}</p>
+					</div>				
 				{% endif %}	
+			
 	        	<div class="control-group">
-	        		{% if form.grade_headquarter.errors %} 
-	        			<div class="alert alert-error">
-							 <button type="button" class="close" data-dismiss="alert">&times;</button>
-							 <p>{{ form.grade_headquarter.errors.as_text }}</p>
-						</div>
-					{% endif %}	 
-	          		<label class="control-label" for="inputHeadquarter">Sede:</label>
-	
+	          		<label class="control-label" for="inputHeadquarter">Sede:</label>	
 	          		<div class="controls">
 	            		{{ form.grade_headquarter }}
 	          		</div>
-	        	</div>
+        		</div>        	
 	
-		        <div class="control-group">
-		       		{{ form.grade_name.errors }} 
-		       		<label class="control-label" for="inputGrade">Grado:</label>
-		
+		        <div class="control-group">		       		
+		       		<label class="control-label" for="inputGrade">Grado:</label>		
 		          	<div class="controls">
 		            	{{form.grade_name}}
 		          	</div>
-		        </div>
-		
-		        
+		        </div>		        
 		    </div>
 		
 	        <div class="modal-footer">
