@@ -1,7 +1,7 @@
 # Django settings for CodeSchool project.
 #encoding:utf-8
 import os
-RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
+PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -53,7 +53,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(RUTA_PROYECTO,'Static')
+MEDIA_ROOT = os.path.join(PROJECT_PATH,'Static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -72,7 +72,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(RUTA_PROYECTO,'Static'),
+    os.path.join(PROJECT_PATH,'Static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -109,7 +109,7 @@ ROOT_URLCONF = 'CodeSchool.urls'
 WSGI_APPLICATION = 'CodeSchool.wsgi.application'
 
 TEMPLATE_DIRS = (
-      os.path.join(RUTA_PROYECTO,'Templates'),
+      os.path.join(PROJECT_PATH,'Templates'),
 )
 
 INSTALLED_APPS = (

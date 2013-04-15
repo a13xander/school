@@ -273,7 +273,7 @@ def headquarters(request):
 @login_required(login_url='/')
 def add_headquarter(request):
     if request.method == 'POST':
-        form = HeadquarterForm(request.POST)
+        form = HeadquarterForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/headquarters') 
@@ -285,7 +285,7 @@ def add_headquarter(request):
 def edit_headquarter(request, id_headquarter):
     headquarter = Headquarter.objects.get(pk = id_headquarter)
     if request.method == 'POST':
-        form = HeadquarterForm(request.POST, instance = headquarter)
+        form = HeadquarterForm(request.POST, request.FILES, instance = headquarter)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/headquarters')
