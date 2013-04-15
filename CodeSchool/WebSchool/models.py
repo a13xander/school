@@ -26,7 +26,7 @@ class Headquarter(models.Model):
     headquarter_address = models.CharField(max_length = 50, null = False)
     headquarter_phone = models.CharField(max_length = 10, null = False)
     headquarter_school = models.ForeignKey(School, default = 1, on_delete = models.PROTECT)
-    headquarter_image = models.ImageField(upload_to = 'Upload_Headquarters', save = False)
+    headquarter_image = models.ImageField(upload_to = 'Upload_Headquarters')
     
     class Meta:
         db_table = "HEADQUARTER"
