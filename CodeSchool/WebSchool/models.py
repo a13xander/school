@@ -22,7 +22,7 @@ class School(models.Model):
         
 class Headquarter(models.Model):
     headquarter_id = models.AutoField(primary_key = True)
-    headquarter_name =  models.CharField(max_length = 100, null = False)
+    headquarter_name =  models.CharField(max_length = 100, null = False, unique = True, error_messages={'unique': 'Ya existe una sede con este nombre.'})
     headquarter_address = models.CharField(max_length = 50, null = False)
     headquarter_phone = models.CharField(max_length = 10, null = False)
     headquarter_school = models.ForeignKey(School, default = 1, on_delete = models.PROTECT)
@@ -116,8 +116,8 @@ class Allocation(models.Model):
             
 class Student(models.Model):
     student_id = models.AutoField(primary_key = True)
-    student_code = models.IntegerField(null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este código'})
-    student_document_id = models.CharField(max_length = 12, null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este documento'})
+    student_code = models.IntegerField(null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este código.'})
+    student_document_id = models.CharField(max_length = 12, null = False, unique = True, error_messages={'unique': 'Ya existe un estudiante con este documento.'})
     student_first_name = models.CharField(max_length = 50, null = False)
     student_last_name = models.CharField(max_length = 50, null = False)
     student_mobile_number = models.CharField(max_length = 10, null = False)

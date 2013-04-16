@@ -26,6 +26,7 @@ from WebSchool.models import Teacher
 from CodeSchool.forms import TeacherForm
 from WebSchool.models import Year
 from django.db.models.deletion import ProtectedError
+from django.core.files.storage import default_storage
 
 
 def login_school(request):
@@ -281,9 +282,12 @@ def add_headquarter(request):
 def edit_headquarter(request, id_headquarter):
     headquarter = Headquarter.objects.get(pk = id_headquarter)
     if request.method == 'POST':
+        mageField = headquarter.headquarter_image
         form = HeadquarterForm(request.POST, request.FILES, instance = headquarter)
         if form.is_valid():
             form.save()
+            if headquarter.headquarter_image != mageField:
+                default_storage.delete(mageField)
             return HttpResponseRedirect('/headquarters')
     else:
         form = HeadquarterForm(instance = headquarter)
@@ -293,6 +297,7 @@ def edit_headquarter(request, id_headquarter):
 def delete_headquarter(request, id_headquarter):
     headquarter = Headquarter.objects.get(pk = id_headquarter) 
     if request.method == 'POST':
+        headquarter.headquarter_image.delete()
         headquarter.delete()
         return HttpResponseRedirect('/headquarters')
     return render_to_response('headquarters.html', {'headquarter':headquarter, 'delete':True}, context_instance = RequestContext(request))
