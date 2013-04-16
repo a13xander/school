@@ -58,7 +58,7 @@ function model_delete_headquarter()
 
 function model_grade()
 {
-	$('#m_n_grade').modal('show');
+	$('#m_grade').modal('show');
 }
 
 function model_delete_grade()
